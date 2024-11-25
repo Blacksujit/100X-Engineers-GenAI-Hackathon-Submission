@@ -1,3 +1,35 @@
+# MVP Video:
+
+
+
+https://github.com/user-attachments/assets/eac1daef-4fd1-4355-95c9-4a0f0dab28aa
+
+
+
+## some generated inforgraphcis by our MVP:
+
+
+
+https://github.com/user-attachments/assets/46526010-1cab-4e09-97ea-a787d8a5ea59
+
+
+
+https://github.com/user-attachments/assets/0014f38f-486d-4d31-a93c-a0e74515931f
+
+
+
+https://github.com/user-attachments/assets/8c631010-4d3f-4e0e-9a9d-b00006173f7f
+
+
+
+https://github.com/user-attachments/assets/16c78aa8-6636-4297-8ccc-325677c56a68
+
+
+
+
+
+
+
 # Project Overview
 
 This project is a Flask-based web application that allows users to generate animated infographic videos based on input text. The application leverages the Pexels API for video content and incorporates natural language processing (NLP) techniques to analyze and transform the input text into a suitable format for video generation.
