@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Video</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css_1/styles.css') }}">
+    <style>
+        /* Include the same styles as in index.html or customize as needed */
+        body {
+            min-height: 100vh;
+            min-width: 1024px;
+            background-color: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+            overflow-x: auto;
+            position: relative;
+        }
+        /* Additional styles for input and result box */
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .input-box {
+            width: 300px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .result-box {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+        .result-box video {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+        .result-box a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        /* Gradio-like box styles */
+        .gradio-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+        }
+        .gradio-box .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .gradio-box .video-container video {
+            width: 100%;
+            height: auto;
+        }
+        .gradio-box .video-container a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+        }
+        /* Button styles */
+        button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text to Video Generation</h1>
+    <div class="input-container">
+        <input type="text" class="input-box" placeholder="Enter your text here..." id="textInput">
+        <button id="generateButton">Generate Video</button>
+        <div class="gradio-box" id="resultBox">Result will appear here...</div>
+    </div>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', () => {
+            const inputText = document.getElementById('textInput').value;
+            fetch('/generate_video', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: inputText })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('resultBox').innerText = `Error: ${data.error}`;
+                } else {
+                    document.getElementById('resultBox').innerText = `Generated video for: ${inputText}`;
+                    data.video_urls.forEach((url, index) => {
+                        const videoContainer = document.createElement('div');
+                        videoContainer.classList.add('video-container');
+                        const video = document.createElement('video');
+                        video.src = url;
+                        video.autoplay = true;
+                        video.playsInline = true;
+                        video.controls = true;
+                        videoContainer.appendChild(video);
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = url;
+                        downloadLink.download = `video_${index + 1}.mp4`;
+                        downloadLink.innerText = `Download Video ${index + 1}`;
+                        videoContainer.appendChild(downloadLink);
+                        document.getElementById('resultBox').appendChild(videoContainer);
+                    });
+                }
+            })
+            .catch(error => {
+                document.getElementById('resultBox').innerText = `An error occurred: ${error}`;
+            });
+        });
+    </script>
+</body>
+</html>
