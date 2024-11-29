@@ -30,18 +30,18 @@ https://github.com/user-attachments/assets/16c78aa8-6636-4297-8ccc-325677c56a68
 
 
 
-# Project Overview
+# Project Overview:
 
 This project is a Flask-based web application that allows users to generate animated infographic videos based on input text. The application leverages the Pexels API for video content and incorporates natural language processing (NLP) techniques to analyze and transform the input text into a suitable format for video generation.
 
-# Features
+# Features:
 
 1. **Text-to-Video Conversion**: Users can input text, and the application will generate a video based on the content of the text.
 2. **NLP Analysis**: The application performs sentiment analysis and semantic segmentation on the input text to better understand its context and meaning.
 3. **Video Generation**: The application uses the Pexels API to search for videos that match the processed text and returns a selection of video URLs.
 4. **Logging**: The application logs responses from the Pexels API and OpenAI (if integrated) for debugging and analytics purposes.
 
-# Technical Details
+# Technical Details:
 
 1. **Backend**: The application is built using Flask, a Python web framework.
 2. **NLP Libraries**: The application utilizes the following NLP libraries:
@@ -54,7 +54,7 @@ This project is a Flask-based web application that allows users to generate anim
 3. **API Integration**: The application integrates with the Pexels API for video content.
 4. **Frontend**: The application uses HTML, CSS, and JavaScript for the user interface.
 
-# Installation and Setup
+# Installation and Setup:
 
 1. Clone the repository: `git clone https://github.com/Blacksujit/100X-Enginnerres-Hackathon-Submission`
 
@@ -64,7 +64,7 @@ This project is a Flask-based web application that allows users to generate anim
 	* `PEXELS_API_KEY`: Your Pexels API key
 4. Run the application: `python app.py`
 
-# Usage
+# Usage:
 
 1. Open a web browser and navigate to `http://localhost:2000`
 2. Input text in the text box on the homepage and click the "Generate Video" button.
