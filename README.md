@@ -1,4 +1,4 @@
-# MVP Video:
+# MVP Video
 
 
 
