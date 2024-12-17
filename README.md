@@ -1,4 +1,7 @@
-# Our Hackathon MVP: Text-to-Video Generation
+# Our Hackathon MVP: Text-to-Video Generation:
+
+
+# MVP Videos
 
 ## Project Overview
 
