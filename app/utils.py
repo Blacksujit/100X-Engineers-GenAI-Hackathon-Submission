@@ -8,9 +8,15 @@ import  nltk
 import os
 from datetime import datetime
 import json
-
+from dotenv import load_dotenv
 # Hardcoded API keys
-PEXELS_API_KEY = 'yepFtS82dEUPX41sHUOMVzris34EohIYvW8Czo5Z5s6KQ2WHPPe4eIQA'
+
+# Load environment variables
+load_dotenv()
+
+
+PEXELS_API_KEY = os.getenv("PEXELS_API_KEY")
+print(f"Your API Key: {PEXELS_API_KEY}")
 
 # Text processing functions
 def parse_input_text(text):
@@ -66,6 +72,9 @@ def semantic_segment_transformation(text):
 
 # Video Generation Function
 def generate_video_from_text(text):
+    # data = parse_input_text(text)
+    print("Parsed Data:", text)
+    
     contextual_prompt = semantic_segment_transformation(text)
     processed_prompt = preprocess_text(contextual_prompt)
     visualization_prompt = f"Create an animated infographic video showing the distribution of: {processed_prompt}"
