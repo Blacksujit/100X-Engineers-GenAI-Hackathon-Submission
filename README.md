@@ -1,8 +1,11 @@
 # Our Hackathon MVP:
 
-## DatavizAI:
+## DataVizAI
 
-# MVP Videos:
+**![images](https://github.com/user-attachments/assets/e26aee53-96a6-4271-a28d-646419758071)**
+
+
+# MVP Videos
 
 **coming soon ....**
 
