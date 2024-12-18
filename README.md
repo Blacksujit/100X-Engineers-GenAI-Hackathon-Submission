@@ -1,5 +1,6 @@
-# Our Hackathon MVP: Text-to-Video Generation:
+# Our Hackathon MVP:
 
+# DatavizAI:
 
 # MVP Videos
 
