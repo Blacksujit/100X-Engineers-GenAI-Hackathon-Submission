@@ -9,7 +9,7 @@
 
 **coming soon ....**
 
-## Project Overview
+## Project Overview:
 
 Our hackathon project is a Flask-based web application that enables users to generate animated infographic videos based on input text. This MVP leverages the Pexels API for video content and incorporates advanced natural language processing (NLP) techniques, including LangChain and Stable Diffusion, to analyze and transform the input text into a suitable format for video generation. The application utilizes a combination of NLP libraries, such as TextBlob, SpaCy, and NLTK, to perform sentiment analysis, semantic segmentation, and text preprocessing. Additionally, it integrates with the Pexels API to search for videos that match the processed text and returns a selection of video URLs.
 
