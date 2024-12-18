@@ -1,8 +1,10 @@
 # Our Hackathon MVP:
 
-# DatavizAI:
+## DatavizAI:
 
-# MVP Videos
+# MVP Videos:
+
+**coming soon ....**
 
 ## Project Overview
 
