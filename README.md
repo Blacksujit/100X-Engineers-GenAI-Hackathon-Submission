@@ -42,7 +42,7 @@ Our hackathon project is a Flask-based web application that enables users to gen
 
 1. Clone the repository: 
    ```bash
-   git clone https://github.com/Blacksujit/100X-Engineerres-Hackathon-Submission
+    https://github.com/Blacksujit/100X-Engineers-GenAI-Hackathon-Submission.git
    ```
 
 2. Install the required packages: 
@@ -53,6 +53,7 @@ Our hackathon project is a Flask-based web application that enables users to gen
 3. Set up the environment variables:
    - `OPENAI_API_KEY`: Your OpenAI API key (if using OpenAI integration).
    - `PEXELS_API_KEY`: Your Pexels API key.
+   - `GROQ_API_KEY`: Your Groq API key. 
 
 4. Run the application: 
    ```bash
