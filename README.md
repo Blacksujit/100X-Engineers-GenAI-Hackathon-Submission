@@ -11,7 +11,7 @@
 
 ## Project Overview:
 
-Our hackathon project is a Flask-based web application that enables users to generate animated infographic videos based on input text. This MVP leverages the Pexels API for video content and incorporates advanced natural language processing (NLP) techniques, including LangChain and Stable Diffusion, to analyze and transform the input text into a suitable format for video generation. The application utilizes a combination of NLP libraries, such as TextBlob, SpaCy, and NLTK, to perform sentiment analysis, semantic segmentation, and text preprocessing. Additionally, it integrates with the Pexels API to search for videos that match the processed text and returns a selection of video URLs.
+Dataviz AI is an AI powered web application that enables users to generate animated infographic videos based on input  Data , text,files. This MVP leverages the Pexels API for video content and incorporates advanced natural language processing (NLP) techniques, including LangChain and stable diffusion techniques, to analyze and create visual impact
 
 ## Key Features
 
@@ -26,7 +26,7 @@ Our hackathon project is a Flask-based web application that enables users to gen
 
 ## Impact of the Product
 
-The Text-to-Video Generation application has the potential to significantly impact various sectors, including education, marketing, and content creation. By transforming textual information into engaging video content, it enhances the way information is consumed and understood. Here are some key impacts:
+The Dataviz AI is an AI powered web application  has the potential to significantly impact various sectors, including education, marketing, and content creation. By transforming textual information into engaging video content, it enhances the way information is consumed and understood. Here are some key impacts:
 
 - **Enhanced Learning**: In educational settings, the ability to convert complex text into visual formats can aid in comprehension and retention, making learning more effective.
 
@@ -37,21 +37,21 @@ The Text-to-Video Generation application has the potential to significantly impa
 - **Content Creation**: Content creators can streamline their workflow by generating videos from scripts or articles, saving time and resources while maintaining high-quality output.
 
 
-
 ## Technical Overview
 
-1. **Backend**: The application is built using Flask, a Python web framework that allows for easy routing and handling of HTTP requests.
+1. **Frontend**: The application uses HTML, CSS, and JavaScript for the user interface, providing a seamless user experience.
 
-2. **NLP Libraries**: The application utilizes the following NLP libraries:
+2. **Backend**: The application is built using Flask, a Python web framework that allows for easy routing and handling of HTTP requests.
+
+3. **NLP Libraries**: The application utilizes the following NLP libraries:
    - **TextBlob** for sentiment analysis, enabling the application to gauge the emotional tone of the input text.
    - **SpaCy** for semantic segmentation, which helps in understanding the structure and meaning of the text.
    - **NLTK** for text preprocessing, ensuring that the input text is clean and ready for analysis.
    - **Transformers** and **Hugging Face** for advanced NLP tasks.
    - **LangChain** for managing and chaining together different language models and tasks.
 
-3. **API Integration**: The application integrates with the Pexels API for video content, allowing users to access a vast library of stock videos.
+4. **API Integration**: The application integrates with the Pexels API for video content, allowing users to access a vast library of stock videos.
 
-4. **Frontend**: The application uses HTML, CSS, and JavaScript for the user interface, providing a seamless user experience.
 
 ## Installation and Setup
 
