@@ -23,6 +23,21 @@ Our hackathon project is a Flask-based web application that enables users to gen
 
 4. **Logging**: The application logs responses from the Pexels API and OpenAI (if integrated) for debugging and analytics purposes, allowing for continuous improvement and monitoring of the application’s performance.
 
+
+## Impact of the Product
+
+The Text-to-Video Generation application has the potential to significantly impact various sectors, including education, marketing, and content creation. By transforming textual information into engaging video content, it enhances the way information is consumed and understood. Here are some key impacts:
+
+- **Enhanced Learning**: In educational settings, the ability to convert complex text into visual formats can aid in comprehension and retention, making learning more effective.
+
+- **Marketing and Communication**: Businesses can leverage this tool to create promotional videos quickly, allowing for more dynamic and engaging marketing strategies that capture audience attention.
+
+- **Accessibility**: By providing visual representations of textual information, the application can help make content more accessible to individuals with different learning styles or those who may struggle with reading.
+
+- **Content Creation**: Content creators can streamline their workflow by generating videos from scripts or articles, saving time and resources while maintaining high-quality output.
+
+
+
 ## Technical Overview
 
 1. **Backend**: The application is built using Flask, a Python web framework that allows for easy routing and handling of HTTP requests.
@@ -66,17 +81,6 @@ Our hackathon project is a Flask-based web application that enables users to gen
 2. Input text in the text box on the homepage and click the "Generate Video" button.
 3. The application will redirect you to a page displaying the generated video URLs.
 
-## Impact of the Product
-
-The Text-to-Video Generation application has the potential to significantly impact various sectors, including education, marketing, and content creation. By transforming textual information into engaging video content, it enhances the way information is consumed and understood. Here are some key impacts:
-
-- **Enhanced Learning**: In educational settings, the ability to convert complex text into visual formats can aid in comprehension and retention, making learning more effective.
-
-- **Marketing and Communication**: Businesses can leverage this tool to create promotional videos quickly, allowing for more dynamic and engaging marketing strategies that capture audience attention.
-
-- **Accessibility**: By providing visual representations of textual information, the application can help make content more accessible to individuals with different learning styles or those who may struggle with reading.
-
-- **Content Creation**: Content creators can streamline their workflow by generating videos from scripts or articles, saving time and resources while maintaining high-quality output.
 
 ## Contributing
 
