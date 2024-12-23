@@ -112,12 +112,16 @@
             transform: rotate(360deg);
         }
     }
-    
+
     video {
         width: 100%;
         border-radius: 0.5rem;
         margin-top: 1rem;
+        max-width: 800px; /* Ensures the video doesn't stretch too much */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adds a shadow for better visibility */
     }
+    
+
 </style>
 <body>
     <h1>Text to Video Generation</h1>
@@ -185,10 +189,13 @@ generateButton.addEventListener('click', async () => {
             throw new Error(data.error || 'Failed to generate video');
         }
 
-        // Display the video
-        resultVideo.src = data.video_path;
-        resultContainer.classList.add('active');
-        
+        console.log('Video Path:', data.video_path); // Log the video path
+
+        // Set the video source and display the video
+        resultVideo.src = data.video_path + `?t=${new Date().getTime()}`; // Add cache-busting query string
+        resultVideo.style.display = 'block';  // Ensure the video element is visible
+        resultContainer.classList.add('active'); // Make result container visible
+
     } catch (error) {
         showError(error.message || 'An error occurred while generating the video');
     } finally {

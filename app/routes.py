@@ -1,3 +1,6 @@
+
+#----------------------------------------OLD CODE---------------------------------------------------#
+
 # from flask import Blueprint, render_template, request, jsonify
 # # from .utils import parse_input_text, generate_video_from_text , nlp
 # from .utils import nlp_pipeline , convert_gif_to_storytelling_video
@@ -64,15 +67,25 @@
 #         logger.error(f"An error occurred: {str(e)}")
 #         return jsonify({"error": "An internal error occurred"}), 500
 
-from flask import Blueprint, render_template, request, jsonify
-from .utils import nlp_pipeline, convert_gif_to_storytelling_video  # Ensure correct import
+#----------------------------------------OLD CODE---------------------------------------------------#
+
+
+
+from flask import Blueprint, render_template, request, jsonify 
+from .utils import nlp_pipeline, convert_gif_to_storytelling_video , create_animated_gif # Ensure correct import
 import logging
+import os
+import time
 
 main = Blueprint('main', __name__)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Define path for static folder to serve video
+STATIC_FOLDER = os.path.join(os.getcwd(), 'static', 'videos')
+
 
 @main.route("/")
 def index():
@@ -82,25 +95,40 @@ def index():
 def text_to_video():
     return render_template('text-to-video.html')
 
+
+
 @main.route("/generate_video", methods=["POST"])
 def generate_video():
     try:
         input_text = request.json.get("text", "")
         
         if not input_text:
-            logger.error("No text provided in the request")
             return jsonify({"error": "Text is missing"}), 400
 
-        gif_path = "animated_infographics.gif"
+        # Generate GIF
+        gif_path = create_animated_gif(input_text)
         
-        parsed_data = nlp_pipeline(input_text, '')
-        logger.info(f"Parsed Data: {parsed_data}")
-
+        # Generate video from GIF
         video_path = convert_gif_to_storytelling_video(gif_path, input_text)
-        logger.info(f"Generated video at: {video_path}")
 
-        return jsonify({"video_path": video_path})
+        # Ensure static folder exists
+        os.makedirs(STATIC_FOLDER, exist_ok=True)
+        
+        # Add a timestamp to the video filename to make it unique
+        timestamp = int(time.time())  # Generate a unique timestamp
+        video_filename = f"generated_video_{timestamp}.mp4"
+        final_video_path = os.path.join(STATIC_FOLDER, video_filename)
+
+        # Move the new video to the static folder
+        os.rename(video_path, final_video_path)
+
+        # Return the unique video path to the frontend
+        return jsonify({"video_path": f"/static/videos/{video_filename}"}), 200
 
     except Exception as e:
-        logger.error(f"Error: {str(e)}")
-        return jsonify({"error": "An internal error occurred"}), 500
+        logger.error(f"Error generating video: {e}")
+        return jsonify({"error": f"An internal error occurred: {str(e)}"}), 500
+
+
+# working code 
+
