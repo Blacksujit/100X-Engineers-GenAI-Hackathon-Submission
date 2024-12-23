@@ -13,7 +13,7 @@
 
 Dataviz AI is an AI powered web application that enables users to generate animated infographic videos based on input  Data , text,files. This MVP leverages the Pexels API for video content and incorporates advanced natural language processing (NLP) techniques, including LangChain and stable diffusion techniques, to analyze and create visual impact
 
-## Key Features
+## Key Features:
 
 1. **Text-to-Video Conversion**: Users can input text, and the application will generate a video based on the content of the text, making information more engaging and accessible.
    
