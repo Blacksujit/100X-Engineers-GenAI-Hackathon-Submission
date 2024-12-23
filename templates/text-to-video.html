@@ -4,162 +4,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text to Video</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css_1/styles.css') }}">
-    <style>
-        /* Include the same styles as in index.html or customize as needed */
-        body {
-            min-height: 100vh;
-            min-width: 1024px;
-            background-color: #111827;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4rem;
-            overflow-x: auto;
-            position: relative;
-        }
-        /* Additional styles for input and result box */
-        .input-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-        .input-box {
-            width: 300px;
-            padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        .result-box {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            overflow-x: auto;
-        }
-        .result-box video {
-            width: 100%;
-            height: auto;
-            margin-bottom: 1rem;
-        }
-        .result-box a {
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-        /* Gradio-like box styles */
-        .gradio-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            width: 100%;
-            max-width: 800px;
-            margin: auto;
-        }
-        .gradio-box .video-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-        .gradio-box .video-container video {
-            width: 100%;
-            height: auto;
-        }
-        .gradio-box .video-container a {
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-        }
-        /* Button styles */
-        button {
-            background-color: #007bff;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css_1/text_to_video.css') }}">
 </head>
+<style>
+    body {
+        min-height: 100vh;
+        min-width: 1024px;
+        background-color: #111827;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4rem;
+        overflow-x: auto;
+        position: relative;
+        color: white;
+    }
+    
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        max-width: 800px;
+    }
+    
+    .input-box {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 1rem;
+        min-height: 100px;
+        resize: vertical;
+    }
+    
+    .instruction-text {
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    button {
+        background: linear-gradient(to right, #22d3ee, #a855f7);
+        border: none;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: opacity 0.3s;
+    }
+    
+    button:hover {
+        opacity: 0.9;
+    }
+    
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .result-container {
+        width: 100%;
+        max-width: 800px;
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        display: none;
+    }
+    
+    .result-container.active {
+        display: block;
+    }
+    
+    .error-message {
+        color: #ef4444;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background: rgba(239, 68, 68, 0.1);
+        margin-top: 1rem;
+        text-align: center;
+    }
+    
+    .loading-spinner {
+        display: none;
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-left-color: #22d3ee;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    .loading-spinner.active {
+        display: block;
+    }
+    
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    video {
+        width: 100%;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+    }
+</style>
 <body>
     <h1>Text to Video Generation</h1>
+    
     <div class="input-container">
-        <input type="text" class="input-box" placeholder="Enter your text here..." id="textInput">
+        <p class="instruction-text">
+            Enter your data in the format: "Label1 value1, Label2 value2" or with percentages "Label1 %value1, Label2 %value2"<br>
+            Example: "Apple 42, Orange 58" or "iOS %65, Android %35"
+        </p>
+        
+        <textarea 
+            class="input-box" 
+            placeholder="Enter your data here..." 
+            id="textInput"
+        ></textarea>
+        
         <button id="generateButton">Generate Video</button>
-        <div class="gradio-box" id="resultBox">Result will appear here...</div>
+        
+        <div class="loading-spinner" id="loadingSpinner"></div>
+        
+        <div class="result-container" id="resultContainer">
+            <video controls id="resultVideo">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <div id="errorContainer"></div>
     </div>
-
+    <script src="{{ url_for('static', filename='js_1/text_to_video.js') }}"></script> 
     <script>
-        document.getElementById('generateButton').addEventListener('click', () => {
-            const inputText = document.getElementById('textInput').value;
-            fetch('/generate_video', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ text: inputText })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('resultBox').innerText = `Error: ${data.error}`;
-                } else {
-                    document.getElementById('resultBox').innerText = `Generated video for: ${inputText}`;
-                    data.video_urls.forEach((url, index) => {
-                        const videoContainer = document.createElement('div');
-                        videoContainer.classList.add('video-container');
-                        const video = document.createElement('video');
-                        video.src = url;
-                        video.autoplay = true;
-                        video.playsInline = true;
-                        video.controls = true;
-                        videoContainer.appendChild(video);
-                        const downloadLink = document.createElement('a');
-                        downloadLink.href = url;
-                        downloadLink.download = `video_${index + 1}.mp4`;
-                        downloadLink.innerText = `Download Video ${index + 1}`;
-                        videoContainer.appendChild(downloadLink);
-                        document.getElementById('resultBox').appendChild(videoContainer);
-                    });
-                }
-            })
-            .catch(error => {
-                document.getElementById('resultBox').innerText = `An error occurred: ${error}`;
-            });
+         
+const generateButton = document.getElementById('generateButton');
+const loadingSpinner = document.getElementById('loadingSpinner');
+const resultContainer = document.getElementById('resultContainer');
+const resultVideo = document.getElementById('resultVideo');
+const errorContainer = document.getElementById('errorContainer');
+const textInput = document.getElementById('textInput');
+
+generateButton.addEventListener('click', async () => {
+    const inputText = textInput.value.trim();
+    
+    if (!inputText) {
+        showError('Please enter some text');
+        return;
+    }
+
+    // Reset UI state
+    hideError();
+    showLoading();
+    resultContainer.classList.remove('active');
+    generateButton.disabled = true;
+
+    try {
+        const response = await fetch('/generate_video', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: inputText })
         });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to generate video');
+        }
+
+        // Display the video
+        resultVideo.src = data.video_path;
+        resultContainer.classList.add('active');
+        
+    } catch (error) {
+        showError(error.message || 'An error occurred while generating the video');
+    } finally {
+        hideLoading();
+        generateButton.disabled = false;
+    }
+});
+
+function showError(message) {
+    errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
+}
+
+function hideError() {
+    errorContainer.innerHTML = '';
+}
+
+function showLoading() {
+    loadingSpinner.classList.add('active');
+}
+
+function hideLoading() {
+    loadingSpinner.classList.remove('active');
+}
+ 
     </script>
 </body>
 </html>
