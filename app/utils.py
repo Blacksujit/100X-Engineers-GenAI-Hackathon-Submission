@@ -62,7 +62,7 @@ def nlp_pipeline(text, data):
     
     # Generate audio
     tts = gtts.gTTS(summary_text, lang='en')
-    tts.save('summary_audio.mp3')
+    tts.save('F:\\100x_enginners_hackathon_genai\\uploads\\audio_files\\summary_audio.mp3')
     
     return {
         'categories': categories,
@@ -156,7 +156,7 @@ def create_animated_gif(text):
     print("Creating GIF...")
     images = [Image.open(f) for f in frames]
     
-    gif_path = 'animated_infographic.gif'
+    gif_path = 'F:\\100x_enginners_hackathon_genai\\generated_images\\animated_infographic.gif'
     images[0].save(
         gif_path,
         save_all=True,
@@ -238,7 +238,7 @@ def create_animated_gif(text):
     print("Creating GIF...")
     images = [Image.open(f) for f in frames]
     
-    gif_path = 'animated_infographic.gif'
+    gif_path = 'F:\\100x_enginners_hackathon_genai\\generated_images\\animated_infographic.gif'
     images[0].save(
         gif_path,
         save_all=True,
@@ -420,11 +420,17 @@ def convert_gif_to_storytelling_video(gif_path, text):
 
 
 
+
 # # Create the animated GIF
 # gif_path = create_animated_gif('30% dogs use nokia and 90% use iphones')
 
 # # Convert to storytelling video
 # video_path = convert_gif_to_storytelling_video(gif_path, '30% dogs use nokia and 90% use iphones')
+
+
+
+
+# --------------------------------------OLD Code Pexels API Implementation  --------------------------------
 
 
 
@@ -542,3 +548,7 @@ def convert_gif_to_storytelling_video(gif_path, text):
 #         filepath = os.path.join(DIRECTORY_LOG_PEXEL, filename)
 #         with open(filepath, "w") as outfile:
 #             outfile.write(json.dumps(log_entry) + '\n')
+
+
+
+# --------------------------------------OLD Code Pexels API Implementation  --------------------------------

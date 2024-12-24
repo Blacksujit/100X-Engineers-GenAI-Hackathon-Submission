@@ -1,5 +1,5 @@
 
-#----------------------------------------OLD CODE---------------------------------------------------#
+#----------------------------------------OLD CODE Pexels API Endpoints ---------------------------------------------------#
 
 # from flask import Blueprint, render_template, request, jsonify
 # # from .utils import parse_input_text, generate_video_from_text , nlp
@@ -71,11 +71,17 @@
 
 
 
-from flask import Blueprint, render_template, request, jsonify 
+from flask import Blueprint, render_template, request, jsonify , send_file , send_from_directory
 from .utils import nlp_pipeline, convert_gif_to_storytelling_video , create_animated_gif # Ensure correct import
 import logging
 import os
 import time
+# from  .text_processing import nlp_pipeline
+# from  .gif_animation_creation import create_animated_gif
+# from  .data_storytelling_video_processing import convert_gif_to_storytelling_video
+from flask import Blueprint
+
+# video_processing = Blueprint('video_processing', __name__)
 
 main = Blueprint('main', __name__)
 
@@ -84,7 +90,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Define path for static folder to serve video
-STATIC_FOLDER = os.path.join(os.getcwd(), 'static', 'videos')
+UPLOADS_FOLDER = os.path.join(os.getcwd(), 'uploads', 'videos')
+# Define the base path for uploads
+UPLOADS_DIRECTORY = os.path.abspath("uploads/videos")
+
 
 
 @main.route("/")
@@ -96,39 +105,39 @@ def text_to_video():
     return render_template('text-to-video.html')
 
 
+@main.route('/uploads/videos/<filename>', methods=['GET'])
+def serve_video(filename):
+    # Serve the video file dynamically
+    return send_from_directory(UPLOADS_DIRECTORY, filename, as_attachment=False)
 
 @main.route("/generate_video", methods=["POST"])
 def generate_video():
     try:
         input_text = request.json.get("text", "")
-        
         if not input_text:
             return jsonify({"error": "Text is missing"}), 400
 
-        # Generate GIF
+        # Create GIF and convert it to a video
         gif_path = create_animated_gif(input_text)
-        
-        # Generate video from GIF
         video_path = convert_gif_to_storytelling_video(gif_path, input_text)
 
-        # Ensure static folder exists
-        os.makedirs(STATIC_FOLDER, exist_ok=True)
-        
-        # Add a timestamp to the video filename to make it unique
-        timestamp = int(time.time())  # Generate a unique timestamp
-        video_filename = f"generated_video_{timestamp}.mp4"
-        final_video_path = os.path.join(STATIC_FOLDER, video_filename)
+        # Ensure the uploads/videos directory exists
+        os.makedirs(UPLOADS_FOLDER, exist_ok=True)
 
-        # Move the new video to the static folder
+        # Save the generated video with a timestamped filename
+        timestamp = int(time.time())
+        video_filename = f"generated_video_{timestamp}.mp4"
+        final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
         os.rename(video_path, final_video_path)
 
-        # Return the unique video path to the frontend
-        return jsonify({"video_path": f"/static/videos/{video_filename}"}), 200
+        logger.info(f"Generated video path: {final_video_path}")
+
+        # Return the correct video path for the frontend
+        return jsonify({"video_path": f"/uploads/videos/{video_filename}"}), 200
 
     except Exception as e:
         logger.error(f"Error generating video: {e}")
         return jsonify({"error": f"An internal error occurred: {str(e)}"}), 500
-
 
 # working code 
 
