@@ -1,225 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text to Video</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css_1/text_to_video.css') }}">
-</head>
-<style>
-    body {
-        min-height: 100vh;
-        min-width: 1024px;
-        background-color: #111827;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4rem;
-        overflow-x: auto;
-        position: relative;
-        color: white;
-    }
-    
-    .input-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        width: 100%;
-        max-width: 800px;
-    }
-    
-    .input-box {
-        width: 100%;
-        padding: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 0.5rem;
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        font-size: 1rem;
-        min-height: 100px;
-        resize: vertical;
-    }
-    
-    .instruction-text {
-        color: rgba(255, 255, 255, 0.7);
-        text-align: center;
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
-    }
-    
-    button {
-        background: linear-gradient(to right, #22d3ee, #a855f7);
-        border: none;
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: opacity 0.3s;
-    }
-    
-    button:hover {
-        opacity: 0.9;
-    }
-    
-    button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-    
-    .result-container {
-        width: 100%;
-        max-width: 800px;
-        padding: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 0.5rem;
-        background: rgba(255, 255, 255, 0.1);
-        display: none;
-    }
-    
-    .result-container.active {
-        display: block;
-    }
-    
-    .error-message {
-        color: #ef4444;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        background: rgba(239, 68, 68, 0.1);
-        margin-top: 1rem;
-        text-align: center;
-    }
-    
-    .loading-spinner {
-        display: none;
-        width: 40px;
-        height: 40px;
-        border: 4px solid rgba(255, 255, 255, 0.1);
-        border-left-color: #22d3ee;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-    
-    .loading-spinner.active {
-        display: block;
-    }
-    
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111827;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
         }
-    }
 
-    video {
-        width: 100%;
-        border-radius: 0.5rem;
-        margin-top: 1rem;
-        max-width: 800px; /* Ensures the video doesn't stretch too much */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Adds a shadow for better visibility */
-    }
-    
+        .dark-mode {
+            background-color: #111827;
+            color: white;
+        }
 
-</style>
-<body>
-    <h1>Text to Video Generation</h1>
+        .light-mode {
+            background-color: #f7f7f7;
+            color: #111827;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #22d3ee;
+        }
+
+        .cta-btn {
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #22d3ee;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        button {
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            animation: gasp 1.5s ease infinite;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @keyframes gasp {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.1);
+            }
+
+            50% {
+                transform: scale(0.95);
+            }
+
+            75% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ef4444;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            animation: slideUp 0.5s forwards;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            0% {
+                bottom: -60px;
+            }
+
+            100% {
+                bottom: 20px;
+            }
+        }
+
+        .result-container {
+            width: 100%;
+            max-width: 800px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .result-container.active {
+            display: block;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .download-btn {
+            background-color: #4caf50;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            color: white;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">Transform Your Data into Stunning Infographics Videos!</h1>
+        <h2 class="hero-title">Data Story Telling Begins Here........!</h1>
+        <p class="text-lg text-gray-400">Enter your data, and we'll generate a beautiful video for you.</p>
+    </section>
     
     <div class="input-container">
-        <p class="instruction-text">
-            Enter your data in the format: "Label1 value1, Label2 value2" or with percentages "Label1 %value1, Label2 %value2"<br>
-            Example: "Apple 42, Orange 58" or "iOS %65, Android %35"
-        </p>
-        
-        <textarea 
-            class="input-box" 
-            placeholder="Enter your data here..." 
-            id="textInput"
-        ></textarea>
-        
+             <!-- Instruction Text for User -->
+             <p class="instruction-text">
+                Enter your data in the format: (Below)
+                <br>
+                Example: "20% users use iphone and 30% users use samsung"</p>
+            </p>
+            
+        <textarea class="input-box" placeholder="Example: 'Create a 30-second video about the 20% users use iphone and 30% users use samsung" id="textInput"></textarea>
         <button id="generateButton">Generate Video</button>
-        
-        <div class="loading-spinner" id="loadingSpinner"></div>
-        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
         <div class="result-container" id="resultContainer">
             <video controls id="resultVideo">
                 Your browser does not support the video tag.
             </video>
+            <button class="download-btn" id="downloadBtn">Download Video</button>
         </div>
-        
-        <div id="errorContainer"></div>
     </div>
-    <script src="{{ url_for('static', filename='js_1/text_to_video.js') }}"></script> 
+
+    <!-- Notifications -->
+    <div id="errorContainer" class="notification"></div>
+
+    <script src="{{ url_for('static', filename='js_1/text_to_video.js') }}"></script>
     <script>
-         
-const generateButton = document.getElementById('generateButton');
-const loadingSpinner = document.getElementById('loadingSpinner');
-const resultContainer = document.getElementById('resultContainer');
-const resultVideo = document.getElementById('resultVideo');
-const errorContainer = document.getElementById('errorContainer');
-const textInput = document.getElementById('textInput');
+        const generateButton = document.getElementById('generateButton');
+        const progressBar = document.getElementById('progress');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultVideo = document.getElementById('resultVideo');
+        const errorContainer = document.getElementById('errorContainer');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const textInput = document.getElementById('textInput');
+        const progressBarContainer = document.querySelector('.progress-bar');
 
-generateButton.addEventListener('click', async () => {
-    const inputText = textInput.value.trim();
-    
-    if (!inputText) {
-        showError('Please enter some text');
-        return;
-    }
+        generateButton.addEventListener('click', async () => {
+            const inputText = textInput.value.trim();
+            if (!inputText) {
+                showNotification('Please enter some text');
+                return;
+            }
 
-    // Reset UI state
-    hideError();
-    showLoading();
-    resultContainer.classList.remove('active');
-    generateButton.disabled = true;
+            progressBarContainer.style.display = 'block';
+            showLoading();
+            resultContainer.classList.remove('active');
+            generateButton.disabled = true;
 
-    try {
-        const response = await fetch('/generate_video', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ text: inputText })
+            try {
+                const response = await fetch('/generate_video', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: inputText })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to generate video');
+                }
+
+                resultVideo.src = data.video_path + `?t=${new Date().getTime()}`;
+                resultVideo.style.display = 'block';
+                resultContainer.classList.add('active');
+                downloadBtn.addEventListener('click', () => {
+                    const link = document.createElement('a');
+                    link.href = data.video_path;
+                    link.download = 'video.mp4';
+                    link.click();
+                });
+
+            } catch (error) {
+                showNotification(error.message || 'An error occurred while generating the video');
+            } finally {
+                hideLoading();
+                generateButton.disabled = false;
+            }
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Failed to generate video');
+        function showNotification(message) {
+            errorContainer.innerText = message;
+            errorContainer.classList.add('show');
+            setTimeout(() => {
+                errorContainer.classList.remove('show');
+            }, 3000);
         }
 
-        console.log('Video Path:', data.video_path); // Log the video path
+        function showLoading() {
+            progressBar.style.width = '50%';
+        }
 
-        // Set the video source and display the video
-        resultVideo.src = data.video_path + `?t=${new Date().getTime()}`; // Add cache-busting query string
-        resultVideo.style.display = 'block';  // Ensure the video element is visible
-        resultContainer.classList.add('active'); // Make result container visible
-
-    } catch (error) {
-        showError(error.message || 'An error occurred while generating the video');
-    } finally {
-        hideLoading();
-        generateButton.disabled = false;
-    }
-});
-
-function showError(message) {
-    errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
-}
-
-function hideError() {
-    errorContainer.innerHTML = '';
-}
-
-function showLoading() {
-    loadingSpinner.classList.add('active');
-}
-
-function hideLoading() {
-    loadingSpinner.classList.remove('active');
-}
- 
+        function hideLoading() {
+            progressBar.style.width = '100%';
+            setTimeout(() => {
+                progressBarContainer.style.display = 'none';
+            }, 500);
+        }
     </script>
 </body>
+
 </html>

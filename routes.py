@@ -37,47 +37,57 @@
 # -------------------------------------OLD CODE-----------------------------------------------------------------------
 
 
-from flask import Blueprint, render_template, request, jsonify
-from utils import nlp_pipeline, convert_gif_to_storytelling_video
-import logging
-from flask import Flask, request, jsonify
-import os
-import pandas as pd
-from gtts import gTTS
-from transformers import pipeline
-import matplotlib.pyplot as plt
-from moviepy.editor import ImageSequenceClip
+# from flask import Blueprint, render_template, request, jsonify
+# from utils import nlp_pipeline, convert_gif_to_storytelling_video
+# import logging
+# from flask import Flask, request, jsonify
+# import os
+# import pandas as pd
+# from gtts import gTTS
+# from transformers import pipeline
+# import matplotlib.pyplot as plt
+# from moviepy.editor import ImageSequenceClip
 
 
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
-main = Blueprint('main', __name__)
 
-@main.route("/")
-def index():
-    return render_template('index.html')
 
-@main.route("/generate_video", methods=["POST"])
-def generate_video():
-    try:
-        input_text = request.json.get("text", "")
-        if not input_text:
-            return jsonify({"error": "No text provided"}), 400
+# --------------------------------------------------------OLD Endpoints --------------------------------------------------------
 
-        # Process the input and generate videos
-        parsed_data = nlp_pipeline(input_text, '')
-        logger.info(f"Parsed input: {parsed_data}")
 
-        video_path = convert_gif_to_storytelling_video(parsed_data)
-        return jsonify({"video_path": video_path})
-    except ValueError as ve:
-        logger.error(f"Invalid input: {str(ve)}")
-        return jsonify({"error": "Invalid input"}), 400
-    except Exception as e:
-        logger.error(f"An error occurred: {str(e)}")
-        return jsonify({"error": "An internal error occurred"}), 500
+# logging.basicConfig(level=logging.INFO)
+# logger = logging.getLogger(__name__)
+
+# main = Blueprint('main', __name__)
+
+# @main.route("/")
+# def index():
+#     return render_template('index.html')
+
+# @main.route("/generate_video", methods=["POST"])
+# def generate_video():
+#     try:
+#         input_text = request.json.get("text", "")
+#         if not input_text:
+#             return jsonify({"error": "No text provided"}), 400
+
+#         # Process the input and generate videos
+#         parsed_data = nlp_pipeline(input_text, '')
+#         logger.info(f"Parsed input: {parsed_data}")
+
+#         video_path = convert_gif_to_storytelling_video(parsed_data)
+#         return jsonify({"video_path": video_path})
+#     except ValueError as ve:
+#         logger.error(f"Invalid input: {str(ve)}")
+#         return jsonify({"error": "Invalid input"}), 400
+#     except Exception as e:
+#         logger.error(f"An error occurred: {str(e)}")
+#         return jsonify({"error": "An internal error occurred"}), 500
+
+
+# --------------------------------------------------------OLD Endpoints the code not in use  --------------------------------------------------------
+
 
 
 # # Flask endpoint to handle text summarization and audio generation
