@@ -24,7 +24,7 @@ Dataviz AI is an AI powered web application that enables users to generate anima
 4. **Logging**: The application logs responses from the Pexels API and OpenAI (if integrated) for debugging and analytics purposes, allowing for continuous improvement and monitoring of the application’s performance.
 
 
-## Impact of the Product
+## Impact of the Product:
 
 The Dataviz AI is an AI powered web application  has the potential to significantly impact various sectors, including education, marketing, and content creation. By transforming textual information into engaging video content, it enhances the way information is consumed and understood. Here are some key impacts:
 
