@@ -163,7 +163,7 @@ def generate_video():
 # working code 
 
 
-# Seond Test Pass --- Working code routes 
+# Second Test Pass --- Working code routes 
 
 # ------------------------------------backup route if the code gets lost ------------------------------
 
