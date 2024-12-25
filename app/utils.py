@@ -94,8 +94,6 @@ def generate_infographics_from_prompt_and_csv(prompt, csv_file):
     
     
     
-    
-    
 def create_animated_gif(text):
     import os
     from PIL import Image
