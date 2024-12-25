@@ -1106,4 +1106,4 @@ def create_scenario_based_infographic_video():
 # create_scenario_based_infographic_video()
 # print("Infographic video created successfully!")
 
-#--------------------------------------------------  This user input will given on frontend used while developing the model --------------------------------------------------------------------------
+#--------------------------------------------------  This user input will given on frontend used while developing the model -------------------------------------------------------------------------
