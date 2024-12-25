@@ -413,9 +413,9 @@ def add_auto_generated_audio_to_video(video_path, audio_file_path, output_video_
     
     
     # Main Function to Create Infographic Video with Auto-Generated Narration and Audio
-def create_infographic_video():
+def create_infographic_video(text_input):
     # Prompt the user for data input
-    user_input = input("Enter the market share data (e.g., 'in the phone industry 20% sales are of the iPhone and 30% sales are of the Samsung'): ")
+    user_input =  nlp_pipeline(text_input, "")
     data = parse_user_input(user_input)
 
     if not data["Category"] or not data["Percentage"]:
@@ -1068,7 +1068,8 @@ def determine_scenario(user_input):
 # Main Function to Create Scenario-Based Infographic Video
 def create_scenario_based_infographic_video(input_text):
     # Prompt the user for data input
-    user_input = input_text
+    user_input = nlp_pipeline(input_text,'')
+    # summary = nlp_pipeline(text, '')
     scenario = determine_scenario(user_input)
     data = parse_user_input(user_input)
 
