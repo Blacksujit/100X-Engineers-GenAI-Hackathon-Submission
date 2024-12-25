@@ -195,42 +195,56 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <h1 class="hero-title">Transform Your Data into Stunning Infographics Videos!</h1>
-        <h2 class="hero-title">Data Story Telling Begins Here........!</h1>
+        <h2 class="hero-title">Data Story Telling Begins Here........!</h2>
         <p class="text-lg text-gray-400">Enter your data, and we'll generate a beautiful video for you.</p>
     </section>
-    
+
     <div class="input-container">
-             <!-- Instruction Text for User -->
-             <p class="instruction-text">
-                Enter your data in the format: (Below)
-                <br>
-                Example: "20% users use iphone and 30% users use samsung"</p>
-            </p>
-            
-        <textarea class="input-box" placeholder="Example: 'Create a 30-second video about the 20% users use iphone and 30% users use samsung" id="textInput"></textarea>
+        <!-- Instruction Text for User -->
+        <p class="instruction-text">
+            Enter your data in the format: (Below)
+            <br>
+            Example: "20% users use iPhone and 30% users use Samsung"
+        </p>
+
+        <textarea class="input-box" placeholder="Example: 'Create a 30-second video about the 20% users use iPhone and 30% users use Samsung" id="textInput"></textarea>
         <button id="generateButton">Generate Video</button>
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
-        <div class="result-container" id="resultContainer">
-            <video controls id="resultVideo">
+
+        <!-- First Video Result -->
+        <div class="result-container" id="firstResultContainer">
+            <h3>Video 1</h3>
+            <video controls id="firstResultVideo">
                 Your browser does not support the video tag.
             </video>
-            <button class="download-btn" id="downloadBtn">Download Video</button>
+            <button class="download-btn" id="firstDownloadBtn">Download Video 1</button>
+        </div>
+
+        <!-- Second Video Result -->
+        <div class="result-container" id="secondResultContainer">
+            <h3>Video 2</h3>
+            <video controls id="secondResultVideo">
+                Your browser does not support the video tag.
+            </video>
+            <button class="download-btn" id="secondDownloadBtn">Download Video 2</button>
         </div>
     </div>
 
     <!-- Notifications -->
     <div id="errorContainer" class="notification"></div>
 
-    <script src="{{ url_for('static', filename='js_1/text_to_video.js') }}"></script>
     <script>
         const generateButton = document.getElementById('generateButton');
         const progressBar = document.getElementById('progress');
-        const resultContainer = document.getElementById('resultContainer');
-        const resultVideo = document.getElementById('resultVideo');
+        const firstResultContainer = document.getElementById('firstResultContainer');
+        const secondResultContainer = document.getElementById('secondResultContainer');
+        const firstResultVideo = document.getElementById('firstResultVideo');
+        const secondResultVideo = document.getElementById('secondResultVideo');
         const errorContainer = document.getElementById('errorContainer');
-        const downloadBtn = document.getElementById('downloadBtn');
+        const firstDownloadBtn = document.getElementById('firstDownloadBtn');
+        const secondDownloadBtn = document.getElementById('secondDownloadBtn');
         const textInput = document.getElementById('textInput');
         const progressBarContainer = document.querySelector('.progress-bar');
 
@@ -243,7 +257,8 @@
 
             progressBarContainer.style.display = 'block';
             showLoading();
-            resultContainer.classList.remove('active');
+            firstResultContainer.classList.remove('active');
+            secondResultContainer.classList.remove('active');
             generateButton.disabled = true;
 
             try {
@@ -261,13 +276,23 @@
                     throw new Error(data.error || 'Failed to generate video');
                 }
 
-                resultVideo.src = data.video_path + `?t=${new Date().getTime()}`;
-                resultVideo.style.display = 'block';
-                resultContainer.classList.add('active');
-                downloadBtn.addEventListener('click', () => {
+                // Display First Video
+                firstResultVideo.src = data.first_video_path + `?t=${new Date().getTime()}`;
+                firstResultContainer.classList.add('active');
+                firstDownloadBtn.addEventListener('click', () => {
                     const link = document.createElement('a');
-                    link.href = data.video_path;
-                    link.download = 'video.mp4';
+                    link.href = data.first_video_path;
+                    link.download = 'video_1.mp4';
+                    link.click();
+                });
+
+                // Display Second Video
+                secondResultVideo.src = data.second_video_path + `?t=${new Date().getTime()}`;
+                secondResultContainer.classList.add('active');
+                secondDownloadBtn.addEventListener('click', () => {
+                    const link = document.createElement('a');
+                    link.href = data.second_video_path;
+                    link.download = 'video_2.mp4';
                     link.click();
                 });
 

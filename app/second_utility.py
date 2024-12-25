@@ -98,7 +98,7 @@ def generate_infographics_from_prompt_and_csv(prompt, csv_file):
     # Create a video from the images using moviepy
     from moviepy.editor import ImageSequenceClip
     clip = ImageSequenceClip(images, fps=1)
-    clip.write_videofile('infographics_video.mp4')
+    clip.write_videofile('F:\\100x_enginners_hackathon_genai\\uploads\\videos')
     
     
     
@@ -165,7 +165,7 @@ def create_animated_gif(text):
     print("Creating GIF...")
     images = [Image.open(f) for f in frames]
 
-    gif_path = 'generated_images_animated_infographic.gif'
+    gif_path = 'F:\\100x_enginners_hackathon_genai\\generated_images\\data_visualization.gif'
     images[0].save(
         gif_path,
         save_all=True,
@@ -329,7 +329,7 @@ def convert_gif_to_storytelling_video(gif_path, text):
              for frame in frames]
 
     # Save as MP4
-    output_path = 'data_storytelling_video.mp4'
+    output_path = 'F:\\100x_enginners_hackathon_genai\\uploads\\videos'
 
     print("Writing video...")
     writer = imageio.get_writer(output_path, fps=fps)
@@ -344,12 +344,12 @@ def convert_gif_to_storytelling_video(gif_path, text):
 # Step 1: Generate Background using Stable Diffusion (Placeholder)
 def generate_background():
     # For now, we'll use a placeholder image. Replace with actual call to Stable Diffusion.
-    background_image = "background.png"  # Replace this with the actual image generation logic
+    background_image = "F:\\100x_enginners_hackathon_genai\\generated_images\\bar_chart.png"  # Replace this with the actual image generation logic
     return background_image
 
 
 # Step 2: Generate Animated Pie Chart using Matplotlib and MoviePy
-def create_animated_pie_chart(data, output_video_path="animated_pie_chart.mp4"):
+def create_animated_pie_chart(data, output_video_path="F:\\100x_enginners_hackathon_genai\\uploads\\videos"):
     if not data["Category"] or not data["Percentage"]:
         print("No data to create the pie chart.")
         return
@@ -395,7 +395,7 @@ def generate_narration(data):
 
 
 # Step 4: Generate Audio from Narration Text using gTTS (Google Text-to-Speech)
-def generate_audio_from_text(narration_text, audio_file_path="narration.mp3"):
+def generate_audio_from_text(narration_text, audio_file_path="F:\\100x_enginners_hackathon_genai\\uploads\\audio_files"):
     tts = gtts.gTTS(narration_text)
     tts.save(audio_file_path)
     
@@ -426,7 +426,7 @@ def create_infographic_video():
     background_image = generate_background()
 
     # Step 2: Generate Animated Pie Chart with Data
-    pie_chart_video = "animated_pie_chart.mp4"
+    pie_chart_video = "F:\\100x_enginners_hackathon_genai\\uploads\\videos"
     create_animated_pie_chart(data, pie_chart_video)
 
     # Step 3: Generate Narration from Data
@@ -434,11 +434,11 @@ def create_infographic_video():
     print(f"Generated Narration: {narration_text}")
 
     # Step 4: Generate Audio from Narration Text
-    generate_audio_from_text(narration_text, audio_file_path="narration.mp3")
+    generate_audio_from_text(narration_text, audio_file_path="F:\\100x_enginners_hackathon_genai\\uploads\\audio_files")
 
     # Step 5: Add Narration Audio to Video
     final_video = "final_infographic_video.mp4"
-    add_auto_generated_audio_to_video(pie_chart_video, audio_file_path="narration.mp3", output_video_path=final_video)
+    add_auto_generated_audio_to_video(pie_chart_video, audio_file_path="F:\\100x_enginners_hackathon_genai\\uploads\\audio_files", output_video_path=final_video)
 
     print("Infographic video created successfully!")
     
@@ -1066,9 +1066,9 @@ def determine_scenario(user_input):
 
 
 # Main Function to Create Scenario-Based Infographic Video
-def create_scenario_based_infographic_video():
+def create_scenario_based_infographic_video(input_text):
     # Prompt the user for data input
-    user_input = input("Enter the market share data (e.g., 'in the phone industry 20% sales are of the iPhone and 30% sales are of the Samsung'): ")
+    user_input = input_text
     scenario = determine_scenario(user_input)
     data = parse_user_input(user_input)
 
@@ -1080,7 +1080,7 @@ def create_scenario_based_infographic_video():
     background_image = generate_background()
 
     # Step 2: Generate Animated Pie Chart with Data
-    pie_chart_video = "animated_pie_chart.mp4"
+    pie_chart_video = "F:\\100x_enginners_hackathon_genai\\uploads\\videos"
     create_animated_pie_chart(data, pie_chart_video)
 
     # Step 3: Generate Narration from Data
@@ -1091,10 +1091,11 @@ def create_scenario_based_infographic_video():
     generate_audio_from_text(narration_text, audio_file_path="narration.mp3")
 
     # Step 5: Add Narration Audio to Video
-    final_video = "final_infographic_video.mp4"
-    add_auto_generated_audio_to_video(pie_chart_video, audio_file_path="narration.mp3", output_video_path=final_video)
+    final_video = "F:\\100x_enginners_hackathon_genai\\uploads\\videos"
+    add_auto_generated_audio_to_video(pie_chart_video, audio_file_path="F:\\100x_enginners_hackathon_genai\\uploads\\audio_files", output_video_path=final_video)
 
     print("Infographic video created successfully!")
+    return final_video
     
     
     
