@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Video</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/text_to_video.css') }}">
+</head> 
+
+<body class="dark-mode">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">Transform Your Data into Stunning Infographics Videos!</h1>
+        <h2 class="hero-title">Data Story Telling Begins Here........!</h2> <!-- Corrected closing tag -->
+        <p class="text-lg text-gray-400">Enter your data, and we'll generate a beautiful Data Storytelling video for you.</p>
+    </section>
+    
+    <div class="input-container">
+        <!-- Instruction Text for User -->
+        <p class="instruction-text">
+            Enter your data in the format: (Below)
+            <br>
+            Example: "20% users use iphone and 30% users use samsung"
+        </p>
+        
+        <textarea class="input-box" placeholder="Example: 'Create a 30-second video about the 20% users use iphone and 30% users use samsung" id="textInput"></textarea>
+        <button id="generateButton">Generate Video</button>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="result-container" id="resultContainer">
+            <video controls id="resultVideo">
+                Your browser does not support the video tag.
+            </video>
+            <button class="download-btn" id="downloadBtn">Download Video</button>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="errorContainer" class="notification"></div>
+
+</body>
+<script src="{{ url_for('static', filename='js/text_to_video.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/templatemo-script.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/slick.js') }}"></script> 
+</html>

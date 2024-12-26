@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataViz AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.scss') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index_page.css') }}">
+</head>
+
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="site-title">
+       <a href="/"> <h1 class="title">DataViz AI</h1></a>
+        <p class="subtitle">Dynamic Infographic Generator</p>
+        <div class="title-glow"></div>
+    </div>
+
+    <div class="cards-container">
+        <div class="card" data-id="1">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <h3 class="card-title">Text Input</h3>
+                <p class="card-description">Enter your data as text</p>
+            </div>
+            <div class="card-overlay">
+                <div class="card-overlay-content">
+                    <p>Click to begin processing your data...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" data-id="2">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                </svg>
+                <h3 class="card-title">Custom Input</h3>
+                <p class="card-description">Data Format:- text:data </p>
+            </div>
+            <div class="card-overlay">
+                <div class="card-overlay-content">
+                    <p>Click to begin processing your data...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" data-id="3">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <h3 class="card-title">CSV Input</h3>
+                <p class="card-description">Upload CSV file</p>
+            </div>
+            <div class="card-overlay">
+                <div class="card-overlay-content">
+                    <p>Click to begin processing your data...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-section">
+        <div class="video-container">
+            <div class="video-placeholder">
+                <div class="play-button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    <div class="play-button-ping">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity: 0.3">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="video-overlay"></div>
+            <div class="video-text">
+                <h3 class="video-title">Watch Tutorial</h3>
+                <p class="video-description">Learn how to create stunning infographics in minutes</p>
+            </div>
+        </div>
+    </div>
+ 
+</body>
+<script src="{{ url_for('static', filename='js/index_page.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/templatemo-script.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/slick.js') }}"></script> 
+</html>

@@ -1,0 +1,39 @@
+flowchart TD
+    subgraph Input Layer
+        A1[Insurance Documents] --> B
+        A2[Claims Data] --> B
+        A3[Customer Details] --> B
+    end
+
+    B[Data Processing Layer] --> C
+
+    subgraph AI Analysis Engine
+        C[Feature Extraction] --> D1
+        C --> D2
+        C --> D3
+        D1[Document Authenticity Check]
+        D2[Pattern Analysis]
+        D3[Network Analysis]
+    end
+
+    D1 & D2 & D3 --> E[Risk Score Calculator]
+    
+    E --> F[Alert Dashboard]
+    
+    subgraph Output
+        F --> G1[High Risk]
+        F --> G2[Medium Risk]
+        F --> G3[Low Risk]
+    end
+
+    style A1 fill:#e1f5fe
+    style A2 fill:#e1f5fe
+    style A3 fill:#e1f5fe
+    
+    style D1 fill:#fff3e0
+    style D2 fill:#fff3e0
+    style D3 fill:#fff3e0
+    
+    style G1 fill:#ffcdd2
+    style G2 fill:#fff9c4
+    style G3 fill:#c8e6c9
