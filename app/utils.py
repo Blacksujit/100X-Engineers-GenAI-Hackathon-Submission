@@ -29,16 +29,8 @@ import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, AutoModelForTokenClassification
 import gtts  # For text-to-speech audio generation
 # from langchain_community import LangChain  # For implementing langchain and other NLP tasks
-<<<<<<< HEAD
-
-os.environ['HF_HOME'] = "D:\\__MACOSX"  # Change this to your desired cache path
-
-
-def nlp_pipeline(text, data):
-    # Use T5 for summarization
-    summary_model = AutoModelForSeq2SeqLM.from_pretrained('t5-base')
-    summary_tokenizer = AutoTokenizer.from_pretrained('t5-base')
-=======
+ 
+ 
 import os
 import pickle
 import gtts
@@ -67,8 +59,7 @@ def nlp_pipeline(text, data):
     # summary_model = AutoModelForSeq2SeqLM.from_pretrained('t5-base')
     # summary_tokenizer = AutoTokenizer.from_pretrained('t5-base')
     # no need to load the model now if you nedd yu can in case we are using the pkl saved models 
->>>>>>> 795a1e6 ( Errors are there in csv to video moddule will do tommorow ✅)
-    
+ 
     # Prepare input
     input_text = f"summarize: {text} {data}"
     inputs = summary_tokenizer.encode(input_text, return_tensors='pt', max_length=512, truncation=True)
