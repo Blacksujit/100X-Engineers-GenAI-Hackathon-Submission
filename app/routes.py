@@ -1,4 +1,3 @@
-
 #----------------------------------------OLD CODE Pexels API Endpoints ---------------------------------------------------#
 
 # from flask import Blueprint, render_template, request, jsonify
@@ -75,6 +74,7 @@ from flask import Blueprint, render_template, request, jsonify , send_file , sen
 from .utils import nlp_pipeline, convert_gif_to_storytelling_video , create_animated_gif # Ensure correct import
 import logging
 import os
+import shutil
 import time
 from .second_utility import create_scenario_based_infographic_video , create_animated_pie_chart , parse_user_input , generate_audio_from_text, generate_narration, add_auto_generated_audio_to_video
 # from  .text_processing import nlp_pipeline
@@ -160,7 +160,16 @@ def generate_video():
         timestamp = int(time.time())
         video_filename = f"generated_video_{timestamp}.mp4"
         final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
-        os.rename(video_path, final_video_path)
+
+        # Ensure the final video path is unique
+        counter = 1
+        while os.path.exists(final_video_path):
+            video_filename = f"generated_video_{timestamp}_{counter}.mp4"
+            final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
+            counter += 1
+
+        shutil.move(video_path, final_video_path)
+        print('the video path is saved as:', final_video_path)
 
         return jsonify({"video_path": f"/uploads/videos/{video_filename}"}), 200
 
@@ -361,28 +370,19 @@ def generate_video():
 #         timestamp = int(time.time())
 #         video_filename = f"generated_video_{timestamp}.mp4"
 #         final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
+
+#         # Ensure the final video path is unique
+#         counter = 1
+#         while os.path.exists(final_video_path):
+#             video_filename = f"generated_video_{timestamp}_{counter}.mp4"
+#             final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
+#             counter += 1
+
 #         os.rename(video_path, final_video_path)
+#         shutil.move(final_video_path, UPLOADS_FOLDER)
 
-#         # Step 6: Generate the second video using the new function
-#         try:
-#             second_video_path = create_scenario_based_infographic_video(input_text)
-#             logger.debug(f"Generated second video path: {second_video_path}")
-#         except Exception as e:
-#             logger.error(f"Error generating second video: {e}")
-#             return jsonify({"error": "Failed to generate second video"}), 500
-
-#         # Step 7: Save the second video and respond with the file path
-#         second_video_filename = f"second_video_{timestamp}.mp4"
-#         final_second_video_path = os.path.join(UPLOADS_FOLDER, second_video_filename)
-#         os.rename(second_video_path, final_second_video_path)
-
-#         return jsonify({
-#             "first_video_path": f"/uploads/videos/{video_filename}",
-#             "second_video_path": f"/uploads/videos/{second_video_filename}"
-#         }), 200
+#         return jsonify({"video_path": f"/uploads/videos/{video_filename}"}), 200
 
 #     except Exception as e:
 #         logger.error(f"Unexpected error: {e}")
 #         return jsonify({"error": "An unexpected error occurred"}), 500
-
-# second test route testing ---------------------------failed this fcuntionality route dont use it 
