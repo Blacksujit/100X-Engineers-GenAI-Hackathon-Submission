@@ -1,4 +1,4 @@
-from flask import Flask
+flask import Flask
 from flask_caching import Cache
 from flask import url_for
 from flask_cors import CORS
