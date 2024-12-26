@@ -30,6 +30,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, AutoModelForToken
 import gtts  # For text-to-speech audio generation
 # from langchain_community import LangChain  # For implementing langchain and other NLP tasks
 
+os.environ['HF_HOME'] = "D:\\__MACOSX"  # Change this to your desired cache path
 
 
 def nlp_pipeline(text, data):
