@@ -29,15 +29,37 @@ import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, AutoModelForTokenClassification
 import gtts  # For text-to-speech audio generation
 # from langchain_community import LangChain  # For implementing langchain and other NLP tasks
+ 
+ 
+import os
+import pickle
+import gtts
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-os.environ['HF_HOME'] = "D:\\__MACOSX"  # Change this to your desired cache path
+# Set the HF_HOME environment variable to change the cache path
+os.environ['HF_HOME'] = "F:\\cache_folder"  # Change this to your desired cache path
+
+# Load the model and tokenizer from .pkl files
+models_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
+
+with open(os.path.join(models_dir, 'model.pkl'), 'rb') as model_file:
+    summary_model = pickle.load(model_file)
+
+with open(os.path.join(models_dir, 'tokenizer.pkl'), 'rb') as tokenizer_file:
+    summary_tokenizer = pickle.load(tokenizer_file)
+
+
+# OLD MODEL PATH NOT IN USE---------------------------------------------
+# os.environ['HF_HOME'] = "D:\\__MACOSX"  # Change this to your desired cache path
+# OLD MODEL PATH NOT IN USE---------------------------------------------
 
 
 def nlp_pipeline(text, data):
-    # Use T5 for summarization
-    summary_model = AutoModelForSeq2SeqLM.from_pretrained('t5-base')
-    summary_tokenizer = AutoTokenizer.from_pretrained('t5-base')
-    
+    # # Use T5 for summarization
+    # summary_model = AutoModelForSeq2SeqLM.from_pretrained('t5-base')
+    # summary_tokenizer = AutoTokenizer.from_pretrained('t5-base')
+    # no need to load the model now if you nedd yu can in case we are using the pkl saved models 
+ 
     # Prepare input
     input_text = f"summarize: {text} {data}"
     inputs = summary_tokenizer.encode(input_text, return_tensors='pt', max_length=512, truncation=True)
