@@ -2,7 +2,7 @@ from flask import Flask
 from flask_caching import Cache
 from flask import url_for
 from flask_cors import CORS
- 
+
 import os
 def create_app():
     app = Flask(__name__, template_folder='../templates', static_folder='../static')  # Specify the path to the templates and static folders
@@ -15,9 +15,9 @@ def create_app():
     # Initialize the cache
     cache = Cache(app)
     # Set the path for the models directory (outside the app directory)
- 
+
     with app.app_context():
         from .routes import main
         app.register_blueprint(main)
-
+    
     return app
