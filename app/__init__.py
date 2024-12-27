@@ -2,6 +2,7 @@ from flask import Flask
 from flask_caching import Cache
 from flask import url_for
 from flask_cors import CORS
+# done with the conflicts 
 
 import os
 def create_app():
