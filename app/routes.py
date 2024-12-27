@@ -96,7 +96,7 @@ UPLOADS_FOLDER = os.path.join(os.getcwd(), 'uploads', 'videos')
 # Define the base path for uploads
 UPLOADS_DIRECTORY = os.path.abspath("uploads/videos")
 
-UPLOADS_FOLDER = 'F:\\100x_enginners_hackathon_genai\\uploads\\videos'
+UPLOADS_FOLDER = 'D:\\1OOx-enginners-hackathon-submission-2\\uploads\\videos'
 
 ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov'}  # add more if needed
 

@@ -1,4 +1,4 @@
-flask import Flask
+from flask import Flask
 from flask_caching import Cache
 from flask import url_for
 from flask_cors import CORS
@@ -10,7 +10,7 @@ def create_app():
     # models_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
     CORS(app)
     app.config['CACHE_TYPE'] = 'filesystem'
-    app.config['CACHE_DIR'] = 'F:\\cache_folder'  # Change this to your desired cache path
+    app.config['CACHE_DIR'] = 'D:\\cahc_models_folder'  # Change this to your desired cache path
     app.config['CACHE_DEFAULT_TIMEOUT'] = 300
     # Initialize the cache
     cache = Cache(app)

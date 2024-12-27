@@ -46,14 +46,14 @@
 # from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 # # Set the TRANSFORMERS_CACHE environment variable
-# os.environ['TRANSFORMERS_CACHE'] = "F:\\cache_folder"
+# os.environ['HF_HOME'] = "D:\\cahc_models_folder"
 
 # # Verify the environment variable is set correctly
-# print("TRANSFORMERS_CACHE:", os.environ['TRANSFORMERS_CACHE'])
+# print("TRANSFORMERS_CACHE:", os.environ['HF_HOME'])
 
 # # Load the model and tokenizer with the cache_dir parameter
-# model = AutoModelForSeq2SeqLM.from_pretrained('t5-base', cache_dir=os.environ['TRANSFORMERS_CACHE'])
-# tokenizer = AutoTokenizer.from_pretrained('t5-base', cache_dir=os.environ['TRANSFORMERS_CACHE'])
+# model = AutoModelForSeq2SeqLM.from_pretrained('t5-base', cache_dir=os.environ['HF_HOME'])
+# tokenizer = AutoTokenizer.from_pretrained('t5-base', cache_dir=os.environ['HF_HOME'])
 
 # # Set the path for the models directory (outside the app directory)
 # models_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
