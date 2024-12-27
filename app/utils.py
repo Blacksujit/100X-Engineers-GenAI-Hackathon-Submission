@@ -37,7 +37,7 @@ import gtts
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 # Set the HF_HOME environment variable to change the cache path
-os.environ['HF_HOME'] = "F:\\cache_folder"  # Change this to your desired cache path
+os.environ['HF_HOME'] = "D:\\cahc_models_folder"  # Change this to your desired cache path
 
 # Load the model and tokenizer from .pkl files
 models_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
@@ -85,7 +85,7 @@ def nlp_pipeline(text, data):
     
     # Generate audio
     tts = gtts.gTTS(summary_text, lang='en')
-    tts.save('F:\\100x_enginners_hackathon_genai\\uploads\\audio_files\\summary_audio.mp3')
+    tts.save('D:\\1OOx-enginners-hackathon-submission-2\\uploads\\audio_files\\summary_audio.mp3')
     
     return {
         'categories': categories,
@@ -177,7 +177,7 @@ def create_animated_gif(text):
     print("Creating GIF...")
     images = [Image.open(f) for f in frames]
     
-    gif_path = 'F:\\100x_enginners_hackathon_genai\\generated_images\\animated_infographic.gif'
+    gif_path = 'D:\\1OOx-enginners-hackathon-submission-2\\generated_images\\animated_infographic.gif'
     images[0].save(
         gif_path,
         save_all=True,
@@ -259,7 +259,7 @@ def create_animated_gif(text):
     print("Creating GIF...")
     images = [Image.open(f) for f in frames]
     
-    gif_path = 'F:\\100x_enginners_hackathon_genai\\generated_images\\animated_infographic.gif'
+    gif_path = 'D:\\1OOx-enginners-hackathon-submission-2\\generated_images\\animated_infographic.gif'
     images[0].save(
         gif_path,
         save_all=True,
