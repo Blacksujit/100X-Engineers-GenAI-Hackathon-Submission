@@ -14,6 +14,7 @@ Functions:
 Exceptions:
     Any exception that occurs during the execution is caught and logged.
 """
+
 from app import create_app
 import os
 import logging
