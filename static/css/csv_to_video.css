@@ -1,0 +1,304 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,900");
+@import url("fontawesome-all.min.css");
+
+/*
+    Aerial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #111827;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode {
+    background-color: #111827;
+    color: white;
+}
+
+.light-mode {
+    background-color: #f7f7f7;
+    color: #111827;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.input-box {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 600;
+    color: #22d3ee;
+}
+
+.cta-btn {
+    background: linear-gradient(to right, #22d3ee, #a855f7);
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.cta-btn:hover {
+    opacity: 0.9;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 1rem;
+    display: none;
+}
+
+.progress {
+    height: 100%;
+    background-color: #22d3ee;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+button {
+    background: linear-gradient(to right, #22d3ee, #a855f7);
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    animation: gasp 1.5s ease infinite;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@keyframes gasp {
+    0% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    75% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.notification {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ef4444;
+    color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    animation: slideUp 0.5s forwards;
+}
+
+.notification.show {
+    display: block;
+}
+
+@keyframes slideUp {
+    0% {
+        bottom: -60px;
+    }
+
+    100% {
+        bottom: 20px;
+    }
+}
+
+.result-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    display: none;
+}
+
+.result-container.active {
+    display: block;
+}
+
+video {
+    width: 100%;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+}
+
+.download-btn {
+    background-color: #4caf50;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    color: white;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.download-btn:hover {
+    opacity: 0.8;
+}
+
+/* New file upload input design */
+/* New file upload input design */
+.file-upload-input {
+    display: none;
+}
+
+.file-upload-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem;
+    background-color: #1f2937;
+    border-radius: 0.5rem;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border: 2px dashed #22d3ee;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.file-upload-wrapper:hover {
+    background-color: #22d3ee;
+    border-color: #fff;
+}
+
+.file-upload-wrapper:active {
+    background-color: #0f172a;
+}
+
+/* Label text inside the file input wrapper */
+.file-upload-wrapper span {
+    font-size: 1rem;
+}
+
+.file-upload-input:focus + .file-upload-wrapper {
+    border-color: #22d3ee;
+}
+
+.file-upload-wrapper p {
+    font-size: 0.9rem;
+    color: #9ca3af;
+}
+
+/* Updated Table styles for CSV preview with scrollable window */
+.preview-container {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 2rem;
+    overflow-x: auto; /* Allows horizontal scrolling if needed */
+    overflow-y: auto; /* Allows vertical scrolling */
+    max-height: 400px; /* Limit the height of the preview */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.preview-table th, .preview-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.preview-table th {
+    background-color: #22d3ee;
+    color: white;
+}
+
+.preview-table td {
+    color: white;
+}
+
+.preview-table tr:hover {
+    background-color: rgba(34, 211, 238, 0.2);
+}
+
+/* Display of "No file selected" when no file is uploaded */
+.no-file-selected {
+    display: block; /* Show the message */
+    text-align: center;
+    color: #9ca3af;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.file-upload-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem;
+    background-color: #1f2937;
+    border-radius: 0.5rem;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border: 2px dashed #22d3ee;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Show "No file selected" when no file is uploaded */
+.file-upload-wrapper .no-file-selected {
+    display: block; /* Display the message when no file is uploaded */
+}
+
+.file-upload-wrapper .file-upload-input:focus + .file-upload-wrapper .no-file-selected {
+    display: none; /* Hide the message once a file is selected */
+}

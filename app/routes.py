@@ -70,19 +70,33 @@
 
 
 
-from flask import Blueprint, render_template, request, jsonify , send_file , send_from_directory
+from flask import Blueprint, render_template, request, jsonify , send_file , send_from_directory , url_for
 from .utils import nlp_pipeline, convert_gif_to_storytelling_video , create_animated_gif # Ensure correct import
 import logging
 import os
 import shutil
 import time
-from .second_utility import create_scenario_based_infographic_video , create_animated_pie_chart , parse_user_input , generate_audio_from_text, generate_narration, add_auto_generated_audio_to_video
+import uuid
+from .csv_to_video_helper_function import create_infographic_video , generate_video_from_images , add_auto_generated_audio_to_video, create_visualizations, select_visualization_method, read_data
+from flask import Blueprint, render_template, request, jsonify, send_file, send_from_directory, url_for
+from werkzeug.utils import secure_filename
+import os
+import logging
+import uuid
+import time
+import shutil
+from functools import wraps
+from pathlib import Path
+from werkzeug.utils import secure_filename
+import os
+import datetime
+from pathlib import Path
+
+# from .second_utility import create_scenario_based_infographic_video , create_animated_pie_chart , parse_user_input , generate_audio_from_text, generate_narration, add_auto_generated_audio_to_video
 # from  .text_processing import nlp_pipeline
 # from  .gif_animation_creation import create_animated_gif
 # from  .data_storytelling_video_processing import convert_gif_to_storytelling_video
 # from flask import Blueprint
-from werkzeug.utils import secure_filename
-import os
 # video_processing = Blueprint('video_processing', __name__)
 
 main = Blueprint('main', __name__)
@@ -91,17 +105,132 @@ main = Blueprint('main', __name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Constants and configurations
+BASE_DIR = Path(__file__).resolve().parent
 # Define path for static folder to serve video
 UPLOADS_FOLDER = os.path.join(os.getcwd(), 'uploads', 'videos')
+UPLOADS_FOLDER = Path('D:\\1OOx-enginners-hackathon-submission-2\\uploads\\videos')  # Convert to a Path object
 # Define the base path for uploads
 UPLOADS_DIRECTORY = os.path.abspath("uploads/videos")
 
-UPLOADS_FOLDER = 'D:\\1OOx-enginners-hackathon-submission-2\\uploads\\videos'
+# UPLOADS_FOLDER = 'D:\\1OOx-enginners-hackathon-submission-2\\uploads\\videos'
 
+ALLOWED_EXTENSIONS_FOR_DATA_FILES = {'csv','xlsx' ,'txt', 'xls'}
 ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov'}  # add more if needed
+TEMP_FOLDER = 'D:\\1OOx-enginners-hackathon-submission-2\\app\\temp'
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+# TEMP_FOLDER.mkdir(parents=True, exist_ok=True)
+
+# UPLOADS_FOLDER.makedirs(parents=True, exist_ok=True)
+# TEMP_FOLDER.makedirs(parents=True, exist_ok=True)
+# session handling ----------------
+
+# session_id = uuid.uuid4().hex  # Unique session identifier
+# user_upload_folder = os.path.join(UPLOADS_FOLDER, session_id)
+# os.makedirs(user_upload_folder, exist_ok=True)
+
+# session handling ----------------
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS_FOR_DATA_FILES = {'csv', 'xls', 'xlsx', 'txt'}
+    ext = filename.rsplit('.', 1)[1].lower()
+    return '.' in filename and ext in ALLOWED_EXTENSIONS_FOR_DATA_FILES
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+class VideoProcessingError(Exception):
+    """Custom exception for video processing errors"""
+    pass
+
+def error_handler(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except VideoProcessingError as e:
+            logger.error(f"Video processing error: {str(e)}")
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            logger.error(f"Unexpected error: {str(e)}")
+            return jsonify({"error": "An unexpected error occurred"}), 500
+    return wrapper
+
+
+def secure_file_path(filename):
+    """Generate a secure file path with unique identifier"""
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    unique_id = str(uuid.uuid4())[:8]
+    secure_name = secure_filename(filename)
+    base_name, ext = os.path.splitext(secure_name)
+    return f"{base_name}_{timestamp}_{unique_id}{ext}"
+
+def create_user_session():
+    """Create a unique session identifier and folder"""
+    session_id = str(uuid.uuid4())
+    session_folder = TEMP_FOLDER / session_id
+    # session_folder.makedirs(exist_ok=True)
+    return session_id, session_folder
+
+def cleanup_temp_files(file_paths):
+    """Clean up temporary files if they exist."""
+    if file_paths is None or not file_paths:  # Check if file_paths is None or empty
+        logger.info("No files to clean up.")
+        return
+
+    try:
+        for path in file_paths:
+            if os.path.exists(path):  # Ensure file exists before attempting to delete
+                os.remove(path)
+                logger.info(f"Cleaned up temporary file: {path}")
+            else:
+                logger.warning(f"File {path} does not exist.")
+    except Exception as e:
+        logger.error(f"Error cleaning up temporary files: {e}")
+
+def get_temp_file_paths(temp_path):
+    try:
+        # Logic to gather file paths in temp_path
+        file_paths = [os.path.join(temp_path, f) for f in os.listdir(temp_path) if os.path.isfile(os.path.join(temp_path, f))]
+        
+        if not file_paths:
+            print(f"No files found in {temp_path}")
+        
+        return file_paths
+    
+    except Exception as e:
+        print(f"Error retrieving temp files: {e}")
+        return None  # In case of an error, you might want to handle it appropriately
+
+
+def create_api_response(data=None, error=None, status=200):
+    """Standardize API responses"""
+    response = {
+        "success": error is None,
+        "data": data,
+        "error": error
+    }
+    return jsonify(response), status
+
+
+def create_infographic_video(file_path):
+    df = read_data(file_path)
+    summary = nlp_pipeline(df.to_string(index=False))
+    visualizations = select_visualization_method(df)
+    image_paths = create_visualizations(df, visualizations)
+    video_path = generate_video_from_images(image_paths, f'video_{uuid.uuid4().hex}.mp4')
+    if video_path is None:
+        logging.error("Failed to generate video from images.")
+        return
+    final_video_path = add_auto_generated_audio_to_video(video_path, summary['audio_path'], f'final_video_{uuid.uuid4().hex}.mp4')
+    if final_video_path is None:
+        logging.error("Failed to add audio to video.")
+        return
+    print(f"Infographic video created successfully: {final_video_path}")
+    
+    return final_video_path
+
 
 @main.route("/")
 def index():
@@ -111,11 +240,14 @@ def index():
 def text_to_video():
     return render_template('text-to-video.html')
 
+@main.route("/csv-to-video")
+def csv_to_video():
+    return render_template('csv-to-video.html') 
+
 @main.route('/uploads/videos/<filename>',methods=['GET'])
 def uploaded_file(filename):
     return send_from_directory(UPLOADS_FOLDER, filename)
 
-# Old Route IN USEE ---------------------------------------------------------------
 @main.route("/generate_video", methods=["POST"])
 def generate_video():
     try:
@@ -167,7 +299,7 @@ def generate_video():
             video_filename = f"generated_video_{timestamp}_{counter}.mp4"
             final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
             counter += 1
-
+ 
         shutil.move(video_path, final_video_path)
         print('the video path is saved as:', final_video_path)
 
@@ -176,6 +308,110 @@ def generate_video():
     except Exception as e:
         logger.error(f"Unexpected error: {e}")
         return jsonify({"error": "An unexpected error occurred"}), 500
+# Route for file upload and infographic video generation
+@main.route('/upload', methods=['POST'])
+def upload_file():
+    """Handle file upload and video generation"""  
+    temp_path = None
+    final_video_path = None
+    
+    # file = request.files['file']
+    # filename = file.filename
+    # logger.info(f"Uploaded file: {filename}")
+  
+
+    try:
+        # Validate file presence
+        if 'file' not in request.files:
+            return jsonify({"error": "No file part"}), 400
+
+
+        file = request.files['file']
+        filename = file.filename
+        logger.info(f"Uploaded file: {filename}")
+        # Validate filename
+        if file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
+            
+        # Validate file type
+        if not allowed_file(file.filename):
+            return jsonify({
+                "error": "Invalid file type. Only CSV, XLS, and XLSX files are allowed."
+            }), 400
+
+        # Create secure file path
+        secure_name = secure_file_path(file.filename)
+        temp_path = TEMP_FOLDER / secure_name
+        
+        # Save uploaded file to temporary location
+        logger.info(f"Saving uploaded file to temporary location: {temp_path}")
+        file.save(temp_path)
+        
+        # Generate infographic video
+        try:
+            from .csv_to_video_helper_function import create_infographic_video
+            final_video_path = create_infographic_video(str(temp_path))
+            
+            if not final_video_path:
+                    logger.error("Video creation failed, no video path returned.")
+                    raise VideoProcessingError("Failed to create infographic video")
+            
+            # Move to permanent storage and generate response
+            video_name = os.path.basename(final_video_path)
+            permanent_path = UPLOADS_FOLDER / video_name
+            
+            # Ensure we don't overwrite existing files
+            if permanent_path.exists():
+                base, ext = os.path.splitext(video_name)
+                video_name = f"{base}_{uuid.uuid4().hex[:8]}{ext}"
+                permanent_path = UPLOADS_FOLDER / video_name
+            
+            # Move the file to permanent storage
+            os.rename(final_video_path, permanent_path)
+            
+            return jsonify({
+                "success": True,
+                "video_url": url_for('main.serve_video', video_name=video_name, _external=True)
+            }), 200
+            
+        except Exception as e:
+            logger.error(f"Error processing video: {e}")
+            return jsonify({
+                "error": "An error occurred while generating the video."
+            }), 500
+            
+    except Exception as e:
+        logger.error(f"Unexpected error during file upload: {e}")
+        return jsonify({
+            "error": "An unexpected error occurred during file processing."
+        }), 500
+        
+    finally:
+        # Clean up temporary files, if any
+        file_paths = [temp_path, final_video_path]  # List of temporary files
+        cleanup_temp_files(file_paths)  # Call cleanup with the list of paths
+            
+
+@main.route('/outputs/<video_name>')
+def serve_video(video_name):
+    """Serve generated video file"""
+    video_path = UPLOADS_FOLDER / secure_filename(video_name)
+    if not video_path.exists():
+        return jsonify({"error": "Video not found"}), 404
+    return send_from_directory(str(UPLOADS_FOLDER), secure_filename(video_name))
+
+@main.route('/video/<video_name>')
+def show_video(video_name):
+    """Show video in the template"""
+    # Validate video exists before rendering
+    video_path = UPLOADS_FOLDER / secure_filename(video_name)
+    if not video_path.exists():
+        return jsonify({"error": "Video not found"}), 404
+    return render_template('csv-to-video.html', video_name=video_name)
+
+# Serve the generated video
+
+# Old Route IN USEE ---------------------------------------------------------------
 
 # working code 
 

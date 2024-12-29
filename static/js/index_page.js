@@ -30,25 +30,20 @@ document.querySelector('.card[data-id="2"]').addEventListener('click', () => {
 });
 
 // Event listener for the CSV Input card
-document.querySelector('.card[data-id="3"]').addEventListener('click', () => {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.csv';
-    fileInput.style.display = 'none';
-
-    document.body.appendChild(fileInput);
-    fileInput.click();
-
-    fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
-        if (file) {
-            console.log("CSV File:", file);
-            alert(`CSV file uploaded: ${file.name}`);
-            // Here you can send this file to the server for processing
-        } else {
-            alert("No file selected!");
-        }
-        document.body.removeChild(fileInput);
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    const card = document.querySelector('.card[data-id="3"]');
+    console.log("Card element:", card); // Check if the card is selected
+    if (card) {
+        card.addEventListener('click', () => {
+            console.log("CSV Input card clicked!"); // Confirm click event
+            try {
+                window.location.assign("/csv-to-video");
+                console.log("Navigating to /csv-to-video...");
+            } catch (error) {
+                console.error("Navigation error:", error);
+            }
+        });
+    } else {
+        console.error("Card element not found!");
+    }
 });
- 
