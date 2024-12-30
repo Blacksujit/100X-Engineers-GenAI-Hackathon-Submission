@@ -167,19 +167,22 @@
         });
 
 
-        function updateProgress(percent) {
-            const progressBar = document.querySelector('.progress');
-            progressBar.style.width = `${percent}%`;
-        }
+
+        // progress bar update code 
+        
+        // function updateProgress(percent) {
+        //     const progressBar = document.querySelector('.progress');
+        //     progressBar.style.width = `${percent}%`;
+        // }
 
         
-        document.getElementById('download-btn').addEventListener('click', () => {
-            const videoPath = document.getElementById('video-player').src;
-            const anchor = document.createElement('a');
-            anchor.href = videoPath;
-            anchor.download = 'generated_video.mp4';
-            document.body.appendChild(anchor);
-            anchor.click();
-            document.body.removeChild(anchor);
-        });
+        // document.getElementById('download-btn').addEventListener('click', () => {
+        //     const videoPath = document.getElementById('video-player').src;
+        //     const anchor = document.createElement('a');
+        //     anchor.href = videoPath;
+        //     anchor.download = 'generated_video.mp4';
+        //     document.body.appendChild(anchor);
+        //     anchor.click();
+        //     document.body.removeChild(anchor);
+        // });
         
