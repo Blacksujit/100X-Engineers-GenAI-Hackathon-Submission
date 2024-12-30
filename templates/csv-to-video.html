@@ -1,72 +1,104 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CSV To Video</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS for Styling -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet" />
+
+    <!-- Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    
+    <!-- External JS Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='scss/style.scss') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/csv_to_video.css') }}">
-</head>
 
-<body class="dark-mode">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss/style.scss') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/csv_to_video.css') }}" />
+  </head>
 
+  <body class="dark-mode">
     <!-- Hero Section -->
-    <section class="hero-section">
-        <h1 class="hero-title">Transform Your Data into Stunning Videos!</h1>
-        <p class="text-lg text-gray-400">Upload your CSV, XLS, or XLSX files, and we'll generate a visually engaging video for you.</p>
+    <section class="hero-section text-center py-16">
+      <h1 class="hero-title text-4xl font-bold text-white">Transform Your Data into Stunning Videos!</h1>
+      <p class="text-lg text-gray-400 mt-4">
+        Upload your CSV, XLS, or XLSX files, and we'll generate a visually engaging video for you.
+      </p>
     </section>
 
     <!-- File Upload Section -->
-    <div class="input-container">
-        <p class="instruction-text">
-            Upload your file to get started. Supported formats: CSV, XLS, XLSX.
-        </p>
+    <div class="input-container text-center py-8">
+      <p class="instruction-text text-lg text-gray-500">
+        Upload your file to get started. Supported formats: CSV, XLS, XLSX.
+      </p>
 
-        <div class="file-upload-wrapper">
-            <form id="uploadForm" method="POST" enctype="multipart/form-data" , action="{{ url_for('main.upload_file') }}">
-                <label for="fileInput">
-                    <span>Choose a file</span>
-                    <p>Max file size: 10MB</p>
-                </label>
-                <input type="file" class="file-upload-input" id="fileInput" name="file" accept=".csv, .xlsx, .xls, .txt">
-                <button type="submit" id="generateButton">Generate CSV To Video</button>
-            </form>
-        </div>
+      <div class="file-upload-wrapper mt-4">
+        <form id="uploadForm" method="POST" enctype="multipart/form-data" action="{{ url_for('main.upload_file') }}">
+          <label for="fileInput" class="file-upload-label block text-white text-xl">
+            Choose a file
+            <p class="text-gray-400">Max file size: 10MB</p>
+          </label>
+          <input type="file" class="file-upload-input mt-2" id="fileInput" name="file" accept=".csv, .xlsx, .xls, .txt" />
+        </form>
+      </div>
 
-        <div id="errorContainer" class="notification"></div>
+      <!-- File Name Display -->
+      <div id="noFileMessage" class="no-file-selected text-gray-400 mt-2" style="display: none">
+        No file uploaded
+      </div>
+
+      <!-- File Preview -->
+      <div id="csvPreview" class="csv-preview mt-4" style="display: none">
+        <table class="table-auto w-full text-white">
+          <thead id="previewHeader" class="bg-gray-800"></thead>
+          <tbody id="previewBody" class="bg-gray-900"></tbody>
+        </table>
+      </div>
+
+      <!-- Generate Button Outside Input Area -->
+      <button type="submit" id="generateButton" class="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+        Generate CSV To Video
+      </button>
     </div>
 
     <!-- Progress Bar -->
-    <div class="progress-bar">
-        <div class="progress" id="progress"></div>
+    <div class="progress-bar mt-8" id="progressBar" style="display: none">
+      <div class="progress bg-blue-600" id="progress"></div>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="preview-container text-center mt-8" id="previewContainer" style="display: none">
+      <h2 class="text-lg font-semibold text-white">CSV File Preview</h2>
+      <div id="csvPreview" class="preview-table mt-4"></div>
     </div>
 
     <!-- Result Section -->
-    <div class="result-container" id="resultContainer" style="display: none;">
-        <video controls id="resultVideo">
-            Your browser does not support the video tag.
-        </video>
-        <a class="download-btn" id="downloadBtn" href="#" download>Download Video</a>
+    <div class="result-container mt-8 text-center" id="resultContainer" style="display: none">
+      <video controls id="resultVideo" class="w-full max-w-lg mx-auto">
+        Your browser does not support the video tag.
+      </video>
+      <a class="download-btn mt-4 inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700" id="downloadBtn" href="#" download>
+        Download Video
+      </a>
     </div>
 
+    <!-- Error Notification -->
+    <div id="errorContainer" class="notification mt-4 text-center text-red-600"></div>
 
-    <!-- Notifications -->
-    <div id="errorContainer" class="notification"></div>
-
-</body>
-
-<script src="{{ url_for('static', filename='js/csv_to_video.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/templatemo-script.js') }}"></script>
-<script src="{{ url_for('static', filename='js/slick.js') }}"></script>
-</html>
+    <!-- Custom JS -->
+  </body>
+  <script src="{{ url_for('static', filename='js/csv_to_video.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/csv_file_preview.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/templatemo-script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/slick.js') }}"></script>
+  
+  </html>

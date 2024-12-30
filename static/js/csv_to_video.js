@@ -1,128 +1,193 @@
-// CSV File or any data file preview script after uploading in the input 
-
-document.getElementById('fileInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const noFileMessage = document.getElementById('noFileMessage');
-    const csvPreview = document.getElementById('csvPreview');
-    
-    // Clear previous preview content
-    document.getElementById('previewHeader').innerHTML = '';
-    document.getElementById('previewBody').innerHTML = '';
-    
-    if (!file) {
-        noFileMessage.style.display = 'block'; // Show "No file uploaded" message
-        csvPreview.style.display = 'none'; // Hide preview table
-    } else {
-        noFileMessage.style.display = 'none'; // Hide "No file uploaded" message
-        csvPreview.style.display = 'block'; // Show preview table
-
-        const fileType = file.type;
-        const fileName = file.name.toLowerCase();
-
-        // Handle CSV files
-        if (fileType === 'text/csv' || fileName.endsWith('.csv')) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const contents = e.target.result;
-                const rows = contents.split('\n').map(row => row.split(','));
-
-                // Create table header from first row of the CSV
-                const headers = rows[0];
-                headers.forEach(header => {
-                    const th = document.createElement('th');
-                    th.textContent = header;
-                    document.getElementById('previewHeader').appendChild(th);
-                });
-
-                // Create table rows from CSV data
-                rows.slice(1).forEach(row => {
-                    const tr = document.createElement('tr');
-                    row.forEach(cell => {
-                        const td = document.createElement('td');
-                        td.textContent = cell;
-                        tr.appendChild(td);
-                    });
-                    document.getElementById('previewBody').appendChild(tr);
-                });
-            };
-            reader.readAsText(file);
-        }
-
-        // Handle XLSX files
-        else if (fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || fileName.endsWith('.xlsx')) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = e.target.result;
-                const workbook = XLSX.read(data, { type: 'binary' });
-                const sheetName = workbook.SheetNames[0];
-                const sheet = workbook.Sheets[sheetName];
-                const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-                // Create table header from first row of the XLSX data
-                const headers = rows[0];
-                headers.forEach(header => {
-                    const th = document.createElement('th');
-                    th.textContent = header;
-                    document.getElementById('previewHeader').appendChild(th);
-                });
-
-                // Create table rows from XLSX data
-                rows.slice(1).forEach(row => {
-                    const tr = document.createElement('tr');
-                    row.forEach(cell => {
-                        const td = document.createElement('td');
-                        td.textContent = cell;
-                        tr.appendChild(td);
-                    });
-                    document.getElementById('previewBody').appendChild(tr);
-                });
-            };
-            reader.readAsBinaryString(file);
-        }
-
-        // Handle TXT files
-        else if (fileType === 'text/plain' || fileName.endsWith('.txt')) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const contents = e.target.result;
-                const rows = contents.split('\n');
-
-                // Create table header from the first row (just a placeholder for simplicity)
-                const headers = ['Line Number', 'Content'];
-                headers.forEach(header => {
-                    const th = document.createElement('th');
-                    th.textContent = header;
-                    document.getElementById('previewHeader').appendChild(th);
-                });
-
-                // Create table rows for TXT file (display line number and content)
-                rows.forEach((line, index) => {
-                    const tr = document.createElement('tr');
-                    const td1 = document.createElement('td');
-                    td1.textContent = index + 1; // Line number
-                    const td2 = document.createElement('td');
-                    td2.textContent = line;
-                    tr.appendChild(td1);
-                    tr.appendChild(td2);
-                    document.getElementById('previewBody').appendChild(tr);
-                });
-            };
-            reader.readAsText(file);
-        }
-        
-        else {
-            alert('Unsupported file type. Please upload CSV, XLSX, or TXT files.');
-        }
-    }
-});
-
-
-
-
-
 
 // script to integrate and process and handle the data to the backend
 // to generate the video from the csv file or any data file
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // DOM Elements
+    const uploadForm = document.getElementById('uploadForm');
+    const fileInput = document.getElementById('fileInput');
+    const generateButton = document.getElementById('generateButton');
+    const progressBar = document.getElementById('progress');
+    const resultContainer = document.getElementById('resultContainer');
+    const resultVideo = document.getElementById('resultVideo');
+    const errorContainer = document.getElementById('errorContainer');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const filePreview = document.getElementById('filePreview');
+    const progressBarContainer = document.querySelector('.progress-bar');
+
+    // Constants
+    const ALLOWED_EXTENSIONS = ['csv', 'xlsx', 'xls', 'txt'];
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+    // File Input Change Handler
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            validateAndPreviewFile(file);
+        }
+    });
+
+    // Validate and Preview File
+    function validateAndPreviewFile(file) {
+        const extension = file.name.split('.').pop().toLowerCase();
+        const ALLOWED_MIME_TYPES = [
+            'text/csv',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.ms-excel',
+            'text/plain'
+        ];
+    
+        if (!ALLOWED_MIME_TYPES.includes(file.type) && !ALLOWED_EXTENSIONS.some(ext => file.name.toLowerCase().endsWith(ext))) {
+            showNotification('Unsupported file type. Please upload CSV, XLSX, or TXT files.');
+            return false;
+        }
+    
+        if (file.size > MAX_FILE_SIZE) {
+            showNotification('File size should not exceed 10MB');
+            return false;
+        }
+    
+        previewFile(file);
+        return true;
+    }
+
+    // Preview the selected file
+    function previewFile(file) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            filePreview.innerHTML = `
+                <div class="preview-info">
+                    <p class="file-name">File: ${file.name}</p>
+                    <p class="file-size">Size: ${(file.size / 1024).toFixed(2)} KB</p>
+                </div>
+            `;
+            filePreview.style.display = 'block';
+            generateButton.disabled = false;
+        };
+
+        reader.onerror = () => {
+            showNotification('Error reading file');
+            filePreview.style.display = 'none';
+            generateButton.disabled = true;
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    // Form Submit Handler
+    uploadForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const file = fileInput.files[0];
+        if (!file) {
+            showNotification('Please select a file');
+            return;
+        }
+
+        if (!validateAndPreviewFile(file)) {
+            return;
+        }
+
+        progressBarContainer.style.display = 'block';
+        showLoading();
+        resultContainer.classList.remove('active');
+        generateButton.disabled = true;
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Upload file to the /upload route
+            const uploadResponse = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const uploadData = await uploadResponse.json();
+            if (!uploadResponse.ok) {
+                throw new Error(uploadData.error || 'Failed to upload file');
+            }
+
+            // Once the file is uploaded, call the /generate_video_from_csv route
+            const generateResponse = await fetch('/generate_video_from_csv', {
+                method: 'POST',
+                body: formData
+            });
+
+            const generateData = await generateResponse.json();
+
+            if (!generateResponse.ok) {
+                throw new Error(generateData.error || 'Failed to generate video');
+            }
+
+            // Update video player with the generated video
+            const videoUrl = generateData.video_path; // This is the video URL returned by Flask
+            resultVideo.src = videoUrl + `?t=${new Date().getTime()}`;
+            resultVideo.style.display = 'block';
+            resultContainer.classList.add('active');
+            resultContainer.style.display = 'block';
+
+            // Setup download button
+            downloadBtn.href = videoUrl;
+            downloadBtn.style.display = 'block';
+
+        } catch (error) {
+            showNotification(error.message || 'An error occurred while generating the video');
+        } finally {
+            hideLoading();
+            generateButton.disabled = false;
+        }
+    });
+
+    // Notification Handler
+    function showNotification(message) {
+        errorContainer.innerText = message;
+        errorContainer.style.display = 'block';
+        setTimeout(() => {
+            errorContainer.style.display = 'none';
+        }, 3000);
+    }
+
+    // Loading State Handlers
+    function showLoading() {
+        progressBar.style.width = '50%';
+        generateButton.disabled = true;
+    }
+
+    function hideLoading() {
+        progressBar.style.width = '100%';
+        setTimeout(() => {
+            progressBarContainer.style.display = 'none';
+            progressBar.style.width = '0%';
+        }, 500);
+        generateButton.disabled = false;
+    }
+
+    // Drag and Drop Handlers
+    const dropZone = document.querySelector('.file-upload-wrapper');
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            fileInput.files = e.dataTransfer.files;
+            validateAndPreviewFile(file);
+        }
+    });
+});
 
 //  direct file and video parsing code 
 
@@ -216,173 +281,3 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 // using the json implementation 
 
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
-    const uploadForm = document.getElementById('uploadForm');
-    const fileInput = document.getElementById('fileInput');
-    const generateButton = document.getElementById('generateButton');
-    const progressBar = document.getElementById('progress');
-    const resultContainer = document.getElementById('resultContainer');
-    const resultVideo = document.getElementById('resultVideo');
-    const errorContainer = document.getElementById('errorContainer');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const filePreview = document.getElementById('filePreview');
-    const progressBarContainer = document.querySelector('.progress-bar');
-
-    // Constants
-    const ALLOWED_EXTENSIONS = ['csv', 'xlsx', 'xls'];
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-
-    // File Input Change Handler
-    fileInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            validateAndPreviewFile(file);
-        }
-    });
-
-    // File Validation
-    function validateAndPreviewFile(file) {
-        const extension = file.name.split('.').pop().toLowerCase();
-        
-        if (!ALLOWED_EXTENSIONS.includes(extension)) {
-            showNotification('Please upload a CSV, XLSX, or XLS file');
-            fileInput.value = '';
-            return false;
-        }
-
-        if (file.size > MAX_FILE_SIZE) {
-            showNotification('File size should not exceed 10MB');
-            fileInput.value = '';
-            return false;
-        }
-
-        // Preview file content
-        previewFile(file);
-        return true;
-    }
-
-    // File Preview
-    function previewFile(file) {
-        const reader = new FileReader();
-        
-        reader.onload = (e) => {
-            filePreview.innerHTML = `
-                <div class="preview-info">
-                    <p class="file-name">File: ${file.name}</p>
-                    <p class="file-size">Size: ${(file.size / 1024).toFixed(2)} KB</p>
-                </div>
-            `;
-            filePreview.style.display = 'block';
-            generateButton.disabled = false;
-        };
-
-        reader.onerror = () => {
-            showNotification('Error reading file');
-            filePreview.style.display = 'none';
-            generateButton.disabled = true;
-        };
-
-        reader.readAsDataURL(file);
-    }
-
-    // Form Submit Handler
-    uploadForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        
-        const file = fileInput.files[0];
-        if (!file) {
-            showNotification('Please select a file');
-            return;
-        }
-
-        if (!validateAndPreviewFile(file)) {
-            return;
-        }
-
-        progressBarContainer.style.display = 'block';
-        showLoading();
-        resultContainer.classList.remove('active');
-        generateButton.disabled = true;
-
-        try {
-            const formData = new FormData();
-            formData.append('file', file);
-
-            const response = await fetch('/upload', {
-                method: 'POST',
-                body: formData
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to generate video');
-            }
-
-            // Update video player with the generated video
-            resultVideo.src = data.video_url + `?t=${new Date().getTime()}`;
-            resultVideo.style.display = 'block';
-            resultContainer.classList.add('active');
-            resultContainer.style.display = 'block';
-
-            // Setup download button
-            downloadBtn.href = data.video_url;
-            downloadBtn.style.display = 'block';
-
-        } catch (error) {
-            showNotification(error.message || 'An error occurred while generating the video');
-        } finally {
-            hideLoading();
-            generateButton.disabled = false;
-        }
-    });
-
-    // Notification Handler
-    function showNotification(message) {
-        errorContainer.innerText = message;
-        errorContainer.style.display = 'block';
-        setTimeout(() => {
-            errorContainer.style.display = 'none';
-        }, 3000);
-    }
-
-    // Loading State Handlers
-    function showLoading() {
-        progressBar.style.width = '50%';
-        generateButton.disabled = true;
-    }
-
-    function hideLoading() {
-        progressBar.style.width = '100%';
-        setTimeout(() => {
-            progressBarContainer.style.display = 'none';
-            progressBar.style.width = '0%';
-        }, 500);
-        generateButton.disabled = false;
-    }
-
-    // Drag and Drop Handlers
-    const dropZone = document.querySelector('.file-upload-wrapper');
-
-    dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('dragover');
-    });
-
-    dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('dragover');
-    });
-
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        
-        const file = e.dataTransfer.files[0];
-        if (file) {
-            fileInput.files = e.dataTransfer.files;
-            validateAndPreviewFile(file);
-        }
-    });
-});

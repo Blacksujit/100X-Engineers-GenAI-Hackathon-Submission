@@ -1,0 +1,9 @@
+column_name,type
+_id,numerical
+ags2,numeric
+ags5,numerical
+kreis,object
+number_accomodation_establishments,numerical
+number_of_beds,numerical
+number_of_guests,numerical
+guests_staying_overnight,numerical

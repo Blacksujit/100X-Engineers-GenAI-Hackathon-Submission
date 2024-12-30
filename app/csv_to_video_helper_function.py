@@ -245,9 +245,9 @@ with open(os.path.join(models_dir, 'tokenizer.pkl'), 'rb') as tokenizer_file:
 
 
 # Initialize sentiment analyzer
-vader_analyzer = SentimentIntensityAnalyzer()
+# vader_analyzer = SentimentIntensityAnalyzer()
 
-def nlp_pipeline(text):
+def nlp_csv_to_video_pipeline(text):
     # Prepare input
     # model = AutoModelForSeq2SeqLM.from_pretrained('t5-base')
     # tokenizer = AutoTokenizer.from_pretrained('t5-base')
@@ -272,9 +272,9 @@ def nlp_pipeline(text):
         percentages = [100]
         categories = ['Summary']
 
-    # Sentiment analysis
-    sentiment = vader_analyzer.polarity_scores(summary_text)
-    sentiment_label = 'positive' if sentiment['compound'] >= 0.05 else 'negative' if sentiment['compound'] <= -0.05 else 'neutral'
+    # # Sentiment analysis
+    # sentiment = vader_analyzer.polarity_scores(summary_text)
+    # sentiment_label = 'positive' if sentiment['compound'] >= 0.05 else 'negative' if sentiment['compound'] <= -0.05 else 'neutral'
 
     # Text correction and language detection
     blob = TextBlob(summary_text)
@@ -292,7 +292,7 @@ def nlp_pipeline(text):
         'values': percentages,
         'text': corrected_text,
         'audio_path': audio_path,
-        'sentiment': sentiment_label,
+        # 'sentiment': sentiment_label,
         'language': language
     }
 
@@ -354,40 +354,53 @@ def create_visualizations(df, visualizations, output_dir="D:\\1OOx-enginners-hac
     return image_paths
 
 
+def generate_video_from_images(image_paths, output_video_path, fps=10, max_resolution=(640, 480)):
+    from moviepy.editor import ImageClip, concatenate_videoclips
+    from PIL import Image
+    import numpy as np
+    import os
+    import logging
+    from tqdm import tqdm
 
-def generate_video_from_images(image_paths, output_video_path, fps=10):
-    # Ensure all images are the same size and in RGB format
-    first_image = Image.open(image_paths[0]).convert('RGB')
-    width, height = first_image.size
-    print(f"First image size: {width}x{height}")
-    resized_image_paths = []
+    logging.basicConfig(level=logging.DEBUG)
+    logger = logging.getLogger(__name__)
 
+    # Resize images and store in memory
+    resized_images = []
     for image_path in image_paths:
-        image = Image.open(image_path).convert('RGB')
-        resized_image = image.resize((width, height))
-        resized_image_path = f"resized_{os.path.basename(image_path)}"
-        resized_image.save(resized_image_path)
-        resized_image_paths.append(resized_image_path)
-        print(f"Processed image: {resized_image_path}, size: {resized_image.size}")
+        try:
+            image = Image.open(image_path).convert('RGB')
+            resized_image = image.resize(max_resolution)
+            resized_images.append(np.array(resized_image))
+            logger.debug(f"Resized image: {image_path}")
+        except Exception as e:
+            logger.error(f"Error processing image {image_path}: {e}")
+            continue
 
-    # Create a video from a sequence of images
-    clips = []
-    for img_path in tqdm(resized_image_paths, desc="Processing images"):
-        img_clip = ImageClip(img_path).set_duration(5).fadein(1).fadeout(1)
-        clips.append(img_clip)
+    # Process images in batches
+    batch_size = 50
+    batch_clips = []
+    for i in range(0, len(resized_images), batch_size):
+        batch = resized_images[i:i + batch_size]
+        clips = [ImageClip(img).set_duration(5).fadein(1).fadeout(1) for img in batch]
+        batch_clip = concatenate_videoclips(clips, method="compose")
+        batch_clips.append(batch_clip)
 
-    final_clip = concatenate_videoclips(clips, method="compose")
-    final_clip = final_clip.set_duration(max(30, final_clip.duration))  # Ensure at least 30 seconds
-    final_clip.fps = fps  # Set the fps attribute
+    # Combine all batches
+    final_clip = concatenate_videoclips(batch_clips, method="compose")
+    final_clip.fps = fps
 
-    # Ensure the output path is absolute
+    # Write video to file with optimized settings
     output_video_path = os.path.abspath(output_video_path)
-    print(f"Output video path: {output_video_path}")
-
     try:
-        final_clip.write_videofile(output_video_path, codec="mpeg4")
-    except OSError as e:
-        print(f"Error writing video file: {e}")
+        final_clip.write_videofile(
+            output_video_path,
+            codec="libx264",
+            preset="ultrafast",
+            bitrate="500k"
+        )
+    except Exception as e:
+        logger.error(f"Error writing video file: {e}")
         raise
 
     return output_video_path
@@ -411,7 +424,7 @@ def add_auto_generated_audio_to_video(video_path, audio_file_path, output_video_
 
 def create_infographic_video(file_path):
     df = read_data(file_path)
-    summary = nlp_pipeline(df.to_string(index=False))
+    summary = nlp_csv_to_video_pipeline(df.to_string(index=False))
     visualizations = select_visualization_method(df)
     image_paths = create_visualizations(df, visualizations)
     video_path = generate_video_from_images(image_paths, f'video_{uuid.uuid4().hex}.mp4')

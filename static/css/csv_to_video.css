@@ -187,7 +187,6 @@ video {
 }
 
 /* New file upload input design */
-/* New file upload input design */
 .file-upload-input {
     display: none;
 }
@@ -272,26 +271,11 @@ video {
 
 /* Display of "No file selected" when no file is uploaded */
 .no-file-selected {
-    display: block; /* Show the message */
+    display: none; /* Initially hidden */
     text-align: center;
     color: #9ca3af;
     margin-top: 1rem;
     font-size: 1rem;
-}
-
-.file-upload-wrapper {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-    padding: 1rem;
-    background-color: #1f2937;
-    border-radius: 0.5rem;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    border: 2px dashed #22d3ee;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Show "No file selected" when no file is uploaded */

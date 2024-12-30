@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to Video Converter</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/test_csv_to_video.css') }}"/>
+</head>
+<body>
+    <div class="container">
+        <h1>CSV to Video Converter</h1>
+        
+        <div id="upload-container" class="upload-container">
+            <div class="upload-icon">📁</div>
+            <p>Drop your file here or click to upload</p>
+            <p style="font-size: 14px; color: #666; margin-top: 10px;">
+                Supports CSV, Excel, and TXT files
+            </p>
+            <input type="file" id="file-input" class="file-input" accept=".csv,.xlsx,.xls,.txt">
+        </div>
+
+        <div id="alert" class="alert alert-error"></div>
+        <div id="loading" class="loading">Processing your file...</div>
+
+        <div id="preview-container" class="preview-container">
+            <h2>Data Preview</h2>
+            <div class="table-container">
+                <table id="preview-table">
+                    <thead>
+                        <tr id="table-header"></tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+
+            <button id="generate-button" class="button">
+                Generate Video
+            </button>
+        </div>
+
+        <div id="video-container" class="video-container">
+            <h2>Generated Video</h2>
+            <video id="video-player" controls>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+</body>
+<script src="{{ url_for('static', filename='js/test_csv_to_video.js') }}"></script>
+</html>
