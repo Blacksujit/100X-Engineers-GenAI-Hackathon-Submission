@@ -5,28 +5,7 @@ document.querySelector('.card[data-id="1"]').addEventListener('click', () => {
 });
 // Event listener for the Custom Input card
 document.querySelector('.card[data-id="2"]').addEventListener('click', () => {
-    let customInputs = [];
-    let addMore = true;
-
-    while (addMore) {
-        const input = prompt("Enter custom input in the format [Text Input]:[Numeric Input] (e.g., Example:42):");
-        if (input && input.includes(":")) {
-            customInputs.push(input);
-            addMore = confirm("Do you want to add another input?");
-        } else {
-            alert("Invalid input. Please use the format [Text Input]:[Numeric Input].");
-            addMore = confirm("Do you want to try again?");
-        }
-    }
-
-    if (customInputs.length > 0) {
-        console.log("Custom Inputs:", customInputs);
-        alert("Custom inputs saved:\n" + customInputs.join("\n"));
-        // Here you can send the customInputs to the server for processing
-        window.location.assign("/multi-model-template.html");
-    } else {
-        alert("No custom inputs provided!");
-    }
+    window.location.assign("/multi-model-template");
 });
 
 // Event listener for the CSV Input card

@@ -58,7 +58,8 @@ import imageio
 import re
 import logging
 from transformers import BartTokenizer, BartForConditionalGeneration
-
+import joblib
+import os
 
 # nlp = spacy.load("en_core_web_sm")
 
@@ -73,14 +74,14 @@ os.environ['HF_HOME'] = "D:\\cahc_models_folder"  # Change this to your desired 
 
 def load_models(model_directory="models"):
     # Load the tokenizer and model from the saved .pkl files
-    with open(os.path.join(model_directory, "facebook_tokenizer.pkl"), "rb") as f:
-        tokenizer = pickle.load(f)
-    with open(os.path.join(model_directory, "facebook_model.pkl"), "rb") as f:
-        model = pickle.load(f)
+    with open(os.path.join(model_directory, "facebook_tokenizer_joblib.pkl"), "rb") as f:
+        tokenizer = joblib.load(f)
+    with open(os.path.join(model_directory, "facebook_model_joblib.pkl"), "rb") as f:
+        model = joblib.load(f)
     
     # Load the spaCy model from the saved .pkl file
-    with open(os.path.join(model_directory, "spacy_model.pkl"), "rb") as f:
-        nlp = pickle.load(f)
+    with open(os.path.join(model_directory, "spacy_model_joblib.pkl"), "rb") as f:
+        nlp = joblib.load(f)
     
     return tokenizer, model, nlp
 
@@ -731,13 +732,13 @@ def data_storytelling_pipeline(file_path, prompt):
         narration_file = generate_narration(narration_text)
         
         logging.info("Creating the infographic video...")
-        video_file = "final_production_model.mp4"
-        generate_infographic_video(data, insights, columns, audio_file=narration_file, video_file=video_file)
+        # video_file = "final_production_model.mp4"
+        generate_infographic_video(data, insights, columns, audio_file=narration_file)
         
         end_time = time.time()
         logging.info(f"Pipeline completed successfully in {end_time - start_time:.2f} seconds")
         
-        return video_file
+        # return video_file
     
     except FileNotFoundError as fnf_error:
         logging.error(f"File not found: {fnf_error}")

@@ -78,7 +78,7 @@ import shutil
 import time
 import uuid
 from .csv_to_video_helper_function import create_infographic_video, nlp_csv_to_video_pipeline , generate_video_from_images , add_auto_generated_audio_to_video, create_visualizations, select_visualization_method, read_data
-from .multi_model_utility import data_storytelling_pipeline
+from .multi_model_utility import data_storytelling_pipeline , perform_eda , analyze_prompt_for_insights , generate_narration , generate_infographic_video , load_and_preprocess_data
 from flask import Blueprint, render_template, request, jsonify, send_file, send_from_directory, url_for
 from werkzeug.utils import secure_filename
 import os
@@ -94,6 +94,7 @@ import datetime
 from pathlib import Path
 import mimetypes
 from flask import session
+import pandas as pd
 # from .second_utility import create_scenario_based_infographic_video , create_animated_pie_chart , parse_user_input , generate_audio_from_text, generate_narration, add_auto_generated_audio_to_video
 # from  .text_processing import nlp_pipeline
 # from  .gif_animation_creation import create_animated_gif
@@ -233,6 +234,59 @@ def create_infographic_video(file_path):
     return final_video_path
 
 
+# Loading the custom Model Code Implementatin 
+
+def data_storytelling_pipeline(file_path, prompt):
+    try:
+        start_time = time.time()
+        
+        logging.info("Loading and preprocessing data...")
+        data = load_and_preprocess_data(file_path)
+        logging.debug(f"Loaded Data: {data.head()}")
+        
+        logging.info("Performing EDA...")
+        eda_summary = perform_eda(data)
+        logging.debug(f"EDA Summary: {eda_summary}")
+        
+        logging.info("Analyzing the user's prompt...")
+        insights, columns = analyze_prompt_for_insights(prompt, eda_summary)
+        logging.debug(f"Extracted insights: {insights}")
+        logging.debug(f"Extracted columns: {columns}")
+        
+        logging.info("Generating narration...")
+        narration_text = f"Here is the analysis based on the prompt: {prompt}. Insights: {', '.join(insights)}"
+        narration_file = generate_narration(narration_text)
+        
+        logging.info("Creating the infographic video...")
+        # video_file = "final_production_model.mp4"
+        video_file = generate_infographic_video(data, insights, columns, audio_file=narration_file)
+        
+        # return video_file
+        
+        end_time = time.time()
+        logging.info(f"Pipeline completed successfully in {end_time - start_time:.2f} seconds")
+        
+        return video_file
+    
+    except FileNotFoundError as fnf_error:
+        logging.error(f"File not found: {fnf_error}")
+        raise
+    except pd.errors.ParserError as parser_error:
+        logging.error(f"Error parsing the file: {parser_error}")
+        raise
+    except TypeError as type_error:
+        logging.error(f"Type error: {type_error}")
+        raise
+    except ValueError as value_error:
+        logging.error(f"Value error: {value_error}")
+        raise
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}")
+        raise    
+
+
+# Loading the custom Model Code Implementation -----------------------------------------------------------------------------------------
+
 @main.route("/")
 def index():
     return render_template('index.html')
@@ -246,7 +300,7 @@ def csv_to_video():
     return render_template('test_csv_to_video.html') 
 
 @main.route('/multi-model-template')
-def multi_model():
+def multi_model_template():
     return render_template('multi-model-template.html')
 
 @main.route('/uploads/videos/<filename>',methods=['GET'])
@@ -254,28 +308,32 @@ def uploaded_file(filename):
     return send_from_directory(UPLOADS_FOLDER, filename)
 
 
+
 @main.route('/process', methods=['POST'])
 def process():
-    if 'csv_file' not in request.files:
-        return "No file part"
-    file = request.files['csv_file']
+    if 'data_file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['data_file']
     if file.filename == '':
-        return "No selected file"
-    if file and file.filename.endswith('.csv'):
+        return jsonify({"error": "No selected file"}), 400
+    if file:
         filename = secure_filename(file.filename)
         file_path = os.path.join(UPLOADS_FOLDER, filename)
         file.save(file_path)
-        
+
         prompt = request.form['prompt']
-        
+
         # Call the data storytelling pipeline
         try:
             video_file = data_storytelling_pipeline(file_path, prompt)
-            return send_from_directory(UPLOADS_FOLDER, video_file, as_attachment=True)
+            return jsonify({"video_file": video_file})
         except Exception as e:
-            return str(e)
+            return jsonify({"error": str(e)}), 500
     else:
-        return "Invalid file format. Please upload a CSV file."
+        return jsonify({"error": "Invalid file format. Please upload a CSV, XLSX, or TXT file."}), 400
+
+
+
 
 @main.route("/generate_video", methods=["POST"])
 def generate_video():

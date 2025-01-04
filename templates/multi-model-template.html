@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Model CSV Upload</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Multi-Model Data Upload</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@
             padding: 0;
         }
         .container {
-            width: 50%;
+            width: 60%;
             margin: 50px auto;
             background: #fff;
             padding: 20px;
@@ -48,20 +48,71 @@
         button:hover {
             background-color: #4cae4c;
         }
+        #videoContainer {
+            display: none;
+            margin-top: 20px;
+        }
+        #errorContainer {
+            display: none;
+            margin-top: 20px;
+            color: red;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Upload CSV and Enter Prompt</h1>
-        <form action="/process" method="post" enctype="multipart/form-data">
-            <label for="csv_file">Upload CSV File:</label>
-            <input type="file" id="csv_file" name="csv_file" accept=".csv" required>
-            
+        <h1>Upload Data and Enter Prompt</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="data_file">Upload Data File (CSV, XLSX, TXT):</label>
+            <input type="file" id="data_file" name="data_file" accept=".csv, .xlsx, .txt" required>
+
             <label for="prompt">Enter Prompt:</label>
             <input type="text" id="prompt" name="prompt" required>
-            
+
             <button type="submit">Submit</button>
         </form>
+        <div id="videoContainer">
+            <h2>Generated Video</h2>
+            <video id="generatedVideo" controls width="100%"></video>
+        </div>
+        <div id="errorContainer">
+            <h2>Error</h2>
+            <p id="errorMessage"></p>
+        </div>
     </div>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const prompt = document.getElementById('prompt').value;
+            formData.append('prompt', prompt);
+
+            fetch('/process', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('errorMessage').textContent = data.error;
+                    document.getElementById('errorContainer').style.display = 'block';
+                    document.getElementById('videoContainer').style.display = 'none';
+                } else {
+                    const videoUrl = `/uploads/videos/${data.video_file}`;
+                    const video = document.getElementById('generatedVideo');
+                    video.src = videoUrl;
+                    document.getElementById('videoContainer').style.display = 'block';
+                    document.getElementById('errorContainer').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').textContent = 'An unexpected error occurred.';
+                document.getElementById('errorContainer').style.display = 'block';
+                document.getElementById('videoContainer').style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
