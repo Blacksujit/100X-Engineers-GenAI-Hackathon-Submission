@@ -78,6 +78,7 @@ import shutil
 import time
 import uuid
 from .csv_to_video_helper_function import create_infographic_video, nlp_csv_to_video_pipeline , generate_video_from_images , add_auto_generated_audio_to_video, create_visualizations, select_visualization_method, read_data
+from .multi_model_utility import data_storytelling_pipeline
 from flask import Blueprint, render_template, request, jsonify, send_file, send_from_directory, url_for
 from werkzeug.utils import secure_filename
 import os
@@ -244,9 +245,37 @@ def text_to_video():
 def csv_to_video():
     return render_template('test_csv_to_video.html') 
 
+@main.route('/multi-model-template')
+def multi_model():
+    return render_template('multi-model-template.html')
+
 @main.route('/uploads/videos/<filename>',methods=['GET'])
 def uploaded_file(filename):
     return send_from_directory(UPLOADS_FOLDER, filename)
+
+
+@main.route('/process', methods=['POST'])
+def process():
+    if 'csv_file' not in request.files:
+        return "No file part"
+    file = request.files['csv_file']
+    if file.filename == '':
+        return "No selected file"
+    if file and file.filename.endswith('.csv'):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(UPLOADS_FOLDER, filename)
+        file.save(file_path)
+        
+        prompt = request.form['prompt']
+        
+        # Call the data storytelling pipeline
+        try:
+            video_file = data_storytelling_pipeline(file_path, prompt)
+            return send_from_directory(UPLOADS_FOLDER, video_file, as_attachment=True)
+        except Exception as e:
+            return str(e)
+    else:
+        return "Invalid file format. Please upload a CSV file."
 
 @main.route("/generate_video", methods=["POST"])
 def generate_video():

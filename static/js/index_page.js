@@ -3,7 +3,6 @@
 document.querySelector('.card[data-id="1"]').addEventListener('click', () => {
     window.location.assign("/text-to-video");
 });
-
 // Event listener for the Custom Input card
 document.querySelector('.card[data-id="2"]').addEventListener('click', () => {
     let customInputs = [];
@@ -24,6 +23,7 @@ document.querySelector('.card[data-id="2"]').addEventListener('click', () => {
         console.log("Custom Inputs:", customInputs);
         alert("Custom inputs saved:\n" + customInputs.join("\n"));
         // Here you can send the customInputs to the server for processing
+        window.location.assign("/multi-model-template.html");
     } else {
         alert("No custom inputs provided!");
     }
