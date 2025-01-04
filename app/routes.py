@@ -310,7 +310,7 @@ def uploaded_file(filename):
 
 
 @main.route('/process', methods=['POST'])
-def process():
+def process():    
     if 'data_file' not in request.files:
         return jsonify({"error": "No file part"}), 400
     file = request.files['data_file']
@@ -320,7 +320,8 @@ def process():
         filename = secure_filename(file.filename)
         file_path = os.path.join(UPLOADS_FOLDER, filename)
         file.save(file_path)
-
+        
+        
         prompt = request.form['prompt']
 
         # Call the data storytelling pipeline
