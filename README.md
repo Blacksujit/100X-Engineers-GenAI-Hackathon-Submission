@@ -37,7 +37,7 @@ The Dataviz AI is an AI powered web application  has the potential to significan
 - **Content Creation**: Content creators can streamline their workflow by generating videos from scripts or articles, saving time and resources while maintaining high-quality output.
 
 
-## Technical Overview
+## Technical Overview:
 
 1. **Frontend**: The application uses HTML, CSS, and JavaScript for the user interface, providing a seamless user experience.
 
@@ -53,7 +53,7 @@ The Dataviz AI is an AI powered web application  has the potential to significan
 4. **API Integration**: The application integrates with the Pexels API for video content, allowing users to access a vast library of stock videos.
 
 
-## Installation and Setup
+## Installation and Setup:
 
 1. Clone the repository: 
    ```bash
