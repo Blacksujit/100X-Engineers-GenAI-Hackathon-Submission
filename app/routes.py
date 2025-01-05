@@ -68,8 +68,6 @@
 
 #----------------------------------------OLD CODE---------------------------------------------------#
 
-
-
 from flask import Blueprint, render_template, request, jsonify , send_file , send_from_directory , url_for
 from .utils import nlp_pipeline, convert_gif_to_storytelling_video , create_animated_gif # Ensure correct import
 import logging
@@ -95,6 +93,8 @@ from pathlib import Path
 import mimetypes
 from flask import session
 import pandas as pd
+# from PyQt5.QtWebEngineWidgets import QApplication
+# from PyQt5.QtCore import QUrl
 # from .second_utility import create_scenario_based_infographic_video , create_animated_pie_chart , parse_user_input , generate_audio_from_text, generate_narration, add_auto_generated_audio_to_video
 # from  .text_processing import nlp_pipeline
 # from  .gif_animation_creation import create_animated_gif
@@ -127,6 +127,7 @@ MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
 UPLOADS_FOLDER.mkdir(parents=True, exist_ok=True)
 TEMP_FOLDER.mkdir(parents=True, exist_ok=True)
+
 # session handling ----------------
 
 # session_id = uuid.uuid4().hex  # Unique session identifier
@@ -310,7 +311,7 @@ def uploaded_file(filename):
 
 
 @main.route('/process', methods=['POST'])
-def process():    
+def process():
     if 'data_file' not in request.files:
         return jsonify({"error": "No file part"}), 400
     file = request.files['data_file']
@@ -320,8 +321,7 @@ def process():
         filename = secure_filename(file.filename)
         file_path = os.path.join(UPLOADS_FOLDER, filename)
         file.save(file_path)
-        
-        
+
         prompt = request.form['prompt']
 
         # Call the data storytelling pipeline
@@ -331,10 +331,9 @@ def process():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
     else:
-        return jsonify({"error": "Invalid file format. Please upload a CSV, XLSX, or TXT file."}), 400
-
-
-
+        return jsonify({"error": "Invalid file format. Please upload a CSV, XLSX, or TXT file."}), 400    
+        
+        
 
 @main.route("/generate_video", methods=["POST"])
 def generate_video():

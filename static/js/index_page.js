@@ -1,4 +1,8 @@
- 
+
+
+
+
+
 // Event listener for the Text Input card
 document.querySelector('.card[data-id="1"]').addEventListener('click', () => {
     window.location.assign("/text-to-video");
@@ -26,3 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Card element not found!");
     }
 });
+
+
+
+

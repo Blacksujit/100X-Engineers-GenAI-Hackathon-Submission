@@ -18,6 +18,23 @@ Exceptions:
 from app import create_app
 import os
 import logging
+from PyQt5.QtWidgets import QApplication
+# from PyQt5.QtCore import QUrl
+import sys 
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+import sys
+
+# class MainWindow(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+#         self.setWindowTitle("PyQt5 WebEngine Example")
+#         self.resize(800, 600)
+
+#         # Add a QWebEngineView
+#         webview = QWebEngineView()
+#         webview.setUrl("https://www.python.org")
+#         self.setCentralWidget(webview)
 
 app = create_app()
 
@@ -25,6 +42,10 @@ if __name__ == "__main__":
     try:
         os.makedirs("uploads", exist_ok=True)
         os.makedirs("models", exist_ok=True)
+        new_app = QApplication(sys.argv)
+        # main_window = MainWindow()
+        # main_window.show()
         app.run(debug=True, port=200)
+        sys.exit(new_app.exec_())
     except Exception as e:
         logging.error(f"An error occurred: {e}")

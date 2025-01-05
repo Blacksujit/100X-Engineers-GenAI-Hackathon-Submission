@@ -57,6 +57,10 @@
             margin-top: 20px;
             color: red;
         }
+        #loadingSpinner {
+            display: none;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -71,43 +75,85 @@
 
             <button type="submit">Submit</button>
         </form>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner">
+            <p>Loading...</p>
+        </div>
+
+        <!-- Video Display -->
         <div id="videoContainer">
             <h2>Generated Video</h2>
             <video id="generatedVideo" controls width="100%"></video>
         </div>
+
+        <!-- Error Handling -->
         <div id="errorContainer">
             <h2>Error</h2>
             <p id="errorMessage"></p>
         </div>
     </div>
+
     <script>
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
+
+            // Get the file and validate file type
+            const fileInput = document.getElementById('data_file');
+            const file = fileInput.files[0];
+            const allowedTypes = ['text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/plain'];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert('Invalid file type. Please upload a CSV, XLSX, or TXT file.');
+                return;
+            }
 
             const formData = new FormData(this);
             const prompt = document.getElementById('prompt').value;
             formData.append('prompt', prompt);
 
+            // Show loading spinner
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('videoContainer').style.display = 'none';
+            document.getElementById('errorContainer').style.display = 'none';
+
+            // Make the POST request
             fetch('/process', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
+                console.log(data); // Debugging
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+
                 if (data.error) {
                     document.getElementById('errorMessage').textContent = data.error;
                     document.getElementById('errorContainer').style.display = 'block';
                     document.getElementById('videoContainer').style.display = 'none';
                 } else {
-                    const videoUrl = `/uploads/videos/${data.video_file}`;
+                    const videoUrl = data.video_file; // Updated to match backend key
                     const video = document.getElementById('generatedVideo');
                     video.src = videoUrl;
+
+                    // Error handler for video
+                    video.onerror = function() {
+                        document.getElementById('errorMessage').textContent = 'Error loading video.';
+                        document.getElementById('errorContainer').style.display = 'block';
+                        document.getElementById('videoContainer').style.display = 'none';
+                    };
+
+                    // Show video container
                     document.getElementById('videoContainer').style.display = 'block';
                     document.getElementById('errorContainer').style.display = 'none';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+
                 document.getElementById('errorMessage').textContent = 'An unexpected error occurred.';
                 document.getElementById('errorContainer').style.display = 'block';
                 document.getElementById('videoContainer').style.display = 'none';

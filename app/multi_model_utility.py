@@ -733,12 +733,14 @@ def data_storytelling_pipeline(file_path, prompt):
         
         logging.info("Creating the infographic video...")
         # video_file = "final_production_model.mp4"
-        generate_infographic_video(data, insights, columns, audio_file=narration_file)
+        video_file = generate_infographic_video(data, insights, columns, audio_file=narration_file)
+        
+        # return video_file
         
         end_time = time.time()
         logging.info(f"Pipeline completed successfully in {end_time - start_time:.2f} seconds")
         
-        # return video_file
+        return video_file
     
     except FileNotFoundError as fnf_error:
         logging.error(f"File not found: {fnf_error}")
