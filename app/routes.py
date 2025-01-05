@@ -328,70 +328,53 @@ def uploaded_file(filename):
 
 @main.route('/process', methods=['POST'])
 def process():
-    # Initialize video_file variable in the outer scope
-    video_file = None
-    file_path = None
-    
     try:
-        # Validate request
         if 'data_file' not in request.files:
-            return jsonify({"error": "No file uploaded"}), 400
+            return jsonify({"error": "No file part"}), 400
 
         file = request.files['data_file']
         if file.filename == '':
-            return jsonify({"error": "Empty filename"}), 400
-            
-        if 'prompt' not in request.form:
-            return jsonify({"error": "No prompt provided"}), 400
+            return jsonify({"error": "No selected file"}), 400
 
-        # Create necessary directories
-        UPLOADS_FOLDER = os.path.join('static', 'uploads')
-        os.makedirs(UPLOADS_FOLDER, exist_ok=True)
-
-        # Save uploaded file
         filename = secure_filename(file.filename)
         file_path = os.path.join(UPLOADS_FOLDER, filename)
         file.save(file_path)
 
-        try:
-            # Generate video
-            video_file = data_storytelling_pipeline(file_path, request.form['prompt'])
-            
-            if not video_file or not os.path.exists(video_file):
-                raise ValueError("Video generation failed - no output file produced")
+        prompt = request.form['prompt']
 
-            # Clean up input file
-            if os.path.exists(file_path):
-                os.remove(file_path)
+        # Call the data storytelling pipeline
+        
+        video_file = data_storytelling_pipeline(file_path, prompt)
+        print(video_file)
+        if not video_file:
+            return jsonify({"error": "Video generation failed"}), 500
+        
+        print(f"Video generated at {video_file}")
+        
+        # else:
+        #     return jsonify({"success": True, "message": "Video generated successfully", "video_path": video_path}), 200
 
-            # Send the video file
-            return send_file(
-                video_file,
-                mimetype='video/mp4',
-                as_attachment=True,
-                download_name='visualization.mp4'
-            )
+        # Ensure the uploads directory exists
+        os.makedirs(UPLOADS_FOLDER, exist_ok=True)
 
-        except Exception as e:
-            # Clean up on failure
-            if file_path and os.path.exists(file_path):
-                os.remove(file_path)
-            if video_file and os.path.exists(video_file):
-                os.remove(video_file)
-            raise e
+        # Save the video to a unique path
+        timestamp = int(time.time())
+        video_filename = f"generated_video_{timestamp}.mp4"
+        final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
+
+        counter = 1
+        while os.path.exists(final_video_path):
+            video_filename = f"generated_video_{timestamp}_{counter}.mp4"
+            final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
+            counter += 1
+
+        shutil.move(video_file, final_video_path)
+        return jsonify({"video_file": f"/uploads/videos/{video_filename}"}), 200
 
     except Exception as e:
-        # Final cleanup
-        if file_path and os.path.exists(file_path):
-            os.remove(file_path)
-        if video_file and os.path.exists(video_file):
-            os.remove(video_file)
-            
-        logger.error(f"Error in process route: {str(e)}", exc_info=True)
-        return jsonify({
-            "error": "Video generation failed",
-            "details": str(e)
-        }), 500
+        logger.error(f"Unexpected error: {e}")
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+
 @main.route("/generate_video", methods=["POST"])
 def generate_video():
     try:
