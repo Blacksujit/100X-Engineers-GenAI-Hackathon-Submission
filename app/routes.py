@@ -235,7 +235,7 @@ def create_infographic_video(file_path):
     return final_video_path
 
 
-# Loading the custom Model Code Implementatin 
+# Loading the custom Model Code Implementation 
 
 def data_storytelling_pipeline(file_path, prompt):
     try:
@@ -243,31 +243,48 @@ def data_storytelling_pipeline(file_path, prompt):
         
         logging.info("Loading and preprocessing data...")
         data = load_and_preprocess_data(file_path)
+        if data is None or data.empty:
+            logging.error("Failed to load or preprocess data.")
+            raise ValueError("Data loading or preprocessing failed.")
         logging.debug(f"Loaded Data: {data.head()}")
         
         logging.info("Performing EDA...")
         eda_summary = perform_eda(data)
+        if not eda_summary:
+            logging.error("Failed to perform EDA.")
+            raise ValueError("EDA failed.")
         logging.debug(f"EDA Summary: {eda_summary}")
         
         logging.info("Analyzing the user's prompt...")
         insights, columns = analyze_prompt_for_insights(prompt, eda_summary)
+        if not insights or not columns:
+            logging.error("Failed to extract insights or columns.")
+            raise ValueError("Insights or columns extraction failed.")
         logging.debug(f"Extracted insights: {insights}")
         logging.debug(f"Extracted columns: {columns}")
         
         logging.info("Generating narration...")
         narration_text = f"Here is the analysis based on the prompt: {prompt}. Insights: {', '.join(insights)}"
         narration_file = generate_narration(narration_text)
+        if not narration_file:
+            logging.error("Narration file generation failed.")
+            raise ValueError("Narration file generation failed.")
+        logging.debug(f"Generated narration file: {narration_file}")
         
         logging.info("Creating the infographic video...")
-        # video_file = "final_production_model.mp4"
         video_file = generate_infographic_video(data, insights, columns, audio_file=narration_file)
-        
-        # return video_file
+        print(video_file)
+        if not video_file:
+            logging.error("Video generation failed.")
+            raise ValueError("Video generation failed.")
+        logging.debug(f"Generated video file: {video_file}")
         
         end_time = time.time()
         logging.info(f"Pipeline completed successfully in {end_time - start_time:.2f} seconds")
         
+        print(video_file)
         return video_file
+    
     
     except FileNotFoundError as fnf_error:
         logging.error(f"File not found: {fnf_error}")
@@ -283,7 +300,7 @@ def data_storytelling_pipeline(file_path, prompt):
         raise
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
-        raise    
+        raise
 
 
 # Loading the custom Model Code Implementation -----------------------------------------------------------------------------------------
@@ -309,32 +326,72 @@ def uploaded_file(filename):
     return send_from_directory(UPLOADS_FOLDER, filename)
 
 
-
 @main.route('/process', methods=['POST'])
 def process():
-    if 'data_file' not in request.files:
-        return jsonify({"error": "No file part"}), 400
-    file = request.files['data_file']
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-    if file:
+    # Initialize video_file variable in the outer scope
+    video_file = None
+    file_path = None
+    
+    try:
+        # Validate request
+        if 'data_file' not in request.files:
+            return jsonify({"error": "No file uploaded"}), 400
+
+        file = request.files['data_file']
+        if file.filename == '':
+            return jsonify({"error": "Empty filename"}), 400
+            
+        if 'prompt' not in request.form:
+            return jsonify({"error": "No prompt provided"}), 400
+
+        # Create necessary directories
+        UPLOADS_FOLDER = os.path.join('static', 'uploads')
+        os.makedirs(UPLOADS_FOLDER, exist_ok=True)
+
+        # Save uploaded file
         filename = secure_filename(file.filename)
         file_path = os.path.join(UPLOADS_FOLDER, filename)
         file.save(file_path)
 
-        prompt = request.form['prompt']
-
-        # Call the data storytelling pipeline
         try:
-            video_file = data_storytelling_pipeline(file_path, prompt)
-            return jsonify({"video_file": video_file})
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
-    else:
-        return jsonify({"error": "Invalid file format. Please upload a CSV, XLSX, or TXT file."}), 400    
-        
-        
+            # Generate video
+            video_file = data_storytelling_pipeline(file_path, request.form['prompt'])
+            
+            if not video_file or not os.path.exists(video_file):
+                raise ValueError("Video generation failed - no output file produced")
 
+            # Clean up input file
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+            # Send the video file
+            return send_file(
+                video_file,
+                mimetype='video/mp4',
+                as_attachment=True,
+                download_name='visualization.mp4'
+            )
+
+        except Exception as e:
+            # Clean up on failure
+            if file_path and os.path.exists(file_path):
+                os.remove(file_path)
+            if video_file and os.path.exists(video_file):
+                os.remove(video_file)
+            raise e
+
+    except Exception as e:
+        # Final cleanup
+        if file_path and os.path.exists(file_path):
+            os.remove(file_path)
+        if video_file and os.path.exists(video_file):
+            os.remove(video_file)
+            
+        logger.error(f"Error in process route: {str(e)}", exc_info=True)
+        return jsonify({
+            "error": "Video generation failed",
+            "details": str(e)
+        }), 500
 @main.route("/generate_video", methods=["POST"])
 def generate_video():
     try:
