@@ -1,0 +1,68 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 60%;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+input[type="file"],
+input[type="text"],
+button {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+}
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #4cae4c;
+}
+#videoContainer {
+    display: none;
+    margin-top: 20px;
+}
+#errorContainer {
+    display: none;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffebee;
+    border: 1px solid #ffcdd2;
+    border-radius: 4px;
+}
+#loadingSpinner {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+}
+.debug-info {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-family: monospace;
+    display: none;
+}

@@ -244,24 +244,20 @@ def data_storytelling_pipeline(file_path, prompt):
         logging.info("Loading and preprocessing data...")
         data = load_and_preprocess_data(file_path)
         if data is None or data.empty:
-            logging.error("Failed to load or preprocess data.")
+            logging.error("Data loading or preprocessing failed.")
             raise ValueError("Data loading or preprocessing failed.")
-        logging.debug(f"Loaded Data: {data.head()}")
         
         logging.info("Performing EDA...")
         eda_summary = perform_eda(data)
         if not eda_summary:
-            logging.error("Failed to perform EDA.")
+            logging.error("EDA failed.")
             raise ValueError("EDA failed.")
-        logging.debug(f"EDA Summary: {eda_summary}")
         
         logging.info("Analyzing the user's prompt...")
         insights, columns = analyze_prompt_for_insights(prompt, eda_summary)
         if not insights or not columns:
-            logging.error("Failed to extract insights or columns.")
+            logging.error("Insights or columns extraction failed.")
             raise ValueError("Insights or columns extraction failed.")
-        logging.debug(f"Extracted insights: {insights}")
-        logging.debug(f"Extracted columns: {columns}")
         
         logging.info("Generating narration...")
         narration_text = f"Here is the analysis based on the prompt: {prompt}. Insights: {', '.join(insights)}"
@@ -269,37 +265,19 @@ def data_storytelling_pipeline(file_path, prompt):
         if not narration_file:
             logging.error("Narration file generation failed.")
             raise ValueError("Narration file generation failed.")
-        logging.debug(f"Generated narration file: {narration_file}")
         
         logging.info("Creating the infographic video...")
         video_file = generate_infographic_video(data, insights, columns, audio_file=narration_file)
-        print(video_file)
-        if not video_file:
+        if not video_file or not os.path.exists(video_file):
             logging.error("Video generation failed.")
             raise ValueError("Video generation failed.")
-        logging.debug(f"Generated video file: {video_file}")
         
         end_time = time.time()
         logging.info(f"Pipeline completed successfully in {end_time - start_time:.2f} seconds")
-        
-        print(video_file)
         return video_file
     
-    
-    except FileNotFoundError as fnf_error:
-        logging.error(f"File not found: {fnf_error}")
-        raise
-    except pd.errors.ParserError as parser_error:
-        logging.error(f"Error parsing the file: {parser_error}")
-        raise
-    except TypeError as type_error:
-        logging.error(f"Type error: {type_error}")
-        raise
-    except ValueError as value_error:
-        logging.error(f"Value error: {value_error}")
-        raise
     except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
+        logging.error(f"Pipeline error: {str(e)}")
         raise
 
 
@@ -325,56 +303,72 @@ def multi_model_template():
 def uploaded_file(filename):
     return send_from_directory(UPLOADS_FOLDER, filename)
 
+@main.route('/uploads/<path:filename>', methods=['GET'])
+def serve_multi_model_file(filename):
+    return send_from_directory(UPLOADS_FOLDER, filename)
+
 
 @main.route('/process', methods=['POST'])
 def process():
     try:
+        logging.info("Received a request to /process")
+
+        # Check for uploaded file
         if 'data_file' not in request.files:
-            return jsonify({"error": "No file part"}), 400
+            logging.error("No file part in the request")
+            return jsonify({"error": "No file part in the request"}), 400
 
         file = request.files['data_file']
         if file.filename == '':
-            return jsonify({"error": "No selected file"}), 400
+            logging.error("No file selected")
+            return jsonify({"error": "No file selected"}), 400
 
+
+        # Save the input file
         filename = secure_filename(file.filename)
         file_path = os.path.join(UPLOADS_FOLDER, filename)
         file.save(file_path)
+        logging.info(f"File saved at: {file_path}")
 
-        prompt = request.form['prompt']
+        # Get and validate prompt
+        prompt = request.form.get('prompt', '').strip()
+        if not prompt:
+            logging.error("Prompt is missing")
+            return jsonify({"error": "Prompt is required"}), 400
+        logging.info(f"Prompt received: {prompt}")
 
-        # Call the data storytelling pipeline
-        
+        # Process the data and generate video
         video_file = data_storytelling_pipeline(file_path, prompt)
-        print(video_file)
-        if not video_file:
+        
+        if not video_file or not os.path.exists(video_file):
+            logging.error("Generated video file does not exist")
             return jsonify({"error": "Video generation failed"}), 500
-        
-        print(f"Video generated at {video_file}")
-        
-        # else:
-        #     return jsonify({"success": True, "message": "Video generated successfully", "video_path": video_path}), 200
 
-        # Ensure the uploads directory exists
-        os.makedirs(UPLOADS_FOLDER, exist_ok=True)
-
-        # Save the video to a unique path
+        # Move video to final location with unique filename
         timestamp = int(time.time())
-        video_filename = f"generated_video_{timestamp}.mp4"
-        final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
-
-        counter = 1
-        while os.path.exists(final_video_path):
-            video_filename = f"generated_video_{timestamp}_{counter}.mp4"
-            final_video_path = os.path.join(UPLOADS_FOLDER, video_filename)
-            counter += 1
-
+        final_filename = f"video_{timestamp}.mp4"
+        final_video_path = os.path.join(UPLOADS_FOLDER, final_filename)
         shutil.move(video_file, final_video_path)
-        return jsonify({"video_file": f"/uploads/videos/{video_filename}"}), 200
+        logging.info(f"Video moved to: {final_video_path}")
+
+        # Return the video URL (relative path)
+        video_url = f"/uploads/videos/{final_filename}"
+        
+        # Verify file exists before returning
+        if not os.path.exists(final_video_path):
+            logging.error(f"Final video file not found at: {final_video_path}")
+            return jsonify({"error": "Video file not found after moving"}), 500
+
+        return jsonify({
+            "video_file": video_url,
+            "file_exists": True,
+            "file_size": os.path.getsize(final_video_path)
+        }), 200
 
     except Exception as e:
-        logger.error(f"Unexpected error: {e}")
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
-
+        logging.error(f"Unexpected error in /process route: {str(e)}")
+        return jsonify({"error": str(e)}), 500    
+    
 @main.route("/generate_video", methods=["POST"])
 def generate_video():
     try:

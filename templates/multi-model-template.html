@@ -5,63 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-Model Data Upload</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 60%;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        input[type="file"],
-        input[type="text"],
-        button {
-            margin-bottom: 20px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #5cb85c;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #4cae4c;
-        }
-        #videoContainer {
-            display: none;
-            margin-top: 20px;
-        }
-        #errorContainer {
-            display: none;
-            margin-top: 20px;
-            color: red;
-        }
-        #loadingSpinner {
-            display: none;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/multi_model_styles.css') }}">
+    
 </head>
 <body>
     <div class="container">
@@ -76,89 +21,25 @@
             <button type="submit">Submit</button>
         </form>
 
-        <!-- Loading Spinner -->
         <div id="loadingSpinner">
-            <p>Loading...</p>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <p>Processing your request...</p>
         </div>
 
-        <!-- Video Display -->
         <div id="videoContainer">
             <h2>Generated Video</h2>
             <video id="generatedVideo" controls width="100%"></video>
         </div>
 
-        <!-- Error Handling -->
         <div id="errorContainer">
             <h2>Error</h2>
             <p id="errorMessage"></p>
         </div>
+
+        <div class="debug-info" id="debugInfo"></div>
     </div>
-
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // Get the file and validate file type
-            const fileInput = document.getElementById('data_file');
-            const file = fileInput.files[0];
-            const allowedTypes = ['text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/plain'];
-
-            if (!allowedTypes.includes(file.type)) {
-                alert('Invalid file type. Please upload a CSV, XLSX, or TXT file.');
-                return;
-            }
-
-            const formData = new FormData(this);
-            const prompt = document.getElementById('prompt').value;
-            formData.append('prompt', prompt);
-
-            // Show loading spinner
-            document.getElementById('loadingSpinner').style.display = 'block';
-            document.getElementById('videoContainer').style.display = 'none';
-            document.getElementById('errorContainer').style.display = 'none';
-
-            // Make the POST request
-            fetch('/process', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data); // Debugging
-                // Hide loading spinner
-                document.getElementById('loadingSpinner').style.display = 'none';
-
-                if (data.error) {
-                    document.getElementById('errorMessage').textContent = data.error;
-                    document.getElementById('errorContainer').style.display = 'block';
-                    document.getElementById('videoContainer').style.display = 'none';
-                } else {
-                    const videoUrl = data.video_file; // Updated to match backend key
-                    const video = document.getElementById('generatedVideo');
-                    video.src = videoUrl;
-
-                    // Error handler for video
-                    video.onerror = function() {
-                        document.getElementById('errorMessage').textContent = 'Error loading video.';
-                        document.getElementById('errorContainer').style.display = 'block';
-                        document.getElementById('videoContainer').style.display = 'none';
-                    };
-
-                    // Show video container
-                    document.getElementById('videoContainer').style.display = 'block';
-                    document.getElementById('errorContainer').style.display = 'none';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Hide loading spinner
-                document.getElementById('loadingSpinner').style.display = 'none';
-
-                document.getElementById('errorMessage').textContent = 'An unexpected error occurred.';
-                document.getElementById('errorContainer').style.display = 'block';
-                document.getElementById('videoContainer').style.display = 'none';
-            });
-        });
-    </script>
 </body>
+<script src="{{url_for('static', filename='js/multi_model_script.js')}}"></script>
 </html>

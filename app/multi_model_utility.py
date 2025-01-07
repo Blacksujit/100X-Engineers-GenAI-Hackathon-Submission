@@ -669,20 +669,36 @@ def create_video_from_frames(frames, audio_file=None, video_file="final_producti
     video.write_videofile(video_file, codec="libx264", fps=24)
     logging.info(f"Video saved as {video_file}")
 
-def generate_infographic_video(data, insights, columns,audio_file=None, title_image="title_screen.png"):
-    frames = generate_animated_frames(data, insights, columns)
-    if not frames:
-        raise ValueError("No frames generated from data.")
-    
-    if os.path.exists(title_image):
-        title_image_clip = Image.open(title_image)
-        title_image_clip = title_image_clip.convert("RGBA")
-        title_image_clip = np.array(title_image_clip)
-        frames.insert(0, title_image_clip)
-    
-    create_video_from_frames(frames, audio_file)
-    print("Video successfully generated!")
-    
+def generate_infographic_video(data, insights, columns, audio_file=None, title_image="title_screen.png"):
+    try:
+        # Generate frames
+        frames = generate_animated_frames(data, insights, columns)
+        if not frames:
+            raise ValueError("No frames generated from data.")
+        
+        # Add title image if it exists
+        if os.path.exists(title_image):
+            title_image_clip = Image.open(title_image)
+            title_image_clip = title_image_clip.convert("RGBA")
+            title_image_clip = np.array(title_image_clip)
+            frames.insert(0, title_image_clip)
+        
+        # Create output video file with absolute path
+        output_video = os.path.join(os.getcwd(), "final_production_model.mp4")
+        
+        # Create video from frames
+        create_video_from_frames(frames, audio_file, output_video)
+        
+        if not os.path.exists(output_video):
+            raise FileNotFoundError(f"Video file was not created at {output_video}")
+            
+        print("Video successfully generated!")
+        return output_video
+        
+    except Exception as e:
+        logging.error(f"Error in generate_infographic_video: {str(e)}")
+        raise
+   
     
     
 def generate_narration(text, output_file="narration.mp3", lang='en', slow=False, tld='com'):
@@ -710,54 +726,42 @@ def generate_narration(text, output_file="narration.mp3", lang='en', slow=False,
         raise
 
     
+
 def data_storytelling_pipeline(file_path, prompt):
     try:
         start_time = time.time()
         
+        # Validate input file exists
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Input file not found: {file_path}")
+        
         logging.info("Loading and preprocessing data...")
         data = load_and_preprocess_data(file_path)
-        logging.debug(f"Loaded Data: {data.head()}")
         
         logging.info("Performing EDA...")
         eda_summary = perform_eda(data)
-        logging.debug(f"EDA Summary: {eda_summary}")
         
         logging.info("Analyzing the user's prompt...")
         insights, columns = analyze_prompt_for_insights(prompt, eda_summary)
-        logging.debug(f"Extracted insights: {insights}")
-        logging.debug(f"Extracted columns: {columns}")
         
         logging.info("Generating narration...")
         narration_text = f"Here is the analysis based on the prompt: {prompt}. Insights: {', '.join(insights)}"
         narration_file = generate_narration(narration_text)
         
         logging.info("Creating the infographic video...")
-        # video_file = "final_production_model.mp4"
         video_file = generate_infographic_video(data, insights, columns, audio_file=narration_file)
         
-        # return video_file
-        
+        if not os.path.exists(video_file):
+            raise FileNotFoundError(f"Generated video file not found at {video_file}")
+            
         end_time = time.time()
         logging.info(f"Pipeline completed successfully in {end_time - start_time:.2f} seconds")
         
         return video_file
     
-    except FileNotFoundError as fnf_error:
-        logging.error(f"File not found: {fnf_error}")
-        raise
-    except pd.errors.ParserError as parser_error:
-        logging.error(f"Error parsing the file: {parser_error}")
-        raise
-    except TypeError as type_error:
-        logging.error(f"Type error: {type_error}")
-        raise
-    except ValueError as value_error:
-        logging.error(f"Value error: {value_error}")
-        raise
     except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
-        raise    
-  
+        logging.error(f"Pipeline error: {str(e)}")
+        raise  
 # now used in project for user input uncomment only for model developement======================================================================  
   
 # # Example usage:
