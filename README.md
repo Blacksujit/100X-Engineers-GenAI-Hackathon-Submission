@@ -1,4 +1,4 @@
-# Our Hackathon MVP:
+# Our Hackathon MVP: Code is present at master branch please clone from there 
 
 ## DataVizAI
 
