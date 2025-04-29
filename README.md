@@ -7,7 +7,7 @@
 
 # MVP Videos:
 
-**coming soon ....**
+**coming soon ......**
 
 ## Project Overview:
 
