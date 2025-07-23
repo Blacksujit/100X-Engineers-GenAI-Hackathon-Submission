@@ -13,6 +13,12 @@
 
 Dataviz AI is an AI powered web application that enables users to generate animated infographic videos based on input  Data , text,files. This MVP leverages the transformers and pretrained genai models to convert ur idea into an datastorytelling video  and incorporates advanced natural language processing (NLP) techniques, including LangChain and stable diffusion techniques, to analyze and create visual impact.
 
+
+## System-Architecture-diagram:
+
+
+![System Architecture](project-system-design/system-design-mermaid.png)
+
 ## Key Features:
 
 **1. Text-to-Video Conversion:** 
