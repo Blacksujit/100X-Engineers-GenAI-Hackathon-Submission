@@ -69,7 +69,7 @@ logging.basicConfig(level=logging.INFO)
 # # Load spaCy model for NER
 # nlp = spacy.load("en_core_web_sm")
 
-os.environ['HF_HOME'] = "D:\\cahc_models_folder"  # Change this to your desired cache path
+os.environ['HF_HOME'] = "D:\\cahc_models_folder"  # Change this as  per desired cache path
 
 
 def load_models(model_directory="models"):
