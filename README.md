@@ -127,7 +127,7 @@ Businesses can leverage this tool to create promotional videos quickly, allowing
 
 2. On the Home Page u will se three cards each card is having an different feature so u can get a rid of it and use it!!
 
-3. Start implemnting  ur bussiness  ideas into , data storytelling video and hop on this journey which is full of  colors!!
+3. Start implemnting  ur bussiness  ideas into , data storytelling video and hop on to this journey which is full of  colors!!
 
 
 ## Contributing:
