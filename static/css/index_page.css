@@ -21,6 +21,128 @@
 .navbar-link:hover, .navbar-link.active {
     color: #38bdf8;
 }
+
+/* Active underline indicator for nav links */
+#tm-nav .nav-item .circle {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: -6px;
+    height: 2px;
+    background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
+    border-radius: 2rem;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease, opacity 200ms ease;
+}
+
+#tm-nav .nav-item:hover .circle,
+#tm-nav .nav-item.active .circle {
+    opacity: 0.8;
+    transform: scaleX(1);
+}
+
+/* Scroll state styles injected by JS */
+#tm-nav.navbar-blur {
+    backdrop-filter: blur(8px);
+    background: rgba(17, 24, 39, 0.9) !important;
+}
+
+#tm-nav.navbar-shadow {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Glassmorphism navbar */
+.glass-nav {
+    background: linear-gradient(
+        120deg,
+        rgba(17, 24, 39, 0.35) 0%,
+        rgba(24, 24, 35, 0.35) 30%,
+        rgba(32, 24, 48, 0.35) 100%
+    ) !important;
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    min-height: 56px;
+}
+
+.glass-nav .navbar-brand {
+    position: relative;
+    color: #e5f8ff !important;
+    letter-spacing: 0.3px;
+    font-size: 1.25rem !important;
+    font-weight: 600;
+}
+
+.glass-nav .navbar-brand::after {
+    content: "";
+    position: absolute;
+    inset: -6px -8px -4px -8px;
+    background: radial-gradient(60% 60% at 20% 50%, rgba(34,211,238,0.10), transparent 60%),
+                radial-gradient(60% 60% at 80% 50%, rgba(168,85,247,0.10), transparent 60%);
+    filter: blur(12px);
+    z-index: -1;
+}
+
+.glass-nav .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.86) !important;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    transition: all 200ms ease;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.glass-nav .navbar-nav .nav-link:hover {
+    color: #fff !important;
+    border-color: rgba(153,255,102,0.2);
+    background: linear-gradient(120deg, rgba(17,24,39,0.55), rgba(32,24,48,0.55));
+    box-shadow: 0 2px 8px rgba(153,255,102,0.08), inset 0 0 6px rgba(255,255,255,0.03);
+}
+
+.glass-nav .navbar-nav .nav-link.active {
+    color: #0b0f1a !important;
+    background: linear-gradient(90deg, #99FF66, #22d3ee);
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(34,211,238,0.2), 0 1px 4px rgba(153,255,102,0.2);
+}
+
+/* Hide legacy underline when using pill style */
+.glass-nav .nav-item .circle { display: none; }
+
+/* Responsive improvements */
+@media (max-width: 992px) {
+    .glass-nav .navbar-nav { gap: 4px !important; }
+    .glass-nav .navbar-nav .nav-link { padding: 6px 10px; }
+    .glass-nav .navbar-brand { font-size: 1.1rem !important; }
+}
+
+/* Compact container spacing */
+.glass-nav .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* Reduce gap between nav items */
+.glass-nav .navbar-nav {
+    gap: 3px !important;
+}
+
+/* Sleek toggle button */
+.glass-nav .navbar-toggler {
+    padding: 3px 5px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 5px;
+    background: rgba(255,255,255,0.05);
+}
+
+.glass-nav .navbar-toggler:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+}
 .navbar-mobile-menu {
     transition: max-height 0.3s ease;
     overflow: hidden;
@@ -395,7 +517,7 @@
     border-bottom: 1px solid rgba(255,255,255,0.08);
     box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     transition: background 200ms ease, box-shadow 200ms ease;
-    z-index: 1000;
+    z-index:  0;
     min-height: 64px;
 }
 
@@ -454,7 +576,7 @@
 .ai-logo-glow {
     position: absolute;
     width: 40px; height: 40px;
-    border-radius: 9999px;
+    border-radius: 90rem;
     background: radial-gradient(60% 60% at 50% 50%, rgba(153,255,102,0.45) 0%, rgba(34,211,238,0.25) 60%, rgba(168,85,247,0.15) 100%);
     filter: blur(14px);
     transform: translate(-6px, 4px);
@@ -484,10 +606,10 @@
 .ai-navbar-link:hover::after { transform: scaleX(1); }
 
 .ai-navbar-link .ai-navbar-link-icon {
-    display: inline-flex;
+    display:inline-flex;
     align-items: center;
     margin-right: 10px;
-    opacity: 0.85;
+    opacity: 0.1;
     transition: transform 200ms ease, opacity 200ms ease;
 }
 

@@ -1,66 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}DataViz AI{% endblock %}</title>
-
-  <!-- Core styles (Tailwind for utility classes) -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Optional vendor styles kept for compatibility -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/app_theme.css') }}">
-
-  {% block head %}{% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DataViz AI{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.scss') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index_page.css') }}">
+    {% block extra_css %}{% endblock %}
 </head>
-<body class="min-h-screen bg-gray-950 text-white">
-  <!-- Navbar -->
-  <header class="ai-navbar sticky top-0 z-40 backdrop-blur bg-black/40 border-b border-white/10">
-    <nav class="container mx-auto flex items-center justify-between px-4 py-3">
-      <a href="/" class="text-xl font-semibold">DataViz AI</a>
-      <div class="hidden md:flex items-center gap-6 text-sm">
-        <a class="navbar-link hover:underline" href="/text-to-video">Text to Video</a>
-        <a class="navbar-link hover:underline" href="/csv-to-video">CSV to Video</a>
-        <a class="navbar-link hover:underline" href="/multi-model-template">Multi-Model</a>
-      </div>
-      <button id="navbar-toggle" class="md:hidden inline-flex items-center justify-center rounded p-2 border border-white/10">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path id="navbar-toggle-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
-        </svg>
-      </button>
+<body>
+    <!-- Navbar Start -->
+    <nav id="tm-nav" class="navbar navbar-expand-lg navbar-dark tm-bg-dark glass-nav shadow-lg fixed-top">
+        <div class="container mx-auto flex items-center justify-between px-6 py-3">
+            <a class="navbar-brand flex items-center gap-2 text-white text-3xl font-bold tracking-wide" href="{{ url_for('main.index') }}">
+                <svg class="inline-block mr-2" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="15" stroke="#99FF66" stroke-width="2" fill="rgba(153,255,102,0.08)"/>
+                    <path d="M10 20L16 12L22 20" stroke="#99FF66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                DataViz <span style="color:#99FF66;">AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.csv_to_video') }}">CSV</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.text_to_video') }}">Text</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.multi_model_template') }}">Studio</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
-    <div id="navbar-mobile-menu" class="md:hidden overflow-hidden transition-all duration-300 max-h-0">
-      <div class="px-4 pb-4 flex flex-col gap-3 text-sm">
-        <a class="navbar-link" href="/text-to-video">Text to Video</a>
-        <a class="navbar-link" href="/csv-to-video">CSV to Video</a>
-        <a class="navbar-link" href="/multi-model-template">Multi-Model</a>
-      </div>
+    <!-- Navbar End -->
+
+    <div class="page-content mt-5 pt-5">
+        {% block content %}{% endblock %}
     </div>
-  </header>
 
-  <main class="container mx-auto px-4 py-6">
-    {% block content %}{% endblock %}
-  </main>
-
-  <footer class="border-t border-white/10 mt-8">
-    <div class="container mx-auto px-4 py-6 text-xs text-gray-400">
-      <p>&copy; {{ 2025 if false else '' }} DataViz AI. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- Vendor scripts kept for compatibility -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-  <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/slick.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/templatemo-script.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
-  {% block scripts %}{% endblock %}
+    {% block scripts %}
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> 
+    <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script> 
+    <script src="{{ url_for('static', filename='js/templatemo-script.js') }}"></script> 
+    <script src="{{ url_for('static', filename='js/slick.js') }}"></script> 
+    {% endblock %}
 </body>
 </html>
-

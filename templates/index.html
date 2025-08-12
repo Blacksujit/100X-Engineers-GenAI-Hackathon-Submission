@@ -16,20 +16,66 @@
 </head>
 
 <body>
+    <!-- Navbar Start -->
+    <nav id="tm-nav" class="navbar navbar-expand-lg navbar-dark tm-bg-dark glass-nav shadow-lg fixed top-0 left-0 w-full z-50" style="font-family: 'Poppins', 'Source Sans Pro', sans-serif;">
+        <div class="container mx-auto flex items-center justify-between px-6 py-3">
+            <a class="navbar-brand flex items-center gap-2 text-white text-3xl font-bold tracking-wide" href="{{ url_for('main.index') }}" style="letter-spacing: 2px;">
+                <svg class="inline-block mr-2" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="15" stroke="#99FF66" stroke-width="2" fill="rgba(153,255,102,0.08)"/>
+                    <path d="M10 20L16 12L22 20" stroke="#99FF66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                DataViz <span style="color:#99FF66;">AI</span>
+            </a>
+            <button class="navbar-toggler text-white border-white focus:outline-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse transition-all duration-300 ease-in-out" id="navbarNav">
+                <ul class="navbar-nav ml-auto flex gap-2 md:gap-6 items-center">
+                    <li class="nav-item selected relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.index') }}" title="Home">
+                            Home
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.csv_to_video') }}" title="CSV to Video">
+                            CSV
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.text_to_video') }}" title="Text to Video">
+                            Text
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.multi_model_template') }}" title="Multi-Model Upload">
+                            Studio
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
     <div class="floating-shapes">
         <div class="shape"></div>
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
 
-    <div class="site-title">
-       <a href="/"> <h1 class="title">DataViz AI</h1></a>
+    <div class="site-title mt-24">
+        <a href="{{ url_for('main.index') }}"> <h1 class="title">DataViz AI</h1></a>
         <p class="subtitle">Dynamic Infographic Generator</p>
         <div class="title-glow"></div>
     </div>
 
     <div class="cards-container">
-        <div class="card" data-id="1">
+        <div class="card" data-id="1" onclick="window.location.href='{{ url_for('main.text_to_video') }}'">
             <div class="card-glow"></div>
             <div class="card-content">
                 <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -49,14 +95,14 @@
             </div>
         </div>
 
-        <div class="card" data-id="2">
+        <div class="card" data-id="2" onclick="window.location.href='{{ url_for('main.multi_model_template') }}'">
             <div class="card-glow"></div>
             <div class="card-content">
                 <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
                 </svg>
                 <h3 class="card-title">Custom Input</h3>
-            <p class="card-description">Data Format - Text and Data Input</p>
+                <p class="card-description">Data Format - Text and Data Input</p>
             </div>
             <div class="card-overlay">
                 <div class="card-overlay-content">
@@ -65,7 +111,7 @@
             </div>
         </div>
 
-        <div class="card" data-id="3">
+        <div class="card" data-id="3" onclick="window.location.href='{{ url_for('main.csv_to_video') }}'">
             <div class="card-glow"></div>
             <div class="card-content">
                 <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
