@@ -1,0 +1,145 @@
+/* Production-grade theme for DataViz AI */
+:root {
+  --bg: #0b1220;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #22d3ee;
+  --accent-2: #a855f7;
+  --success: #99FF66;
+  --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --radius: 12px;
+}
+
+/* Layout */
+.app-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.app-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.app-section { margin: 1.5rem 0; }
+
+/* Typography */
+.app-title {
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 1.875rem;
+  color: var(--text);
+}
+.app-subtitle {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+/* Surfaces */
+.app-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+  padding: 1rem;
+  backdrop-filter: blur(6px);
+}
+.app-card-lg { padding: 1.25rem 1.25rem; }
+
+/* Form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+
+.app-label { color: var(--text); font-weight: 600; font-size: 0.95rem; }
+
+.app-input,
+.app-textarea,
+.app-file {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  outline: none;
+  transition: border 150ms ease, box-shadow 150ms ease;
+}
+.app-textarea { min-height: 140px; resize: vertical; }
+.app-input:focus,
+.app-textarea:focus,
+.app-file:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.25);
+}
+
+/* Buttons */
+.app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: #0b1220;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: transform 150ms ease, filter 150ms ease, box-shadow 150ms ease;
+}
+.app-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+.app-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.app-btn-ghost {
+  color: var(--text);
+  background: transparent;
+  border-color: var(--border);
+}
+.app-btn-ghost:hover { border-color: var(--accent); color: #fff; }
+
+/* Upload / Dropzone */
+.dropzone {
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  padding: 1.5rem;
+  text-align: center;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.dropzone:hover { border-color: var(--accent); background: rgba(34, 211, 238, 0.05); }
+
+/* Tables */
+.app-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.app-table th,
+.app-table td {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text);
+}
+.app-table th { color: #0b1220; background: var(--accent); text-align: left; }
+
+/* Utilities */
+.muted { color: var(--muted); }
+.center { text-align: center; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+
+/* Media */
+video.app-video { width: 100%; border-radius: 10px; margin-top: 0.75rem; }
+
+
