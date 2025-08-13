@@ -321,82 +321,236 @@
     
     .card {
         position: relative;
-        width: 300px;
-        height: 16rem;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(0.75rem);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 0.75rem;
+        width: 280px;
+        height: 320px;
+        background: rgba(17, 24, 39, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
         cursor: pointer;
         overflow: hidden;
-        transition: transform 0.3s;
+        transition: all 0.3s ease;
         flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
     .card:hover {
-        transform: scale(1.05);
+        transform: translateY(-5px);
+        border-color: rgba(153, 255, 102, 0.3);
+        box-shadow: 0 8px 24px rgba(153, 255, 102, 0.2);
     }
     
     .card-glow {
         position: absolute;
         inset: 0;
-        opacity: 0.3;
+        opacity: 0.15;
         transition: opacity 0.3s;
+        background: radial-gradient(circle at 50% 50%, 
+            rgba(153, 255, 102, 0.4), 
+            transparent 70%);
+        filter: blur(20px);
     }
     
     .card:hover .card-glow {
-        opacity: 0.5;
-    }
-    
-    .card:nth-child(1) .card-glow {
-        background: linear-gradient(to right, rgba(34, 211, 238, 0.3), transparent);
-    }
-    
-    .card:nth-child(2) .card-glow {
-        background: linear-gradient(to right, rgba(168, 85, 247, 0.3), transparent);
-    }
-    
-    .card:nth-child(3) .card-glow {
-        background: linear-gradient(to right, rgba(236, 72, 153, 0.3), transparent);
+        opacity: 0.3;
     }
     
     .card-content {
         position: relative;
-        padding: 1.5rem;
+        padding: 1.75rem;
         height: 100%;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        z-index: 1;
     }
     
     .card-icon {
-        color: rgba(255, 255, 255, 0.9);
-        width: 2rem;
-        height: 2rem;
-        transition: transform 0.3s;
+        font-size: 2.5rem;
+        color: #99FF66;
+        margin-bottom: 0.5rem;
+        filter: drop-shadow(0 0 8px rgba(153, 255, 102, 0.4));
+        transition: all 0.3s ease;
     }
     
     .card:hover .card-icon {
         transform: scale(1.1);
+        filter: drop-shadow(0 0 12px rgba(153, 255, 102, 0.6));
     }
     
     .card-title {
-        font-size: 1.25rem;
-        font-weight: bold;
+        font-size: 1.35rem;
+        font-weight: 600;
         color: white;
-        transition: color 0.3s;
+        margin: 0.5rem 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
     }
     
     .card:hover .card-title {
-        background: linear-gradient(to right, white, #22d3ee);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        color: #99FF66;
+        text-shadow: 0 0 8px rgba(153, 255, 102, 0.4);
     }
     
     .card-description {
-        color: rgba(255, 255, 255, 0.7);
-        transition: color 0.3s;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 90%;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        padding-bottom: 1rem;
+    }
+    
+    .card:hover .card-description {
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    /* Card styles from index.html - refined to prevent overflow */
+    .card {
+        height: 280px !important;
+        width: 250px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        background: rgba(17, 24, 39, 0.7) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(153, 255, 102, 0.1) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .card:hover {
+        border-color: rgba(153, 255, 102, 0.3) !important;
+        box-shadow: 0 0 20px rgba(153, 255, 102, 0.15) !important;
+        transform: translateY(-5px) !important;
+    }
+
+    .card-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 1.25rem !important;
+        height: 100% !important;
+        justify-content: space-between !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    .card-icon {
+        font-size: 2.25rem !important;
+        margin-bottom: 0.75rem !important;
+        color: #99FF66 !important;
+        transition: all 0.3s ease !important;
+        filter: drop-shadow(0 0 8px rgba(153, 255, 102, 0.4)) !important;
+    }
+
+    .card:hover .card-icon {
+        transform: scale(1.1) !important;
+        filter: drop-shadow(0 0 12px rgba(153, 255, 102, 0.6)) !important;
+    }
+
+    .card-title {
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+        margin-bottom: 0.75rem !important;
+        color: #ffffff !important;
+        text-shadow: 0 0 10px rgba(153, 255, 102, 0.3) !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .card:hover .card-title {
+        color: #99FF66 !important;
+        text-shadow: 0 0 15px rgba(153, 255, 102, 0.4) !important;
+    }
+
+    .card-description {
+        font-size: 0.875rem !important;
+        line-height: 1.4 !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+        max-width: 180px !important;
+        margin: 0 auto !important;
+        padding: 0 0.5rem !important;
+        overflow-wrap: break-word !important;
+        word-wrap: break-word !important;
+        hyphens: auto !important;
+        text-shadow: 0 0 8px rgba(153, 255, 102, 0.2) !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        min-height: 2.8em !important;
+    }
+
+    .card:hover .card-description {
+        color: rgba(255, 255, 255, 0.95) !important;
+        text-shadow: 0 0 12px rgba(153, 255, 102, 0.25) !important;
+    }
+
+    /* Ensure paragraph margins are reset */
+    .card-description p {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Add subtle gradient glow to card */
+    .card::after {
+        content: '' !important;
+        position: absolute !important;
+        inset: 0 !important;
+        background: radial-gradient(
+            circle at 50% 0%,
+            rgba(153, 255, 102, 0.15),
+            transparent 70%
+        ) !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease !important;
+        pointer-events: none !important;
+    }
+
+    .card:hover::after {
+        opacity: 1 !important;
+    }
+
+    /* Add subtle light beam effect */
+    .card::before {
+        content: '' !important;
+        position: absolute !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(
+            45deg,
+            transparent,
+            rgba(153, 255, 102, 0.1),
+            transparent
+        ) !important;
+        background-size: 200% 100% !important;
+        background-position: -100% 0 !important;
+        transition: background-position 0.5s ease !important;
+    }
+
+    .card:hover::before {
+        background-position: 200% 0 !important;
+    }
+
+    /* Additional glow effect for content */
+    .card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 0%, 
+            rgba(153, 255, 102, 0.1), 
+            transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .card:hover::before {
+        opacity: 1;
     }
     
     .card:hover .card-description {

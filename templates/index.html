@@ -6,6 +6,7 @@
     <title>DataViz AI</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
@@ -39,20 +40,20 @@
                         <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
                     </li>
                     <li class="nav-item relative group">
-                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.csv_to_video') }}" title="CSV to Video">
-                            CSV
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.csv_to_video') }}" title="Transform your data into stunning videos">
+                            Data Magic
                         </a>
                         <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
                     </li>
                     <li class="nav-item relative group">
-                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.text_to_video') }}" title="Text to Video">
-                            Text
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.text_to_video') }}" title="Turn your ideas into visual stories">
+                            Story Lab
                         </a>
                         <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
                     </li>
                     <li class="nav-item relative group">
-                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.multi_model_template') }}" title="Multi-Model Upload">
-                            Studio
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.multi_model_template') }}" title="Create professional-grade visual content">
+                            Pro Studio
                         </a>
                         <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
                     </li>
@@ -78,19 +79,13 @@
         <div class="card" data-id="1" onclick="window.location.href='{{ url_for('main.text_to_video') }}'">
             <div class="card-glow"></div>
             <div class="card-content">
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                <h3 class="card-title">Text Input</h3>
-                <p class="card-description">Enter your data as text</p>
+                <i class="card-icon fas fa-wand-magic-sparkles fa-bounce"></i>
+                <h3 class="card-title">Story Lab</h3>
+                <p class="card-description">Turn text into dynamic video stories</p>
             </div>
             <div class="card-overlay">
                 <div class="card-overlay-content">
-                    <p>Click to begin processing your data...</p>
+                    <p>Start creating your story...</p>
                 </div>
             </div>
         </div>
@@ -98,15 +93,13 @@
         <div class="card" data-id="2" onclick="window.location.href='{{ url_for('main.multi_model_template') }}'">
             <div class="card-glow"></div>
             <div class="card-content">
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                </svg>
-                <h3 class="card-title">Custom Input</h3>
-                <p class="card-description">Data Format - Text and Data Input</p>
+                <i class="card-icon fas fa-photo-film fa-beat-fade"></i>
+                <h3 class="card-title">Pro Studio</h3>
+                <p class="card-description">Pro-grade visuals in minutes</p>
             </div>
             <div class="card-overlay">
                 <div class="card-overlay-content">
-                    <p>Click to begin processing your data...</p>
+                    <p>Enter the studio...</p>
                 </div>
             </div>
         </div>
@@ -114,17 +107,13 @@
         <div class="card" data-id="3" onclick="window.location.href='{{ url_for('main.csv_to_video') }}'">
             <div class="card-glow"></div>
             <div class="card-content">
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                <h3 class="card-title">CSV Input</h3>
-                <p class="card-description">Upload CSV file</p>
+                <i class="card-icon fas fa-chart-line fa-fade"></i>
+                <h3 class="card-title">Data Magic</h3>
+                <p class="card-description">Data-driven stories that inspire</p>
             </div>
             <div class="card-overlay">
                 <div class="card-overlay-content">
-                    <p>Click to begin processing your data...</p>
+                    <P>Click to begin processing your data...</P>
                 </div>
             </div>
         </div>
