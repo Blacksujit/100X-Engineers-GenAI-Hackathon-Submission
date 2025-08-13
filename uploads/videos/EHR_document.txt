@@ -1,0 +1,56 @@
+Patient Information:
+---------------------
+Name: John Doe
+Age: 45
+Gender: Male
+Date of Birth: 1979-02-15
+Contact: 123-456-7890
+Address: 123 Main St, Springfield, IL
+
+Medical History:
+----------------
+- Hypertension diagnosed in 2010
+- Type 2 Diabetes diagnosed in 2015
+- Allergic to Penicillin
+
+Presenting Complaints:
+----------------------
+The patient presented with complaints of:
+- Persistent abdominal pain over the last week
+- Nausea and vomiting
+- Loss of appetite
+- Slight fever (99.5°F)
+
+Medications:
+------------
+- Lisinopril 10mg daily for hypertension
+- Metformin 500mg twice a day for diabetes
+
+Vital Signs:
+------------
+- Blood Pressure: 140/90 mmHg
+- Heart Rate: 78 bpm
+- Temperature: 99.5°F
+- Oxygen Saturation: 98%
+
+Physical Examination:
+----------------------
+- Abdomen: Tender to palpation in the epigastric region
+- No signs of peritonitis
+- No palpable masses or organomegaly
+
+Assessment:
+-----------
+- Likely gastroenteritis due to viral infection
+- Rule out any potential complications related to diabetes
+
+Plan:
+-----
+- Hydration with IV fluids
+- Prescribe antiemetics and pain relievers
+- Follow-up in 3 days for reassessment
+
+Signatures:
+-----------
+Dr. Jane Smith, MD
+Family Medicine
