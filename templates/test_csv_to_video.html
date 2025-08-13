@@ -20,8 +20,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-[#111827] text-white min-h-screen">
-      <!-- Navbar Start -->
-    <nav id="tm-nav" class="navbar navbar-expand-lg navbar-dark tm-bg-dark glass-nav shadow-lg fixed top-0 left-0 w-full z-50" style="font-family: 'Poppins', 'Source Sans Pro', sans-serif;">
+     <!-- Navbar Start -->
+     <nav id="tm-nav" class="navbar navbar-expand-lg navbar-dark tm-bg-dark glass-nav shadow-lg fixed top-0 left-0 w-full z-50" style="font-family: 'Poppins', 'Source Sans Pro', sans-serif;">
         <div class="container mx-auto flex items-center justify-between px-6 py-3">
             <a class="navbar-brand flex items-center gap-2 text-white text-3xl font-bold tracking-wide" href="{{ url_for('main.index') }}" style="letter-spacing: 2px;">
                 <svg class="inline-block mr-2" width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -36,25 +36,29 @@
             </button>
             <div class="collapse navbar-collapse transition-all duration-300 ease-in-out" id="navbarNav">
                 <ul class="navbar-nav ml-auto flex gap-2 md:gap-6 items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.index') }}">
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.index') }}" title="Home">
                             Home
                         </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link active" href="{{ url_for('main.csv_to_video') }}">
-                            CSV
+                    <li class="nav-item selected relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.csv_to_video') }}" title="Transform your data into stunning videos">
+                            Data Magic
                         </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.text_to_video') }}">
-                            Text
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.text_to_video') }}" title="Turn your ideas into visual stories">
+                            Story Lab
                         </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.multi_model_template') }}">
-                            Studio
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.multi_model_template') }}" title="Create professional-grade visual content">
+                            Pro Studio
                         </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
                     </li>
                 </ul>
             </div>

@@ -1,3 +1,8 @@
+
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,900");
+@import url("fontawesome-all.min.css");
+
+
 :root {
     --primary: #22d3ee;
     --primary-hover: #0891b2;
@@ -1068,87 +1073,3 @@ td[data-highlighted="true"] {
     color: var(--primary);
 }
 
-/* Enhanced Navbar Styles */
-.nav-item {
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.nav-link {
-    position: relative;
-    transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent);
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--accent);
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.nav-item.selected .nav-link {
-    color: var(--accent);
-    text-shadow: 0 0 10px rgba(153, 255, 102, 0.5);
-}
-
-.nav-item.selected .nav-link::after {
-    width: 100%;
-    background: var(--accent);
-    box-shadow: 0 0 15px var(--accent);
-}
-
-.nav-item.selected .circle {
-    background: var(--accent);
-    box-shadow: 0 0 15px var(--accent);
-    opacity: 0.8;
-    transform: scale(1.2);
-}
-
-.circle {
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%) scale(0.8);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: transparent;
-    transition: all 0.3s ease;
-    opacity: 0;
-}
-
-.nav-item:hover .circle {
-    opacity: 0.5;
-    transform: translateX(-50%) scale(1);
-}
-
-/* Animated glow effect for selected nav item */
-.nav-item.selected::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120%;
-    height: 130%;
-    background: radial-gradient(circle, rgba(153, 255, 102, 0.1) 0%, rgba(153, 255, 102, 0) 70%);
-    opacity: 0.5;
-    pointer-events: none;
-    animation: navPulse 2s ease-in-out infinite;
-}
-
-@keyframes navPulse {
-    0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; }
-    50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.8; }
-    100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; }
-}

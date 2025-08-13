@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,900");
+@import url("fontawesome-all.min.css");
+
 /* Custom navbar styles for overlay and mobile menu */
 .navbar-blur {
     backdrop-filter: blur(8px);
@@ -78,15 +81,13 @@
 
 .glass-nav .navbar-nav .nav-link {
     color: rgba(255,255,255,0.86) !important;
-    padding: 8px 16px;
+    padding: 4px 10px;
     border-radius: 9999px;
     border: 1px solid transparent;
     transition: all 200ms ease;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.2px;
-    position: relative;
-    overflow: hidden;
 }
 
 .glass-nav .navbar-nav .nav-link:hover {
@@ -97,23 +98,10 @@
 }
 
 .glass-nav .navbar-nav .nav-link.active {
-    color: #ffffff !important;
+    color: #0b0f1a !important;
     background: linear-gradient(90deg, #99FF66, #22d3ee);
     border-color: transparent;
     box-shadow: 0 4px 12px rgba(34,211,238,0.2), 0 1px 4px rgba(153,255,102,0.2);
-    animation: glowPulse 2s infinite;
-}
-
-@keyframes glowPulse {
-    0% {
-        box-shadow: 0 4px 12px rgba(34,211,238,0.2), 0 1px 4px rgba(153,255,102,0.2);
-    }
-    50% {
-        box-shadow: 0 4px 20px rgba(34,211,238,0.4), 0 1px 8px rgba(153,255,102,0.4);
-    }
-    100% {
-        box-shadow: 0 4px 12px rgba(34,211,238,0.2), 0 1px 4px rgba(153,255,102,0.2);
-    }
 }
 
 /* Hide legacy underline when using pill style */
@@ -330,3 +318,4 @@
     0% { background-position: 0% 0%; }
     100% { background-position: 200% 0%; }
 }
+
