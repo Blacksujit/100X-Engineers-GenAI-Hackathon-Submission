@@ -66,15 +66,18 @@ body {
 }
 
 .input-meta {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	gap: 1rem;
-	font-size: 0.9rem;
-	color: rgba(255,255,255,0.75);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.92);
 }
 
-.input-meta .hint { color: rgba(255,255,255,0.6); }
+.input-meta .hint { color: rgba(255,255,255,0.9); }
+.char-limit-note { margin-left: 8px; opacity: 0.9; }
+.char-limit-warning { display: none; color: #ef4444; font-weight: 600; margin-left: 10px; }
+.input-box.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
 
 .glass-panel {
 	background: var(--glass);

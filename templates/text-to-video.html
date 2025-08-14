@@ -77,15 +77,15 @@
     <div class="content-container mt-24">
         <!-- Hero Section -->
         <section class="hero-section">
-            <h1 class="hero-title">Turn Text Into Video</h1>
-            <h2 class="hero-subtitle">Data stories in seconds</h2>
-            <p class="hero-description">Type insights. Get visuals.</p>
+            <h1 class="hero-title">Transform Words Into Motion</h1>
+            <h2 class="hero-subtitle">Instantly Visualize Your Data Narrative</h2>
+            <p class="hero-description">Craft. Command. Captivate.</p>
         </section>
         
 		<div class="input-container glass-panel">
         <!-- Instruction Text for User -->
         <p class="instruction-text">
-            Enter your data in the format: (Below)
+            Enter your data in the format: (or select one prompt from given options)
             <br>
             Example: "20% users use iphone and 30% users use samsung"
         </p>
@@ -100,7 +100,15 @@
         
 		<textarea class="input-box" placeholder="Example: 'Create a 30-second video about the 20% users use iphone and 30% users use samsung" id="textInput"></textarea>
 		<div class="input-meta">
-			<span><i class="fas fa-pen"></i> <span id="charCount">0</span> characters</span>
+			<span>
+				<i class="fas fa-pen"></i>
+				<span id="charCount" class="">0</span> words
+				<span class="char-limit-note" id="charLimitNote">(Max: 25 words)</span>
+				<span id="charLimitWarning" class="char-limit-warning" style="display:none; color: #ef4444; font-weight:600; margin-left:10px;">
+					Limit exceeded! Max 25 words allowed.
+				</span>
+			</span>
+			
 			<span class="hint"><i class="fas fa-lightbulb"></i> Tip: Use short, structured facts like "30% X, 20% Y"</span>
 		</div>
         <div class="progress-bar">

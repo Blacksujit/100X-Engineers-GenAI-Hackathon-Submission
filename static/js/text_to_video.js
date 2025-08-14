@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const inputText = textInput.value.trim();
         if (!inputText) {
             textInput.classList.add('error');
-            showNotification('Please enter some text to generate a video', 'error');
+            showNotification('Please enter prompt to generate a video', 'error');
             setTimeout(() => textInput.classList.remove('error'), 1200);
             return;
         }
@@ -144,10 +144,29 @@ document.addEventListener('DOMContentLoaded', function() {
 	const charCount = document.getElementById('charCount');
 	const chips = document.querySelectorAll('.prompt-chip');
 	const genBtn = document.getElementById('generateButton');
+    const charLimitNote = document.getElementById('charLimitNote');
+    const charLimitWarning = document.getElementById('charLimitWarning');
+    const MAX_WORDS = 25; // 2-3 lines max
+
+    function countWords(str) {
+        // Count by whitespace-separated tokens, ignoring empty entries
+        const tokens = str.trim().split(/\s+/).filter(Boolean);
+        return tokens.length;
+    }
 
 	function updateCount() {
 		if (!textarea || !charCount) return;
-		charCount.textContent = textarea.value.length;
+        let words = countWords(textarea.value);
+        if (words > MAX_WORDS) {
+            textarea.value = textarea.value.split(/\s+/).slice(0, MAX_WORDS).join(' ');
+            words = MAX_WORDS;
+			if (charLimitNote) charLimitNote.style.color = '#ef4444';
+			if (charLimitWarning) charLimitWarning.style.display = 'inline';
+		} else {
+			if (charLimitNote) charLimitNote.style.color = '';
+			if (charLimitWarning) charLimitWarning.style.display = 'none';
+		}
+        charCount.textContent = String(words);
 	}
 
 	if (textarea) {
@@ -168,3 +187,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Loading state is handled in static/js/text_to_video.js after validation
 });
+			

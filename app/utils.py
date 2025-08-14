@@ -70,7 +70,52 @@ def nlp_pipeline(text, data):
     
     # Extract percentages and categories using simpler regex patterns
     import re
-    percentages = [int(x.strip('%')) for x in re.findall(r'\d+%', text)]
+    # Advanced regex patterns to extract percentages, numbers, and key phrases for text-to-video context
+
+    # Extract percentages (e.g., "45%", "12.5%")
+    percentages = [float(x.replace('%', '')) for x in re.findall(r'\b\d+(?:\.\d+)?%', text)]
+
+    # Extract numbers with units (e.g., "10 million", "5k", "3.2B")
+    numbers_with_units = re.findall(r'\b\d+(?:\.\d+)?\s?(?:million|billion|k|m|bn|thousand|hundred)?\b', text, re.IGNORECASE)
+
+    # Extract key phrases for categories (e.g., after "about", "regarding", "on", "for", "in", "of")
+    category_phrases = re.findall(r'(?:about|regarding|on|for|in|of)\s+([A-Za-z0-9\s\-]+?)(?:[.,;:]|\s|$)', text, re.IGNORECASE)
+
+    # Extract quoted phrases (e.g., "AI adoption", 'market share')
+    quoted_phrases = re.findall(r'["\']([^"\']+)["\']', text)
+
+    # Fallback: extract capitalized words as possible categories
+    capitalized_words = re.findall(r'\b([A-Z][a-zA-Z0-9]+)\b', text)
+
+    # Combine all possible categories, deduplicate, and filter out short/irrelevant ones
+    categories = list({cat.strip() for cat in (category_phrases + quoted_phrases + capitalized_words) if len(cat.strip()) > 1})
+
+    # If no percentages found, fallback to numbers with units
+    if not percentages and numbers_with_units:
+        # Try to convert numbers with units to float/int if possible
+        def parse_number_unit(s):
+            import re
+            s = s.lower().replace(',', '')
+            match = re.match(r'(\d+(?:\.\d+)?)(?:\s)?(million|billion|k|m|bn|thousand|hundred)?', s)
+            if match:
+                num = float(match.group(1))
+                unit = match.group(2)
+                if unit:
+                    if unit in ['k', 'thousand']:
+                        num *= 1_000
+                    elif unit in ['m', 'million']:
+                        num *= 1_000_000
+                    elif unit in ['b', 'billion', 'bn']:
+                        num *= 1_000_000_000
+                    elif unit in ['hundred']:
+                        num *= 100
+                return num
+            return None
+        percentages = [parse_number_unit(x) for x in numbers_with_units if parse_number_unit(x) is not None]
+
+    # If still nothing, fallback to [100]
+    if not percentages:
+        percentages = [100]
     words = text.split()
     categories = []
     
@@ -140,10 +185,51 @@ def create_animated_gif(text):
         # Create bars with current height
         bars = ax.bar(categories, current_values, color='skyblue')
         
-        # Styling
-        ax.set_title('Market Share Analysis', fontsize=20, pad=20)
-        ax.set_xlabel('Brands', fontsize=14)
-        ax.set_ylabel('Percentage (%)', fontsize=14)
+        # Dynamically extract title and labels from the user prompt/context
+        # Use the summary dict returned by nlp_pipeline for contextual info
+        title = summary.get('title', text if 'title' not in summary else summary['title'])
+        x_label = summary.get('x_label', summary.get('categories_label', 'Category'))
+        y_label = summary.get('y_label', summary.get('values_label', 'Value (%)'))
+
+        # Fallbacks: try to infer from prompt if not present in summary
+        import re
+        def extract_title_from_prompt(prompt):
+            # Try to extract a phrase before a colon or after "show", "visualize", "compare", "create"
+            match = re.search(r"(visualize|show|compare|create)[\s:]+(.+?)(:|,|\.|$)", prompt, re.IGNORECASE)
+            if match:
+                return match.group(2).strip().capitalize()
+            # Otherwise, use the first sentence or the whole prompt
+            return prompt.split(":")[0].strip().capitalize()
+
+        if not title or title.strip() == "":
+            title = extract_title_from_prompt(text)
+
+        # Try to infer x_label from prompt if not present
+        if not x_label or x_label.lower() in ['category', 'categories', 'brands']:
+            # Look for words like "by X", "of X", or after "show", "visualize", etc.
+            match = re.search(r"(by|of)\s+([A-Za-z0-9 ]+)", text, re.IGNORECASE)
+            if match:
+                x_label = match.group(2).strip().capitalize()
+            elif 'categories' in summary:
+                x_label = ' / '.join(summary['categories']) if len(summary['categories']) < 4 else 'Category'
+            else:
+                x_label = 'Category'
+
+        # Try to infer y_label from prompt if not present
+        if not y_label or y_label.lower() in ['value (%)', 'percentage (%)', 'percentage']:
+            if '%' in text:
+                y_label = 'Percentage (%)'
+            elif 'growth' in text.lower():
+                y_label = 'Growth'
+            elif 'satisfaction' in text.lower():
+                y_label = 'Satisfaction'
+            else:
+                y_label = 'Value'
+
+        # Styling with dynamic labels
+        ax.set_title(title, fontsize=20, pad=20)
+        ax.set_xlabel(x_label, fontsize=14)
+        ax.set_ylabel(y_label, fontsize=14)
         ax.set_ylim(0, max(values) * 1.2)
         
         # Add value labels
@@ -222,10 +308,49 @@ def create_animated_gif(text):
         # Create bars with current height
         bars = ax.bar(categories, current_values, color='skyblue')
         
-        # Styling
-        ax.set_title('Market Share Analysis', fontsize=20, pad=20)
-        ax.set_xlabel('Brands', fontsize=14)
-        ax.set_ylabel('Percentage (%)', fontsize=14)
+        # Dynamically extract title and axis labels from the user prompt/context
+        # Use simple heuristics to extract a relevant title and labels
+        import re
+
+        def extract_title_and_labels(prompt):
+            # Try to extract a phrase before a colon as the title
+            title = None
+            x_label = None
+            y_label = None
+
+            # 1. Title: before colon or first sentence
+            colon_match = re.match(r"(.+?):", prompt)
+            if colon_match:
+                title = colon_match.group(1).strip().capitalize()
+            else:
+                # Fallback: use first sentence or first 8 words
+                title = prompt.split('.')[0].strip().capitalize()
+                if not title:
+                    title = "Data Visualization"
+
+            # 2. X label: try to find a word after "show", "compare", "visualize", "display", "plot"
+            x_label_match = re.search(r"(show|compare|visualize|display|plot)\s+([a-zA-Z0-9\s]+?)(:|,|\.|$)", prompt, re.IGNORECASE)
+            if x_label_match:
+                x_label = x_label_match.group(2).strip().capitalize()
+            else:
+                # Fallback: use "Categories" or "Labels"
+                x_label = "Categories"
+
+            # 3. Y label: look for "percentage", "growth", "satisfaction", "traffic", etc.
+            y_label = None
+            if re.search(r"percent|%|satisfaction|growth|traffic|score|rate", prompt, re.IGNORECASE):
+                y_label = "Percentage (%)"
+            else:
+                y_label = "Value"
+
+            return title, x_label, y_label
+
+        # Extract dynamic title and labels
+        dynamic_title, dynamic_xlabel, dynamic_ylabel = extract_title_and_labels(text)
+
+        ax.set_title(dynamic_title, fontsize=20, pad=20)
+        ax.set_xlabel(dynamic_xlabel, fontsize=14)
+        ax.set_ylabel(dynamic_ylabel, fontsize=14)
         ax.set_ylim(0, max(values) * 1.2)
         
         # Add value labels
@@ -284,158 +409,224 @@ def create_animated_gif(text):
 
 def create_detailed_infographic(text):
     """
-    Creates a static detailed infographic for data storytelling
+    Creates a static detailed infographic for data storytelling,
+    dynamically extracting the title and axis labels from the user prompt/context.
     """
     import matplotlib.pyplot as plt
-    
+    import re
+
+    # Helper functions to extract title and labels from prompt
+    def extract_title_from_prompt(prompt):
+        # Try to extract a phrase after "visualize", "compare", "create", "show"
+        match = re.search(r"(visualize|compare|create|show)[\s:]+(.+?)(:|,|\.|$)", prompt, re.IGNORECASE)
+        if match:
+            return match.group(2).strip().capitalize()
+        # Try to extract before a colon
+        if ':' in prompt:
+            return prompt.split(':')[0].strip().capitalize()
+        # Fallback: use the whole prompt
+        return prompt.strip().capitalize()
+
+    def extract_x_label_from_prompt(prompt, categories):
+        # Look for "by X", "of X", or after "show", "visualize", etc.
+        match = re.search(r"(by|of)\s+([A-Za-z0-9 ]+)", prompt, re.IGNORECASE)
+        if match:
+            return match.group(2).strip().capitalize()
+        # If categories are time periods, label as "Period"
+        if all(re.match(r"Q\d|quarter|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec", c, re.IGNORECASE) for c in categories):
+            return "Period"
+        # Fallback: "Category"
+        return "Category"
+
+    def extract_y_label_from_prompt(prompt):
+        # Look for "growth", "satisfaction", "traffic", "market share", etc.
+        if re.search(r"growth", prompt, re.IGNORECASE):
+            return "Growth (%)"
+        if re.search(r"satisfaction", prompt, re.IGNORECASE):
+            return "Satisfaction (%)"
+        if re.search(r"traffic", prompt, re.IGNORECASE):
+            return "Traffic (%)"
+        if re.search(r"market share", prompt, re.IGNORECASE):
+            return "Market Share (%)"
+        if "%" in prompt:
+            return "Percentage (%)"
+        # Fallback
+        return "Value"
+
     # Process text
     summary = nlp_pipeline(text, '')
     categories = summary['categories']
     values = summary['values']
-    
+
+    # Dynamically extract title and labels
+    title = extract_title_from_prompt(text)
+    x_label = extract_x_label_from_prompt(text, categories)
+    y_label = extract_y_label_from_prompt(text)
+
     # Create figure with subplots
     fig = plt.figure(figsize=(15, 10))
-    
+
     # Main bar plot
     ax1 = plt.subplot2grid((2, 2), (0, 0), colspan=2)
     bars = ax1.bar(categories, values, color='skyblue')
-    ax1.set_title('Market Share Distribution', fontsize=16)
-    ax1.set_ylabel('Percentage (%)')
-    
+    ax1.set_title(title, fontsize=18)
+    ax1.set_xlabel(x_label, fontsize=14)
+    ax1.set_ylabel(y_label, fontsize=14)
+
     # Add value labels
     for bar in bars:
         height = bar.get_height()
         ax1.text(bar.get_x() + bar.get_width()/2., height,
                 f'{int(height)}%',
-                ha='center', va='bottom')
-    
+                ha='center', va='bottom', fontsize=12)
+
     # Pie chart
     ax2 = plt.subplot2grid((2, 2), (1, 0))
     ax2.pie(values, labels=categories, autopct='%1.1f%%')
-    ax2.set_title('Market Share Proportion')
-    
+    ax2.set_title(f"{title} Proportion", fontsize=14)
+
     # Additional insights text
     ax3 = plt.subplot2grid((2, 2), (1, 1))
     ax3.axis('off')
     total = sum(values)
+    leading_idx = values.index(max(values))
+    leading_label = categories[leading_idx] if categories else ""
+    gap = max(values) - min(values) if values else 0
     insights_text = f"""Key Insights:
-    
-    • Total market coverage: {total}%
-    • Leading brand: {categories[values.index(max(values))]}
-    • Market share gap: {max(values)-min(values)}%
-    """
+
+• Total coverage: {total}%
+• Leading: {leading_label} ({max(values)}%)
+• Gap: {gap}%
+"""
     ax3.text(0, 0.5, insights_text, fontsize=12, va='center')
-    
+
     plt.tight_layout()
-    
+
     # Save high-quality image
     output_path = 'detailed_infographic.png'
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
-    
+
     print(f"Detailed infographic saved as: {output_path}")
     return output_path
-    print(f"Detailed infographic saved as: {output_path}")
-    
-    
-    
-    
-    
+
+
+
 def convert_gif_to_storytelling_video(gif_path, text):
     """
-    Converts a GIF into a storytelling video using imageio
+    Converts a GIF into a storytelling video using imageio,
+    dynamically extracting the title and context from the user prompt.
     """
     import os
     from PIL import Image, ImageDraw, ImageFont
     import numpy as np
     import imageio
-    
+    import re
+
+    # Helper functions to extract title and labels from prompt
+    def extract_title_from_prompt(prompt):
+        match = re.search(r"(visualize|compare|create|show)[\s:]+(.+?)(:|,|\.|$)", prompt, re.IGNORECASE)
+        if match:
+            return match.group(2).strip().capitalize()
+        if ':' in prompt:
+            return prompt.split(':')[0].strip().capitalize()
+        return prompt.strip().capitalize()
+
     # Process text for insights
     summary = nlp_pipeline(text, '')
     categories = summary['categories']
     values = summary['values']
-    
+
+    # Dynamically extract title
+    title = extract_title_from_prompt(text)
+
     def create_text_frame(text, size=(1920, 1080), bg_color='white'):
         img = Image.new('RGB', size, color=bg_color)
         draw = ImageDraw.Draw(img)
-        
+
         try:
             font = ImageFont.truetype("arial.ttf", 60)
         except:
             font = ImageFont.load_default()
-        
+
         # Get text bbox
-        bbox = draw.textbbox((0, 0), text, font=font)
-        text_width = bbox[2] - bbox[0]
-        text_height = bbox[3] - bbox[1]
-        
+        if hasattr(draw, "textbbox"):
+            bbox = draw.textbbox((0, 0), text, font=font)
+            text_width = bbox[2] - bbox[0]
+            text_height = bbox[3] - bbox[1]
+        else:
+            text_width, text_height = draw.textsize(text, font=font)
+
         # Center text
         x = (size[0] - text_width) // 2
         y = (size[1] - text_height) // 2
-        
+
         draw.text((x, y), text, fill='black' if bg_color == 'white' else 'white', font=font)
-        # Convert to RGB numpy array
         return np.array(img.convert('RGB'))
-    
+
     # Prepare frames
     frames = []
     fps = 30
-    
+
     # 1. Title sequence (2 seconds)
-    title_frame = create_text_frame("Market Share Analysis", bg_color='black')
+    title_frame = create_text_frame(title, bg_color='black')
     for _ in range(2 * fps):
         frames.append(title_frame)
-    
+
     # 2. GIF sequence (4 seconds)
     gif = Image.open(gif_path)
     gif_frames = []
     try:
         while True:
             frame = gif.copy()
-            # Resize frame and ensure RGB
             frame = frame.convert('RGB').resize((1920, 1080), Image.LANCZOS)
-            # Convert to numpy array
             frame_array = np.array(frame)
             gif_frames.append(frame_array)
             gif.seek(len(gif_frames))
     except EOFError:
         pass
-    
+
     # Extend gif frames to 4 seconds
     frames_needed = 4 * fps
     while len(gif_frames) < frames_needed:
         gif_frames.extend(gif_frames)
     frames.extend(gif_frames[:frames_needed])
-    
+
     # 3. Explanation sequence (4 seconds)
+    # Dynamically generate explanations based on prompt and data
+    leading_idx = values.index(max(values)) if values else 0
+    leading_label = categories[leading_idx] if categories else ""
+    gap = max(values) - min(values) if values else 0
+    total = sum(values) if values else 0
+
     explanations = [
-        "Analyzing market share data...",
-        f"Main competitor: {categories[values.index(max(values))]} leads with {max(values)}%",
-        f"Market gap analysis shows {max(values)-min(values)}% difference",
-        f"Total market coverage: {sum(values)}%",
+        f"Analyzing: {title}...",
+        f"Top: {leading_label} leads with {max(values)}%" if categories and values else "",
+        f"Gap: {gap}% between highest and lowest" if values else "",
+        f"Total: {total}%" if values else "",
         "Generating insights and recommendations..."
     ]
-    
-    frames_per_explanation = int((4 * fps) / len(explanations))
+    explanations = [e for e in explanations if e]  # Remove empty
+
+    frames_per_explanation = int((4 * fps) / max(1, len(explanations)))
     for exp in explanations:
         exp_frame = create_text_frame(exp)
         for _ in range(frames_per_explanation):
             frames.append(exp_frame)
-    
-    # Verify all frames have same shape and channels
+
+    # Ensure all frames have same shape
     frame_shape = frames[0].shape
-    frames = [frame.reshape(frame_shape) if frame.shape != frame_shape else frame 
-             for frame in frames]
-    
+    frames = [frame.reshape(frame_shape) if frame.shape != frame_shape else frame for frame in frames]
+
     # Save as MP4
     output_path = 'data_storytelling_video.mp4'
-    
+
     print("Writing video...")
     writer = imageio.get_writer(output_path, fps=fps)
     for frame in frames:
         writer.append_data(frame)
     writer.close()
-    
+
     print(f"Data storytelling video saved as: {output_path}")
     return output_path
 
