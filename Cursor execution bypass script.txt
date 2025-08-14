@@ -1,0 +1,9 @@
+Cursor execution bypass script 
+
+
+
+cd "D:\"
+
+.\Reset-CursorTrial.ps1
+
+Set-ExecutionPolicy Bypass -Scope Process -Force

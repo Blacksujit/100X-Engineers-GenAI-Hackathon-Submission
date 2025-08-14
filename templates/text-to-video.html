@@ -7,42 +7,134 @@
     <title>Text to Video</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar_for_test_csv_template.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='scss/style.scss') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/text_to_video.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head> 
 
 <body class="dark-mode">
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <h1 class="hero-title">Transform Your Data into Stunning Infographics Videos!</h1>
-        <h2 class="hero-title">Data Story Telling Begins Here........!</h2> <!-- Corrected closing tag -->
-        <p class="text-lg text-gray-400">Enter your data, and we'll generate a beautiful Data Storytelling video for you.</p>
-    </section>
-    
-    <div class="input-container">
+    <!-- Navbar Start -->
+    <nav id="tm-nav" class="navbar navbar-expand-lg navbar-dark tm-bg-dark glass-nav shadow-lg fixed top-0 left-0 w-full z-50" style="font-family: 'Poppins', 'Source Sans Pro', sans-serif;">
+        <div class="container mx-auto flex items-center justify-between px-6 py-3">
+            <a class="navbar-brand flex items-center gap-2 text-white text-3xl font-bold tracking-wide" href="{{ url_for('main.index') }}" style="letter-spacing: 2px;">
+                <svg class="inline-block mr-2" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="15" stroke="#99FF66" stroke-width="2" fill="rgba(153,255,102,0.08)"/>
+                    <path d="M10 20L16 12L22 20" stroke="#99FF66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                DataViz <span style="color:#99FF66;">AI</span>
+            </a>
+            <button class="navbar-toggler text-white border-white focus:outline-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse transition-all duration-300 ease-in-out" id="navbarNav">
+                <ul class="navbar-nav ml-auto flex gap-2 md:gap-6 items-center">
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.index') }}" title="Home">
+                            Home
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.csv_to_video') }}" title="Transform your data into stunning videos">
+                            Data Magic
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item selected relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap active" href="{{ url_for('main.text_to_video') }}" title="Turn your ideas into visual stories">
+                            Story Lab
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.multi_model_template') }}" title="Create professional-grade visual content">
+                            Pro Studio
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Background Effects -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="content-container mt-24">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Turn Text Into Video</h1>
+            <h2 class="hero-subtitle">Data stories in seconds</h2>
+            <p class="hero-description">Type insights. Get visuals.</p>
+        </section>
+        
+		<div class="input-container glass-panel">
         <!-- Instruction Text for User -->
         <p class="instruction-text">
             Enter your data in the format: (Below)
             <br>
             Example: "20% users use iphone and 30% users use samsung"
         </p>
+
+		<!-- Preset Prompts -->
+		<div class="preset-prompts">
+			<button type="button" class="prompt-chip" data-sample="Create a 30-second video showing market share: 20% iPhone, 30% Samsung, 25% Xiaomi, 25% Others."><i class="fas fa-bolt"></i><span>Market Share</span></button>
+			<button type="button" class="prompt-chip" data-sample="Visualize website traffic sources: 45% Organic, 25% Direct, 15% Social, 15% Referral."><i class="fas fa-chart-pie"></i><span>Traffic Sources</span></button>
+			<button type="button" class="prompt-chip" data-sample="Show quarterly sales growth: Q1 +12%, Q2 +8%, Q3 +15%, Q4 +20%."><i class="fas fa-chart-line"></i><span>Sales Growth</span></button>
+			<button type="button" class="prompt-chip" data-sample="Compare customer satisfaction: 60% Satisfied, 25% Neutral, 15% Unsatisfied."><i class="fas fa-face-smile"></i><span>Customer Sentiment</span></button>
+		</div>
         
-        <textarea class="input-box" placeholder="Example: 'Create a 30-second video about the 20% users use iphone and 30% users use samsung" id="textInput"></textarea>
-        <button id="generateButton">Generate Video</button>
+		<textarea class="input-box" placeholder="Example: 'Create a 30-second video about the 20% users use iphone and 30% users use samsung" id="textInput"></textarea>
+		<div class="input-meta">
+			<span><i class="fas fa-pen"></i> <span id="charCount">0</span> characters</span>
+			<span class="hint"><i class="fas fa-lightbulb"></i> Tip: Use short, structured facts like "30% X, 20% Y"</span>
+		</div>
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
-        <div class="result-container" id="resultContainer">
-            <video controls id="resultVideo">
-                Your browser does not support the video tag.
-            </video>
-            <button class="download-btn" id="downloadBtn">Download Video</button>
+        </div>
+
+		<!-- Actions outside the panel -->
+		<div class="actions">
+			<button id="generateButton" class="primary-button">
+				<span class="button-content"><i class="fas fa-magic"></i> Generate Video</span>
+				<span class="button-loader"><span class="spinner"></span> Generating...</span>
+			</button>
+		</div>
+
+        <!-- Separated Video Section -->
+        <div id="videoSection" class="video-section">
+            <div class="section-header">
+                <h2 class="section-title">Your Generated Video</h2>
+            </div>
+            <div class="video-wrapper">
+                <div class="result-container" id="resultContainer">
+                    <video controls id="resultVideo">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-controls">
+                        <button id="regenerateBtn" class="action-button regenerate-btn">
+                            <span class="button-content"><i class="fas fa-sync-alt"></i> Regenerate</span>
+                            <span class="button-loader"><span class="spinner"></span> Resetting...</span>
+                        </button>
+                        <button class="download-btn action-button" id="downloadBtn"><i class="fas fa-download"></i> Download Video</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -50,6 +142,7 @@
     <div id="errorContainer" class="notification"></div>
 
 </body>
+
 <script src="{{ url_for('static', filename='js/text_to_video.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> 
 <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script> 
