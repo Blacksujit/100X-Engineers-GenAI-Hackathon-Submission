@@ -4,3 +4,4 @@ pycache/.env
 /pycache/
 /models/
 .gitattributes
+Cursor execution bypass script.txt
