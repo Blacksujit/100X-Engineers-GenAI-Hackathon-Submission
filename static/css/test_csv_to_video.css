@@ -29,6 +29,7 @@ body {
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Main Container */
@@ -49,12 +50,13 @@ body {
 }
 
 .title {
-    font-size: 3rem;
-    font-weight: bold;
-    background: linear-gradient(to right, #22d3ee, #a855f7, #ec4899);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-size: 2.75rem;
+	font-weight: 700;
+	background: linear-gradient(to right, var(--primary), var(--secondary), #ec4899);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	text-shadow: 0 0 20px rgba(34,211,238,0.25);
     white-space: nowrap;
     animation: none !important;
 }

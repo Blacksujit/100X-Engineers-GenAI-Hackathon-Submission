@@ -90,6 +90,7 @@ body {
 .hero-section {
     text-align: center;
 	margin-bottom: 2rem;
+    
 }
 
 .hero-title {
@@ -101,6 +102,38 @@ body {
 	color: transparent;
 	text-shadow: 0 0 20px rgba(34,211,238,0.25);
 }
+
+/* Underline effect for hero section title in text-to-video.html */
+.hero-title {
+    position: relative;
+    display: inline-block;
+}
+
+.hero-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(153, 255, 102, 0.7),
+        transparent
+    );
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.hero-section:hover .hero-title::after {
+    opacity: 1;
+}
+
+
 
 .hero-subtitle {
 	margin-top: 0.25rem;
