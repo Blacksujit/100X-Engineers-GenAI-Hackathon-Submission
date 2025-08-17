@@ -4,6 +4,9 @@
 
 **![images](https://github.com/user-attachments/assets/e26aee53-96a6-4271-a28d-646419758071)**
 
+## Sample Frontend Landing Page:
+
+![image](./assets-of-app/image.png)
 
 # MVP Videos:
 
