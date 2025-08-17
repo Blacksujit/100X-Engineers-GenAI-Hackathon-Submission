@@ -319,3 +319,383 @@
     100% { background-position: 200% 0%; }
 }
 
+/* Legacy navbar styles - kept for compatibility */
+.navbar-link i {
+    font-size: 0.85em !important;
+    margin-right: 0.4rem !important;
+    transition: all 0.3s ease !important;
+    filter: drop-shadow(0 0 2px rgba(153, 255, 102, 0.2)) !important;
+    z-index: 2 !important;
+    position: relative !important;
+    opacity: 1 !important;
+}
+
+.navbar-link:hover i {
+    transform: scale(1.05) !important;
+    filter: drop-shadow(0 0 4px rgba(153, 255, 102, 0.4)) !important;
+    color: #99FF66 !important;
+}
+
+.navbar-link.active {
+    color: #99FF66 !important;
+    background: rgba(153, 255, 102, 0.1) !important;
+    border: 1px solid rgba(153, 255, 102, 0.3) !important;
+    box-shadow: 0 0 12px rgba(153, 255, 102, 0.2) !important;
+    transform: none !important;
+}
+
+.navbar-link.active i {
+    color: #99FF66 !important;
+    filter: drop-shadow(0 0 4px rgba(153, 255, 102, 0.5)) !important;
+    opacity: 1 !important;
+    z-index: 3 !important;
+    transform: none !important;
+}
+
+.navbar-link.active i.fa-home,
+.navbar-link.active i.fa-chart-line,
+.navbar-link.active i.fa-lightbulb,
+.navbar-link.active i.fa-crown {
+    color: #99FF66 !important;
+    opacity: 1 !important;
+    filter: drop-shadow(0 0 4px rgba(153, 255, 102, 0.5)) !important;
+    z-index: 3 !important;
+    position: relative !important;
+}
+
+.navbar-link.active i.fa-crown {
+    color: #99FF66 !important;
+    filter: drop-shadow(0 0 6px rgba(153, 255, 102, 0.6)) !important;
+    opacity: 1 !important;
+    transform: scale(1.02) !important;
+    z-index: 3 !important;
+}
+
+.navbar-nav .nav-item {
+    margin: 0 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.navbar-nav .nav-item:first-child {
+    margin-left: 0 !important;
+}
+
+.navbar-nav .nav-item:last-child {
+    margin-right: 0 !important;
+}
+
+@media (max-width: 768px) {
+    .navbar-link {
+        padding: 0.4rem 0.6rem !important;
+    }
+    
+    .navbar-link i {
+        font-size: 0.8em !important;
+        margin-right: 0.3rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-link {
+        padding: 0.35rem 0.5rem !important;
+    }
+    
+    .navbar-link i {
+        font-size: 0.75em !important;
+        margin-right: 0.25rem !important;
+    }
+}
+
+.navbar-link.active:hover {
+    background: rgba(153, 255, 102, 0.15) !important;
+    box-shadow: 0 0 20px rgba(153, 255, 102, 0.3) !important;
+}
+
+.navbar-link.active:hover i {
+    transform: scale(1.02) !important;
+    filter: drop-shadow(0 0 6px rgba(153, 255, 102, 0.6)) !important;
+}
+
+/* ========================= */
+/* NAVBAR STYLING - EXACTLY MATCHES INDEX PAGE */
+/* ========================= */
+
+/* Glassmorphism navbar - matches index page exactly */
+.glass-nav {
+    background: linear-gradient(
+        120deg,
+        rgba(17, 24, 39, 0.35) 0%,
+        rgba(24, 24, 35, 0.35) 30%,
+        rgba(32, 24, 48, 0.35) 100%
+    ) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    min-height: 80px !important;
+    padding: 0.75rem 0 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Container spacing - matches index page */
+.glass-nav .container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+}
+
+/* Navbar brand - matches index page exactly */
+.glass-nav .navbar-brand {
+    position: relative !important;
+    color: #e5f8ff !important;
+    letter-spacing: 0.3px !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+}
+
+.glass-nav .navbar-brand::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: -6px -8px -4px -8px !important;
+    background: radial-gradient(60% 60% at 20% 50%, rgba(34,211,238,0.10), transparent 60%),
+                radial-gradient(60% 60% at 80% 50%, rgba(168,85,247,0.10), transparent 60%) !important;
+    filter: blur(12px) !important;
+    z-index: -1 !important;
+}
+
+/* Navbar nav - matches index page spacing */
+.glass-nav .navbar-nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 !important;
+    gap: 1.5rem !important;
+    margin-left: auto !important;
+}
+
+/* Nav items spacing - EXACTLY matches index page */
+.glass-nav .navbar-nav .nav-item {
+    margin: 0 0.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+}
+
+.glass-nav .navbar-nav .nav-item:first-child {
+    margin-left: 0 !important;
+}
+
+.glass-nav .navbar-nav .nav-item:last-child {
+    margin-right: 0 !important;
+}
+
+/* Navbar links - EXACTLY matches index page */
+.glass-nav .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.86) !important;
+    padding: 0.75rem 1.25rem !important;
+    border-radius: 0.75rem !important;
+    border: 1px solid transparent !important;
+    transition: all 0.3s ease !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    position: relative !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    min-width: fit-content !important;
+}
+
+/* Icon styling - EXACTLY matches index page */
+.glass-nav .navbar-nav .nav-link i {
+    font-size: 1em !important;
+    margin-right: 0.5rem !important;
+    transition: all 0.3s ease !important;
+    filter: drop-shadow(0 0 3px rgba(153, 255, 102, 0.2)) !important;
+    z-index: 2 !important;
+    position: relative !important;
+    opacity: 1 !important;
+    width: 1.2em !important;
+    text-align: center !important;
+}
+
+/* Hover effects - matches index page */
+.glass-nav .navbar-nav .nav-link:hover {
+    color: #fff !important;
+    border-color: rgba(153,255,102,0.2) !important;
+    background: linear-gradient(120deg, rgba(17,24,39,0.55), rgba(32,24,48,0.55)) !important;
+    box-shadow: 0 2px 8px rgba(153,255,102,0.08), inset 0 0 6px rgba(255,255,255,0.03) !important;
+    transform: translateY(-2px) !important;
+}
+
+.glass-nav .navbar-nav .nav-link:hover i {
+    transform: scale(1.1) !important;
+    filter: drop-shadow(0 0 5px rgba(153, 255, 102, 0.5)) !important;
+    color: #99FF66 !important;
+}
+
+/* Active state - EXACTLY matches index page */
+.glass-nav .navbar-nav .nav-link.active {
+    color: #99FF66 !important;
+    background: rgba(153, 255, 102, 0.12) !important;
+    border: 1px solid rgba(153, 255, 102, 0.4) !important;
+    box-shadow: 0 0 20px rgba(153, 255, 102, 0.25) !important;
+    transform: none !important;
+}
+
+.glass-nav .navbar-nav .nav-link.active i {
+    color: #99FF66 !important;
+    filter: drop-shadow(0 0 6px rgba(153, 255, 102, 0.6)) !important;
+    opacity: 1 !important;
+    z-index: 3 !important;
+    transform: none !important;
+}
+
+/* Ensure all icons are visible in active state */
+.glass-nav .navbar-nav .nav-link.active i.fa-home,
+.glass-nav .navbar-nav .nav-link.active i.fa-chart-line,
+.glass-nav .navbar-nav .nav-link.active i.fa-lightbulb,
+.glass-nav .navbar-nav .nav-link.active i.fa-crown {
+    color: #99FF66 !important;
+    opacity: 1 !important;
+    filter: drop-shadow(0 0 6px rgba(153, 255, 102, 0.6)) !important;
+    z-index: 3 !important;
+    position: relative !important;
+}
+
+/* Specific crown icon styling */
+.glass-nav .navbar-nav .nav-link.active i.fa-crown {
+    color: #99FF66 !important;
+    filter: drop-shadow(0 0 8px rgba(153, 255, 102, 0.7)) !important;
+    opacity: 1 !important;
+    transform: scale(1.05) !important;
+    z-index: 3 !important;
+}
+
+/* Remove any background pseudo-elements that cover icons */
+.glass-nav .navbar-nav .nav-link.active::before,
+.glass-nav .navbar-nav .nav-link.active::after {
+    display: none !important;
+}
+
+/* Enhanced hover effects for active state */
+.glass-nav .navbar-nav .nav-link.active:hover {
+    background: rgba(153, 255, 102, 0.18) !important;
+    box-shadow: 0 0 25px rgba(153, 255, 102, 0.35) !important;
+    border-color: rgba(153, 255, 102, 0.5) !important;
+}
+
+.glass-nav .navbar-nav .nav-link.active:hover i {
+    transform: scale(1.05) !important;
+    filter: drop-shadow(0 0 8px rgba(153, 255, 102, 0.7)) !important;
+}
+
+/* Responsive adjustments - EXACTLY matches index page */
+@media (max-width: 768px) {
+    .glass-nav .navbar-nav .nav-item {
+        margin: 0 0.5rem !important;
+    }
+    
+    .glass-nav .navbar-nav .nav-link {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.95rem !important;
+    }
+    
+    .glass-nav .navbar-nav .nav-link i {
+        font-size: 0.9em !important;
+        margin-right: 0.4rem !important;
+    }
+    
+    .glass-nav .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    .glass-nav .navbar-brand {
+        font-size: 1.3rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .glass-nav .navbar-nav .nav-item {
+        margin: 0 0.3rem !important;
+    }
+    
+    .glass-nav .navbar-nav .nav-link {
+        padding: 0.5rem 0.8rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .glass-nav .navbar-nav .nav-link i {
+        font-size: 0.85em !important;
+        margin-right: 0.3rem !important;
+    }
+    
+    .glass-nav .container {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    
+    .glass-nav .navbar-brand {
+        font-size: 1.2rem !important;
+    }
+}
+
+/* Ensure navbar doesn't interfere with page content */
+.glass-nav + * {
+    margin-top: 0 !important;
+}
+
+/* Compact toggle button */
+.glass-nav .navbar-toggler {
+    padding: 0.375rem 0.75rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 0.375rem !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.glass-nav .navbar-toggler:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Ensure proper navbar width and alignment */
+.glass-nav .navbar-nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 !important;
+    gap: 1.5rem !important;
+}
+
+/* Brand positioning */
+.glass-nav .navbar-brand {
+    flex-shrink: 0 !important;
+    margin-right: 2rem !important;
+}
+
+/* Responsive navbar layout */
+@media (max-width: 992px) {
+    .glass-nav .navbar-nav {
+        justify-content: flex-start !important;
+        gap: 1rem !important;
+    }
+    
+    .glass-nav .navbar-brand {
+        margin-right: 1rem !important;
+    }
+}
+
+/* Hide legacy underline when using pill style */
+.glass-nav .nav-item .circle { 
+    display: none !important; 
+}
+

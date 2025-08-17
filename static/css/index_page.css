@@ -843,3 +843,60 @@
     0% { background-position: 0% 0%; }
     100% { background-position: 200% 0%; }
 }
+
+/* Index Page Navbar Icon Spacing Fix - Enhanced */
+#tm-nav .navbar-nav .nav-item {
+    margin: 0 0.75rem !important;
+}
+
+#tm-nav .navbar-link {
+    padding: 0.75rem 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    position: relative !important;
+}
+
+#tm-nav .navbar-link i {
+    margin-right: 0.5rem !important;
+    font-size: 0.9em !important;
+    z-index: 2 !important;
+    position: relative !important;
+}
+
+/* Active state styling for index page */
+#tm-nav .navbar-link.active {
+    color: #99FF66 !important;
+    background: rgba(153, 255, 102, 0.1) !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid rgba(153, 255, 102, 0.3) !important;
+    box-shadow: 0 0 15px rgba(153, 255, 102, 0.2) !important;
+}
+
+#tm-nav .navbar-link.active i {
+    color: #99FF66 !important;
+    filter: drop-shadow(0 0 5px rgba(153, 255, 102, 0.5)) !important;
+    opacity: 1 !important;
+    z-index: 3 !important;
+}
+
+/* Ensure proper spacing on mobile */
+@media (max-width: 768px) {
+    #tm-nav .navbar-nav .nav-item {
+        margin: 0 0.5rem !important;
+    }
+    
+    #tm-nav .navbar-link {
+        padding: 0.5rem 0.75rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    #tm-nav .navbar-nav .nav-item {
+        margin: 0 0.3rem !important;
+    }
+    
+    #tm-nav .navbar-link {
+        padding: 0.4rem 0.6rem !important;
+    }
+}

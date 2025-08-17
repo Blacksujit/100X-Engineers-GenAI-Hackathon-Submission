@@ -3,43 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Model Data Upload</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>DataViz AI - Pro Studio | Multi-Model Data Studio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.23/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/multi_model_styles.css') }}">
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar_for_test_csv_template.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-style.css') }}">     
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">                   
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss/style.scss') }}">                   
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>Upload Data and Enter Prompt</h1>
-        <form id="uploadForm" enctype="multipart/form-data">
-            <label for="data_file">Upload Data File (CSV, XLSX, TXT):</label>
-            <input type="file" id="data_file" name="data_file" accept=".csv, .xlsx, .txt" required>
-
-            <label for="prompt">Enter Prompt:</label>
-            <input type="text" id="prompt" name="prompt" required>
-
-            <button type="submit">Submit</button>
-        </form>
-
-        <div id="loadingSpinner">
-            <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
+<body class="bg-[#111827] text-white min-h-screen">
+    <!-- Navbar Start -->
+    <nav id="tm-nav" class="navbar navbar-expand-lg navbar-dark tm-bg-dark glass-nav shadow-lg fixed top-0 left-0 w-full z-50" style="font-family: 'Poppins', 'Source Sans Pro', sans-serif;">
+        <div class="container mx-auto flex items-center justify-between px-6 py-3">
+            <a class="navbar-brand flex items-center gap-2 text-white text-3xl font-bold tracking-wide" href="{{ url_for('main.index') }}" style="letter-spacing: 2px;">
+                <svg class="inline-block mr-2" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="15" stroke="#99FF66" stroke-width="2" fill="rgba(153,255,102,0.08)"/>
+                    <path d="M10 20L16 12L22 20" stroke="#99FF66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                DataViz <span style="color:#99FF66;">AI</span>
+            </a>
+            <button class="navbar-toggler text-white border-white focus:outline-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse transition-all duration-300 ease-in-out" id="navbarNav">
+                <ul class="navbar-nav ml-auto flex gap-2 md:gap-6 items-center">
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.index') }}" title="Home">
+                            <i class="fas fa-home mr-2"></i>Home
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.csv_to_video') }}" title="Transform your data into stunning videos">
+                            <i class="fas fa-chart-line mr-2"></i>Data Magic
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap" href="{{ url_for('main.text_to_video') }}" title="Turn your ideas into visual stories">
+                            <i class="fas fa-lightbulb mr-2"></i>Story Lab
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                    <li class="nav-item selected relative group">
+                        <a class="nav-link navbar-link text-lg font-semibold transition-colors duration-200 hover:text-[#99FF66] text-nowrap active" href="{{ url_for('main.multi_model_template') }}" title="Create professional-grade visual content">
+                            <i class="fas fa-crown mr-2"></i>Pro Studio
+                        </a>
+                        <span class="circle transition-all duration-300 group-hover:bg-[#99FF66]"></span>
+                    </li>
+                </ul>
             </div>
-            <p>Processing your request...</p>
         </div>
+    </nav>
+    <!-- Navbar End -->
 
-        <div id="videoContainer">
-            <h2>Generated Video</h2>
-            <video id="generatedVideo" controls width="100%"></video>
-        </div>
-
-        <div id="errorContainer">
-            <h2>Error</h2>
-            <p id="errorMessage"></p>
-        </div>
-
-        <div class="debug-info" id="debugInfo"></div>
+    <!-- Background Effects -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
     </div>
+
+    <!-- Main Content -->
+    <div class="main-container mt-24">
+        <!-- Page Title -->
+        <div class="site-title mb-12">
+            <h1 class="title">Pro Studio - Multi-Model Data Studio</h1>
+            <h2 class="subtitle text-xl md:text-2xl text-center mt-3 text-white/90 font-semibold">
+                Professional AI-Powered Video Generation. <span class="text-[#99FF66]">Enterprise. Innovation. Excellence.</span>
+            </h2>
+            <p class="hero-description text-center mt-2 text-white/70 text-lg">
+                Transform your data into cinematic masterpieces with our enterprise-grade multi-model AI system—<span class="font-bold text-[#99FF66]">where creativity meets precision</span>.
+            </p>
+            <div class="title-glow absolute left-1/2 -translate-x-1/2 w-2/3 h-2 blur-2xl bg-[#99FF66]/30 mt-4"></div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section glass-effect">
+            <div id="upload-container" class="upload-area">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <h2 class="upload-title">Drop your data file here</h2>
+                <p class="upload-text">or click to browse</p>
+                <p class="file-types">Supports CSV, Excel, and TXT files</p>
+                <input type="file" id="file-input" class="file-input" accept=".csv,.xlsx,.xls,.txt">
+            </div>
+        </div>
+
+
+
+        <!-- Prompt Input Section -->
+        <div class="prompt-section glass-effect">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-magic mr-2 text-[#99FF66]"></i>Creative Prompt
+                </h2>
+                <div class="prompt-hint">
+                    <i class="fas fa-info-circle text-blue-400"></i>
+                    <span>Keep it concise - 25 words maximum (1-2 sentences)</span>
+                </div>
+            </div>
+            
+            <div class="prompt-input-wrapper">
+                <textarea 
+                    id="prompt-input" 
+                    class="prompt-textarea"
+                    placeholder="Describe the video you want to create... Example: 'Create a dynamic visualization showing quarterly sales growth with animated charts and engaging transitions'"
+                    rows="4"
+                ></textarea>
+                <div class="prompt-meta">
+                    <span class="char-count">
+                        <i class="fas fa-pen text-[#99FF66]"></i>
+                        <span id="wordCount">0</span>/25 words
+                    </span>
+                    <span class="prompt-tips">
+                        <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                        <span id="promptWarning">Keep it concise</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Section -->
+        <div id="preview-container" class="preview-section glass-effect">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-table mr-2 text-[#99FF66]"></i>Data Preview
+                </h2>
+                <div class="progress-indicator">
+                    <div class="progress-step active">
+                        <i class="fas fa-file-upload"></i>
+                        <span>Upload</span>
+                    </div>
+                    <div class="progress-step">
+                        <i class="fas fa-table"></i>
+                        <span>Preview</span>
+                    </div>
+                    <div class="progress-step">
+                        <i class="fas fa-video"></i>
+                        <span>Generate</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-preview-wrapper">
+                <div class="table-container">
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="table-search" placeholder="Search in data...">
+                        </div>
+                        <div class="table-info">
+                            <span id="row-count" class="info-badge">
+                                <i class="fas fa-table"></i>
+                                <span>0 rows</span>
+                            </span>
+                            <span id="column-count" class="info-badge">
+                                <i class="fas fa-columns"></i>
+                                <span>0 columns</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <table id="preview-table">
+                        <thead>
+                            <tr id="table-header"></tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                    <div class="resize-handle" title="Drag to resize">
+                        <div class="resize-dots"></div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+
+                <div class="action-container">
+                    <button id="generate-button" class="processing-button">
+                        <span class="button-content">
+                            <i class="fas fa-magic"></i>
+                            <span>Generate Professional Video</span>
+                        </span>
+                        <span class="button-loader">
+                            <div class="spinner"></div>
+                            <span>Processing... <span class="progress-text">0%</span></span>
+                        </span>
+                    </button>
+                    <button id="download-csv" class="action-button" disabled>
+                        <i class="fas fa-download"></i>
+                        <span>Download CSV</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Section -->
+        <div id="video-container" class="video-section glass-effect">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-video mr-2 text-[#99FF66]"></i>Your Generated Video
+                </h2>
+            </div>
+            
+            <div class="video-wrapper">
+                <video id="video-player" controls controlsList="nodownload">
+                    Your browser does not support the video tag.
+                </video>
+                
+                <div class="video-controls">
+                    <button id="regenerate-video" class="action-button regenerate-btn">
+                        <span class="button-content">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Regenerate Video</span>
+                        </span>
+                        <span class="button-loader">
+                            <div class="spinner"></div>
+                            <span>Regenerating...</span>
+                        </span>
+                    </button>
+                    <button id="download-video" class="action-button download-btn">
+                        <span class="button-content">
+                            <i class="fas fa-download"></i>
+                            <span>Download Video</span>
+                        </span>
+                        <span class="button-loader">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Downloading...</span>
+                        </span>
+                    </button>
+                    <button id="share-video" class="action-button share-btn">
+                        <i class="fas fa-share-alt"></i>
+                        <span>Share</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/multi_model_script.js') }}"></script>
 </body>
-<script src="{{url_for('static', filename='js/multi_model_script.js')}}"></script>
 </html>
