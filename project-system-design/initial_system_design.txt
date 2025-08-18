@@ -1,0 +1,3 @@
+in this folder the initial system architecture
+was used while Development
+original final MVP architecture is in readme file 
