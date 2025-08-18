@@ -105,117 +105,125 @@ Our DataViz AI platform delivers exactly what the hackathon demanded:
 ### **DataViz AI - Complete System Architecture**
 
 ```mermaid
-graph TB
-    %% User Interface Layer
-    subgraph "🎨 User Interface Layer"
-        UI[Web Interface<br/>Flask + HTML/CSS/JS]
-        UPLOAD[File Upload<br/>Drag & Drop]
-        INPUT[Text Input<br/>25-word limit]
-        PROMPT[Creative Prompt<br/>AI-guided]
+flowchart TD
+    %% User Input Layer
+    subgraph UI ["🎨 User Interface Layer"]
+        direction TB
+        UI_WEB[Web Interface<br/>Flask + React]
+        UI_UPLOAD[File Upload<br/>Drag & Drop]
+        UI_TEXT[Text Input<br/>25-word limit]
+        UI_PROMPT[Creative Prompt<br/>AI-guided]
     end
 
     %% Data Processing Layer
-    subgraph "📊 Data Processing Layer"
-        NLP[NLP Pipeline<br/>TextBlob + SpaCy + NLTK]
-        EDA[Exploratory Data Analysis<br/>Pandas + NumPy]
-        PARSER[Data Parser<br/>CSV/Excel/TXT]
-        VALIDATOR[Input Validator<br/>Format & Size Check]
+    subgraph DP ["📊 Data Processing Layer"]
+        direction TB
+        DP_NLP[NLP Pipeline<br/>TextBlob + SpaCy]
+        DP_EDA[Data Analysis<br/>Pandas + NumPy]
+        DP_PARSE[Data Parser<br/>CSV/Excel/TXT]
+        DP_VALID[Input Validator<br/>Format Check]
     end
 
     %% AI/ML Layer
-    subgraph "🧠 AI/ML Processing Layer"
-        TRANSFORMER[Transformers<br/>Hugging Face Models]
-        LANGCHAIN[LangChain<br/>Prompt Engineering]
-        VIZ_ENGINE[Visualization Engine<br/>Matplotlib + Plotly]
-        ANIMATION[Animation Framework<br/>MoviePy + PIL]
+    subgraph AI ["🧠 AI/ML Processing Layer"]
+        direction TB
+        AI_TRANS[Transformers<br/>Hugging Face]
+        AI_LANG[LangChain<br/>Prompt Engineering]
+        AI_VIZ[Visualization Engine<br/>Matplotlib + Plotly]
+        AI_ANIM[Animation Framework<br/>MoviePy + PIL]
     end
 
     %% Content Generation Layer
-    subgraph "🎬 Content Generation Layer"
-        CHART_GEN[Chart Generator<br/>Dynamic Charts]
-        AUDIO_GEN[Audio Generator<br/>Text-to-Speech]
-        VIDEO_COMP[Video Compositor<br/>Frame Assembly]
-        TRANSITIONS[Transition Effects<br/>Smooth Animations]
+    subgraph CG ["🎬 Content Generation Layer"]
+        direction TB
+        CG_CHART[Chart Generator<br/>Dynamic Charts]
+        CG_AUDIO[Audio Generator<br/>Text-to-Speech]
+        CG_VIDEO[Video Compositor<br/>Frame Assembly]
+        CG_TRANS[Transition Effects<br/>Smooth Animations]
     end
 
     %% Output Layer
-    subgraph "📹 Output Layer"
-        MP4_EXPORT[MP4 Export<br/>Production Ready]
-        DOWNLOAD[Download Manager<br/>File Delivery]
-        PREVIEW[Video Preview<br/>Quality Check]
-        METADATA[Metadata Storage<br/>File Management]
+    subgraph OUT ["📹 Output Layer"]
+        direction TB
+        OUT_MP4[MP4 Export<br/>Production Ready]
+        OUT_DOWN[Download Manager<br/>File Delivery]
+        OUT_PREV[Video Preview<br/>Quality Check]
+        OUT_META[Metadata Storage<br/>File Management]
     end
 
     %% Storage Layer
-    subgraph "💾 Storage Layer"
-        TEMP[Temp Storage<br/>Processing Files]
-        OUTPUT[Output Storage<br/>Generated Videos]
-        CACHE[Cache System<br/>Performance]
-        LOGS[Logging System<br/>Debug & Analytics]
+    subgraph STORAGE ["💾 Storage Layer"]
+        direction TB
+        STORAGE_TEMP[Temp Storage<br/>Processing Files]
+        STORAGE_OUT[Output Storage<br/>Generated Videos]
+        STORAGE_CACHE[Cache System<br/>Performance]
+        STORAGE_LOGS[Logging System<br/>Debug & Analytics]
     end
 
     %% API Layer
-    subgraph "🔌 API Layer"
-        FLASK_API[Flask API<br/>RESTful Endpoints]
-        ROUTES[Route Handlers<br/>Request Processing]
-        MIDDLEWARE[Middleware<br/>Authentication & CORS]
-        ERROR_HANDLER[Error Handler<br/>Exception Management]
+    subgraph API ["🔌 API Layer"]
+        direction TB
+        API_FLASK[Flask API<br/>RESTful Endpoints]
+        API_ROUTES[Route Handlers<br/>Request Processing]
+        API_MIDDLE[Middleware<br/>Auth & CORS]
+        API_ERROR[Error Handler<br/>Exception Management]
     end
 
-    %% Connections - User Interface to Data Processing
-    UI --> UPLOAD
-    UI --> INPUT
-    UI --> PROMPT
-    UPLOAD --> PARSER
-    INPUT --> NLP
-    PROMPT --> LANGCHAIN
+    %% Main Flow Connections
+    UI_WEB --> DP_PARSE
+    UI_UPLOAD --> DP_PARSE
+    UI_TEXT --> DP_NLP
+    UI_PROMPT --> AI_LANG
 
-    %% Connections - Data Processing to AI/ML
-    PARSER --> VALIDATOR
-    VALIDATOR --> EDA
-    NLP --> TRANSFORMER
-    EDA --> VIZ_ENGINE
-    LANGCHAIN --> VIZ_ENGINE
+    DP_PARSE --> DP_VALID
+    DP_VALID --> DP_EDA
+    DP_NLP --> AI_TRANS
+    DP_EDA --> AI_VIZ
+    AI_LANG --> AI_VIZ
 
-    %% Connections - AI/ML to Content Generation
-    VIZ_ENGINE --> CHART_GEN
-    TRANSFORMER --> AUDIO_GEN
-    CHART_GEN --> VIDEO_COMP
-    AUDIO_GEN --> VIDEO_COMP
-    VIDEO_COMP --> TRANSITIONS
+    AI_VIZ --> CG_CHART
+    AI_TRANS --> CG_AUDIO
+    CG_CHART --> CG_VIDEO
+    CG_AUDIO --> CG_VIDEO
+    CG_VIDEO --> CG_TRANS
 
-    %% Connections - Content Generation to Output
-    TRANSITIONS --> MP4_EXPORT
-    MP4_EXPORT --> PREVIEW
-    PREVIEW --> DOWNLOAD
-    MP4_EXPORT --> METADATA
+    CG_TRANS --> OUT_MP4
+    OUT_MP4 --> OUT_PREV
+    OUT_PREV --> OUT_DOWN
+    OUT_MP4 --> OUT_META
 
-    %% Connections - Storage
-    TEMP --> OUTPUT
-    OUTPUT --> CACHE
-    CACHE --> LOGS
+    %% Storage Connections
+    STORAGE_TEMP --> STORAGE_OUT
+    STORAGE_OUT --> STORAGE_CACHE
+    STORAGE_CACHE --> STORAGE_LOGS
 
-    %% Connections - API Layer
-    FLASK_API --> ROUTES
-    ROUTES --> MIDDLEWARE
-    MIDDLEWARE --> ERROR_HANDLER
+    %% API Connections
+    API_FLASK --> API_ROUTES
+    API_ROUTES --> API_MIDDLE
+    API_MIDDLE --> API_ERROR
+
+    %% Cross-layer connections
+    API_ROUTES -.-> DP_PARSE
+    API_ROUTES -.-> DP_NLP
+    STORAGE_TEMP -.-> CG_VIDEO
+    STORAGE_OUT -.-> OUT_MP4
 
     %% Styling
-    classDef uiLayer fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef dataLayer fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef aiLayer fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
-    classDef contentLayer fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef outputLayer fill:#fce4ec,stroke:#880e4f,stroke-width:2px
-    classDef storageLayer fill:#f1f8e9,stroke:#33691e,stroke-width:2px
-    classDef apiLayer fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+    classDef uiStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#0d47a1
+    classDef dpStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px,color:#4a148c
+    classDef aiStyle fill:#e8f5e8,stroke:#388e3c,stroke-width:3px,color:#1b5e20
+    classDef cgStyle fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#e65100
+    classDef outStyle fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#880e4f
+    classDef storageStyle fill:#f1f8e9,stroke:#689f38,stroke-width:3px,color:#33691e
+    classDef apiStyle fill:#e0f2f1,stroke:#00796b,stroke-width:3px,color:#004d40
 
-    class UI,UPLOAD,INPUT,PROMPT uiLayer
-    class NLP,EDA,PARSER,VALIDATOR dataLayer
-    class TRANSFORMER,LANGCHAIN,VIZ_ENGINE,ANIMATION aiLayer
-    class CHART_GEN,AUDIO_GEN,VIDEO_COMP,TRANSITIONS contentLayer
-    class MP4_EXPORT,DOWNLOAD,PREVIEW,METADATA outputLayer
-    class TEMP,OUTPUT,CACHE,LOGS storageLayer
-    class FLASK_API,ROUTES,MIDDLEWARE,ERROR_HANDLER apiLayer
+    class UI_WEB,UI_UPLOAD,UI_TEXT,UI_PROMPT uiStyle
+    class DP_NLP,DP_EDA,DP_PARSE,DP_VALID dpStyle
+    class AI_TRANS,AI_LANG,AI_VIZ,AI_ANIM aiStyle
+    class CG_CHART,CG_AUDIO,CG_VIDEO,CG_TRANS cgStyle
+    class OUT_MP4,OUT_DOWN,OUT_PREV,OUT_META outStyle
+    class STORAGE_TEMP,STORAGE_OUT,STORAGE_CACHE,STORAGE_LOGS storageStyle
+    class API_FLASK,API_ROUTES,API_MIDDLE,API_ERROR apiStyle
 ```
 
 ### **Architecture Components Overview**
