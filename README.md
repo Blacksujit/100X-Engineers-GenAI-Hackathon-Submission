@@ -102,9 +102,152 @@ Our DataViz AI platform delivers exactly what the hackathon demanded:
 
 <div align="center">
 
-![System Architecture](./project-system-design/system-design-mermaid.png)
+### **DataViz AI - Complete System Architecture**
 
-*Enterprise-grade architecture designed for scalability and performance*
+```mermaid
+graph TB
+    %% User Interface Layer
+    subgraph "🎨 User Interface Layer"
+        UI[Web Interface<br/>Flask + HTML/CSS/JS]
+        UPLOAD[File Upload<br/>Drag & Drop]
+        INPUT[Text Input<br/>25-word limit]
+        PROMPT[Creative Prompt<br/>AI-guided]
+    end
+
+    %% Data Processing Layer
+    subgraph "📊 Data Processing Layer"
+        NLP[NLP Pipeline<br/>TextBlob + SpaCy + NLTK]
+        EDA[Exploratory Data Analysis<br/>Pandas + NumPy]
+        PARSER[Data Parser<br/>CSV/Excel/TXT]
+        VALIDATOR[Input Validator<br/>Format & Size Check]
+    end
+
+    %% AI/ML Layer
+    subgraph "🧠 AI/ML Processing Layer"
+        TRANSFORMER[Transformers<br/>Hugging Face Models]
+        LANGCHAIN[LangChain<br/>Prompt Engineering]
+        VIZ_ENGINE[Visualization Engine<br/>Matplotlib + Plotly]
+        ANIMATION[Animation Framework<br/>MoviePy + PIL]
+    end
+
+    %% Content Generation Layer
+    subgraph "🎬 Content Generation Layer"
+        CHART_GEN[Chart Generator<br/>Dynamic Charts]
+        AUDIO_GEN[Audio Generator<br/>Text-to-Speech]
+        VIDEO_COMP[Video Compositor<br/>Frame Assembly]
+        TRANSITIONS[Transition Effects<br/>Smooth Animations]
+    end
+
+    %% Output Layer
+    subgraph "📹 Output Layer"
+        MP4_EXPORT[MP4 Export<br/>Production Ready]
+        DOWNLOAD[Download Manager<br/>File Delivery]
+        PREVIEW[Video Preview<br/>Quality Check]
+        METADATA[Metadata Storage<br/>File Management]
+    end
+
+    %% Storage Layer
+    subgraph "💾 Storage Layer"
+        TEMP[Temp Storage<br/>Processing Files]
+        OUTPUT[Output Storage<br/>Generated Videos]
+        CACHE[Cache System<br/>Performance]
+        LOGS[Logging System<br/>Debug & Analytics]
+    end
+
+    %% API Layer
+    subgraph "🔌 API Layer"
+        FLASK_API[Flask API<br/>RESTful Endpoints]
+        ROUTES[Route Handlers<br/>Request Processing]
+        MIDDLEWARE[Middleware<br/>Authentication & CORS]
+        ERROR_HANDLER[Error Handler<br/>Exception Management]
+    end
+
+    %% Connections - User Interface to Data Processing
+    UI --> UPLOAD
+    UI --> INPUT
+    UI --> PROMPT
+    UPLOAD --> PARSER
+    INPUT --> NLP
+    PROMPT --> LANGCHAIN
+
+    %% Connections - Data Processing to AI/ML
+    PARSER --> VALIDATOR
+    VALIDATOR --> EDA
+    NLP --> TRANSFORMER
+    EDA --> VIZ_ENGINE
+    LANGCHAIN --> VIZ_ENGINE
+
+    %% Connections - AI/ML to Content Generation
+    VIZ_ENGINE --> CHART_GEN
+    TRANSFORMER --> AUDIO_GEN
+    CHART_GEN --> VIDEO_COMP
+    AUDIO_GEN --> VIDEO_COMP
+    VIDEO_COMP --> TRANSITIONS
+
+    %% Connections - Content Generation to Output
+    TRANSITIONS --> MP4_EXPORT
+    MP4_EXPORT --> PREVIEW
+    PREVIEW --> DOWNLOAD
+    MP4_EXPORT --> METADATA
+
+    %% Connections - Storage
+    TEMP --> OUTPUT
+    OUTPUT --> CACHE
+    CACHE --> LOGS
+
+    %% Connections - API Layer
+    FLASK_API --> ROUTES
+    ROUTES --> MIDDLEWARE
+    MIDDLEWARE --> ERROR_HANDLER
+
+    %% Styling
+    classDef uiLayer fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef dataLayer fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef aiLayer fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef contentLayer fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef outputLayer fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef storageLayer fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+    classDef apiLayer fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+
+    class UI,UPLOAD,INPUT,PROMPT uiLayer
+    class NLP,EDA,PARSER,VALIDATOR dataLayer
+    class TRANSFORMER,LANGCHAIN,VIZ_ENGINE,ANIMATION aiLayer
+    class CHART_GEN,AUDIO_GEN,VIDEO_COMP,TRANSITIONS contentLayer
+    class MP4_EXPORT,DOWNLOAD,PREVIEW,METADATA outputLayer
+    class TEMP,OUTPUT,CACHE,LOGS storageLayer
+    class FLASK_API,ROUTES,MIDDLEWARE,ERROR_HANDLER apiLayer
+```
+
+### **Architecture Components Overview**
+
+| **Layer** | **Components** | **Technologies** | **Purpose** |
+|-----------|----------------|------------------|-------------|
+| **🎨 UI Layer** | Web Interface, File Upload, Text Input | Flask, HTML/CSS/JS, Tailwind | User interaction and data input |
+| **📊 Data Processing** | NLP Pipeline, EDA, Parser, Validator | TextBlob, SpaCy, Pandas, NumPy | Data analysis and preprocessing |
+| **🧠 AI/ML Layer** | Transformers, LangChain, Visualization Engine | Hugging Face, LangChain, Matplotlib | AI-powered content generation |
+| **🎬 Content Generation** | Chart Generator, Audio Generator, Video Compositor | MoviePy, PIL, Text-to-Speech | Dynamic content creation |
+| **📹 Output Layer** | MP4 Export, Download Manager, Preview | FFmpeg, Video Processing | Final video delivery |
+| **💾 Storage Layer** | Temp Storage, Output Storage, Cache | File System, Database | Data persistence and caching |
+| **🔌 API Layer** | Flask API, Routes, Middleware | Flask, RESTful APIs | Backend service management |
+
+### **Data Flow Process**
+
+1. **📥 Input Processing** - Users upload files or enter text through the web interface
+2. **🔍 Data Analysis** - System analyzes input using NLP and EDA techniques
+3. **🧠 AI Processing** - Advanced AI models generate insights and visualizations
+4. **🎬 Content Creation** - Dynamic charts, animations, and audio are generated
+5. **🎥 Video Assembly** - All components are composited into final video
+6. **📤 Output Delivery** - High-quality MP4 files are delivered to users
+
+### **Key Features of Architecture**
+
+- **🔄 Scalable Design** - Modular components for easy scaling and maintenance
+- **🛡️ Error Handling** - Comprehensive error management and logging
+- **⚡ Performance Optimized** - Caching and efficient processing pipelines
+- **🔒 Secure** - Input validation and secure file handling
+- **📱 Responsive** - Works across all devices and platforms
+
+*Enterprise-grade architecture designed for scalability, performance, and reliability*
 
 </div>
 
