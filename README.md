@@ -98,6 +98,18 @@ Our DataViz AI platform delivers exactly what the hackathon demanded:
 
 ---
 
+## 🏗️ **System Architecture**
+
+<div align="center">
+
+![System Architecture](./project-system-design/system-design-mermaid.png)
+
+*Enterprise-grade architecture designed for scalability and performance*
+
+</div>
+
+---
+
 ## 🎯 **MVP Showcase - Hackathon Solution**
 
 <div align="center">
@@ -206,17 +218,8 @@ Our DataViz AI platform delivers exactly what the hackathon demanded:
 
 ---
 
-## 🏗️ **System Architecture**
-
-<div align="center">
-
-![System Architecture](./project-system-design/system-design-mermaid.png)
-
-*Enterprise-grade architecture designed for scalability and performance*
-
-</div>
-
 ---
+
 
 ## 🎯 **Impact & Applications**
 
