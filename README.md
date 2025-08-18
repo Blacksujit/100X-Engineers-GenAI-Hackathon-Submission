@@ -568,7 +568,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ![GitHub forks](https://img.shields.io/github/forks/Blacksujit/100X-Engineers-GenAI-Hackathon-Submission?style=social)
 ![GitHub issues](https://img.shields.io/github/issues/Blacksujit/100X-Engineers-GenAI-Hackathon-Submission?style=social)
 
-**Made with ❤️ by the DataViz AI Team**
+**Made with ❤️ by the DataViz AI Team.**
 
 </div>
 
