@@ -26,7 +26,7 @@
 
 </div>
 
-### **The Challenge by - (AEOS Labs)** 🎯
+### **The Challenge by (AEOS Labs)** 🎯
 
 **Automated Data Visualization & Video Generation System**
 
@@ -144,15 +144,15 @@ Our DataViz AI platform delivers exactly what the hackathon demanded:
 
 **Transform simple text into captivating video narratives instantly!**
 
-- **🎯 Smart Text Processing**: Advanced NLP pipeline with 25-word optimization
-- **⚡ Preset Templates**: Market Share, Traffic Sources, Sales Growth, Customer Sentiment
-- **🎬 Dynamic Visualizations**: Auto-generated charts, animations, and transitions
-- **🎵 Audio Integration**: AI-generated narration and background music
-- **📱 Responsive Design**: Works seamlessly across all devices
+- **🎯 Smart Text Processing** - Advanced NLP pipeline with 25-word optimization
+- **⚡ Preset Templates** - Market Share, Traffic Sources, Sales Growth, Customer Sentiment
+- **🎬 Dynamic Visualizations** - Auto-generated charts, animations, and transitions
+- **🎵 Audio Integration** - AI-generated narration and background music
+- **📱 Responsive Design** - Works seamlessly across all devices
 
-**Example Input**: *"20% users use iPhone, 30% users use Samsung"*
+**Example Input:** *"20% users use iPhone, 30% users use Samsung"*
 
-**Output**: *Professional 30-second infographic video with animated charts*
+**Output:** *Professional 30-second infographic video with animated charts*
 
 ---
 
@@ -165,14 +165,14 @@ Our DataViz AI platform delivers exactly what the hackathon demanded:
 
 **Professional AI-powered video generation for enterprise needs!**
 
-- **📊 Multi-Format Support**: CSV, Excel, TXT files with drag-and-drop interface
-- **🧠 Intelligent Prompt Engineering**: Creative prompt optimization (25-word limit)
-- **🔍 Advanced Data Preview**: Interactive table with search and filtering
-- **📈 Real-time Progress Tracking**: 3-phase processing with visual indicators
-- **🎯 Enterprise Features**: Professional-grade output with customization options
-- **🔄 Regeneration Capabilities**: Multiple iterations for perfect results
+- **📊 Multi-Format Support** - CSV, Excel, TXT files with drag-and-drop interface
+- **🧠 Intelligent Prompt Engineering** - Creative prompt optimization (25-word limit)
+- **🔍 Advanced Data Preview** - Interactive table with search and filtering
+- **📈 Real-time Progress Tracking** - 3-phase processing with visual indicators
+- **🎯 Enterprise Features** - Professional-grade output with customization options
+- **🔄 Regeneration Capabilities** - Multiple iterations for perfect results
 
-**Perfect for**: Business presentations, marketing campaigns, data reports
+**Perfect for:** Business presentations, marketing campaigns, data reports
 
 ---
 
@@ -185,14 +185,14 @@ Our DataViz AI platform delivers exactly what the hackathon demanded:
 
 **Transform raw data into compelling visual stories!**
 
-- **📁 File Upload**: Drag-and-drop CSV, Excel, TXT support
-- **🔍 Data Analysis**: Automatic EDA and insight extraction
-- **📊 Visualization Engine**: Dynamic charts, graphs, and infographics
-- **🎬 Video Generation**: Cinematic data storytelling with animations
-- **🎵 Audio Narration**: AI-generated voiceovers and soundtracks
-- **💾 Download Options**: High-quality video exports
+- **📁 File Upload** - Drag-and-drop CSV, Excel, TXT support
+- **🔍 Data Analysis** - Automatic EDA and insight extraction
+- **📊 Visualization Engine** - Dynamic charts, graphs, and infographics
+- **🎬 Video Generation** - Cinematic data storytelling with animations
+- **🎵 Audio Narration** - AI-generated voiceovers and soundtracks
+- **💾 Download Options** - High-quality video exports
 
-**Supported Formats**: CSV, XLSX, XLS, TXT (up to 10MB)
+**Supported Formats:** CSV, XLSX, XLS, TXT (up to 10MB)
 
 ---
 
@@ -218,32 +218,29 @@ Our DataViz AI platform delivers exactly what the hackathon demanded:
 
 ---
 
----
-
-
 ## 🎯 **Impact & Applications**
 
 ### 📚 **Education & Learning**
-- **Enhanced Comprehension**: Visual learning for complex data concepts
-- **Interactive Presentations**: Engaging classroom materials
-- **Student Projects**: Easy data visualization for academic work
+- **Enhanced Comprehension** - Visual learning for complex data concepts
+- **Interactive Presentations** - Engaging classroom materials
+- **Student Projects** - Easy data visualization for academic work
 
 ### 💼 **Business & Marketing**
-- **Dynamic Presentations**: Captivating boardroom presentations
-- **Marketing Campaigns**: Viral social media content
-- **Sales Pitches**: Compelling data-driven narratives
-- **Reports & Analytics**: Automated report generation
+- **Dynamic Presentations** - Captivating boardroom presentations
+- **Marketing Campaigns** - Viral social media content
+- **Sales Pitches** - Compelling data-driven narratives
+- **Reports & Analytics** - Automated report generation
 
 ### 🎨 **Content Creation**
-- **Social Media**: Trending infographic videos
-- **YouTube Content**: Educational data storytelling
-- **Blog Posts**: Embedded video content
-- **Newsletters**: Visual data summaries
+- **Social Media** - Trending infographic videos
+- **YouTube Content** - Educational data storytelling
+- **Blog Posts** - Embedded video content
+- **Newsletters** - Visual data summaries
 
 ### ♿ **Accessibility**
-- **Visual Learning**: Support for different learning styles
-- **Multilingual Support**: Global accessibility
-- **Mobile Optimization**: On-the-go content creation
+- **Visual Learning** - Support for different learning styles
+- **Multilingual Support** - Global accessibility
+- **Mobile Optimization** - On-the-go content creation
 
 ---
 
