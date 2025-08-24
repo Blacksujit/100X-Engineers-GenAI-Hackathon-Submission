@@ -202,6 +202,8 @@ The solution should be able to:
 <!-- YouTube Demo Video Embed (GitHub-compatible) -->
 <div align="center">
 
+**Click below image to see it in action:**
+
 [![Demo Video](https://img.youtube.com/vi/G9khu1KDEic/0.jpg)](https://www.youtube.com/watch?v=G9khu1KDEic)
 
 </div>
@@ -212,6 +214,7 @@ The solution should be able to:
 
   [![Demo Video](https://img.youtube.com/vi/G9khu1KDEic/0.jpg)](https://www.youtube.com/watch?v=G9khu1KDEic)
 -->
+
 
 **🔗 Demo Links:**
 
