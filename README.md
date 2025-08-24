@@ -224,9 +224,10 @@ The solution should be able to:
 
 <div align="center">
 
-### **Frontend Landing Page**
+### **Application Preview**
 
 ![Landing Page Preview](./assets-of-app/image.png)
+
 <br>
 
 ![Story-Lab Preview](./assets-of-app/story-lab.png)
