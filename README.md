@@ -157,6 +157,8 @@ The solution should be able to:
 
 ## 🏆 **Our Solution - DataViz AI MVP**
 
+## **📹 Demo Videos Showcase:**
+
 <div align="center">
 
 ![MVP Solution](https://img.shields.io/badge/MVP%20Solution-Complete-brightgreen?style=for-the-badge&logo=check-circle&logoColor=white)
@@ -166,21 +168,9 @@ The solution should be able to:
 </div>
 
 
-
-## **📹 Demo Videos Showcase:**
-
-
-### 🎬 **Live Demo & Videos**
-
-<div align="center">
-
-[![Watch Demo Video](https://img.shields.io/badge/Watch-Demo%20Video-red?style=for-the-badge&logo=youtube&logoColor=white)](coming soon....)
-
-[![Try Live Demo](https://img.shields.io/badge/Try-Live%20Demo-brightgreen?style=for-the-badge&logo=globe&logoColor=white)](coming soon....)
-
 </div>
 
-### **🎥 Video Gallery**
+### **🎥 Video Gallery:**
 
 <div align="center">
 
@@ -189,7 +179,7 @@ The solution should be able to:
 | **Story Lab** | 30s | Text-to-Video, AI Narration | [▶️ Watch](coming soon....) |
 | **Pro Studio** | 60s | Multi-Model, Enterprise Features | [▶️ Watch](coming soon....) |
 | **Data Magic** | 45s | CSV Processing, Advanced Viz | [▶️ Watch](coming soon....) |
-| **Full Platform** | 3min | Complete Walkthrough | [▶️ Watch](coming soon....) |
+| **Full Platform** | 9:28 min | Complete Walkthrough | [▶️ Watch](https://youtu.be/G9khu1KDEic?si=bQ3AnRLcUd3Pv-c8) |
 
 </div>
 
