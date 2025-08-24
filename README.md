@@ -203,7 +203,7 @@ The solution should be able to:
 
 **🔗 Demo Links:**
 
-- **🌐 Live Platform:** [dataviz-ai-demo.com](coming soon....)
+- **🌐 Live Platform:** [coming soon...](coming soon....)
 
 </div>
 
