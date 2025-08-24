@@ -195,9 +195,6 @@ The solution should be able to:
 
 ### **🎬 Live Demo Access**
 
-<div align="center">
-
-**Experience DataViz AI in Real-Time!**
 
 <!-- YouTube Demo Video Embed (GitHub-compatible) -->
 <div align="center">
