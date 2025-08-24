@@ -26,7 +26,7 @@
 ### **🚀 Quick Navigation**
 - [🎯 Problem Statement](#-problem-statement---100x-engineers-genai-buildathon)
 - [🏆 Our Solution](#-our-solution---dataviz-ai-mvp)
-- [🎬 Live Demo & Videos](#-live-demo--videos)
+- [🎬 Live Demo & Videos](#-demo-videos-showcase)
 - [🎯 MVP Showcase](#-mvp-showcase---hackathon-solution)
 - [🏗️ System Architecture](#️-system-architecture)
 - [🌟 Revolutionary Features](#-revolutionary-features)
