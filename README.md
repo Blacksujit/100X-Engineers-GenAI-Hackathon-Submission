@@ -642,7 +642,6 @@ Open your browser and navigate to: `http://localhost:2000`
 
 ## 🔮 **Future Roadmap**
 
-<div align="center">
 
 ### **Phase 1: Enhanced AI Capabilities** 🧠
 - Advanced NLP models integration
@@ -664,7 +663,6 @@ Open your browser and navigate to: `http://localhost:2000`
 - Interactive data exploration
 - Predictive analytics integration
 
-</div>
 
 ---
 
@@ -707,7 +705,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 **Acknowledgments**
 
-<div align="center">
 
 ### **Special Thanks To**
 - **🏆 100X Engineers GenAI Buildathon** - For presenting this challenging problem statement and providing the platform to showcase our solution
@@ -716,7 +713,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **🌶️ Flask Community** - For the amazing web framework
 - **👥 All Contributors** - Who made this hackathon solution possible
 
-</div>
 
 ---
 
@@ -725,9 +721,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <div align="center">
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Blacksujit)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/yourhandle)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:your.email@example.com)
 
 </div>
 
