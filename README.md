@@ -420,43 +420,6 @@ flowchart TD
 
 ---
 
-
-### **Solution Demonstration**
-> **Perfect Match for Problem Statement** - Our solution exactly addresses the hackathon requirements! 🎯
-
-**Example Implementation:**
-- **Input:** "20% of users own an iPhone, 50% own a Samsung, and the rest own a variety of brands"
-- **Output:** Animated pie chart video with professional transitions and labels
-- **Processing Time:** Under 2 minutes
-- **Quality:** Production-ready MP4 format
-
-
-
----
-
-#### **🎯 Story Lab Demo**
-> **Text-to-Video Magic in Action**
-- **Input:** "20% users use iPhone, 30% users use Samsung, 25% users use Huawei, 25% users use other brands"
-- **Output:** Professional animated pie chart with smooth transitions
-- **Duration:** 30 seconds
-- **Features:** AI-generated narration, dynamic animations, professional graphics
-
-#### **🏆 Pro Studio Demo**
-> **Enterprise-Grade Multi-Model Processing**
-- **Input:** CSV file with sales data
-- **Output:** Comprehensive data storytelling video
-- **Duration:** 60 seconds
-- **Features:** Multiple chart types, advanced animations, custom branding
-
-#### **✨ Data Magic Demo**
-> **CSV-to-Video Transformation**
-- **Input:** Complex dataset with multiple variables
-- **Output:** Cinematic data visualization
-- **Duration:** 45 seconds
-- **Features:** Interactive elements, professional voiceover, engaging transitions
-
----
-
 ## 🌟 **Revolutionary Features**
 
 ### 🎨 **1. Story Lab - Text-to-Video Magic**
@@ -519,6 +482,45 @@ flowchart TD
 **Supported Formats:** CSV, XLSX, XLS, TXT (up to 10MB)
 
 ---
+
+
+
+### **Solution Demonstration**
+> **Perfect Match for Problem Statement** - Our solution exactly addresses the hackathon requirements! 🎯
+
+**Example Implementation:**
+- **Input:** "20% of users own an iPhone, 50% own a Samsung, and the rest own a variety of brands"
+- **Output:** Animated pie chart video with professional transitions and labels
+- **Processing Time:** Under 2 minutes
+- **Quality:** Production-ready MP4 format
+
+
+
+---
+
+#### **🎯 Story Lab Demo**
+
+- **Input:** "20% users use iPhone, 30% users use Samsung, 25% users use Huawei, 25% users use other brands"
+- **Output:** Professional animated pie chart with smooth transitions
+- **Duration:** 30 seconds
+- **Features:** AI-generated narration, dynamic animations, professional graphics
+
+#### **🏆 Pro Studio Demo**
+
+- **Input:** CSV file with sales data
+- **Output:** Comprehensive data storytelling video
+- **Duration:** 60 seconds
+- **Features:** Multiple chart types, advanced animations, custom branding
+
+#### **✨ Data Magic Demo**
+
+- **Input:** Complex dataset with multiple variables
+- **Output:** Cinematic data visualization
+- **Duration:** 45 seconds
+- **Features:** Interactive elements, professional voiceover, engaging transitions
+
+---
+--- 
 
 ## 🎯 **Problem Statement Alignment**
 
