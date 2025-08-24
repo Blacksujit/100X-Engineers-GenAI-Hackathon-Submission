@@ -167,7 +167,7 @@ The solution should be able to:
 
 <div align="center">
 
-**Click below image to see it in action:**
+**Click below image to see MVP in action:**
 
 [![Demo Video](./assets-of-app/image.png)](https://www.youtube.com/watch?v=G9khu1KDEic)
 
