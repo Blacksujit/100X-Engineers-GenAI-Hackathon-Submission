@@ -199,10 +199,10 @@ The solution should be able to:
 
 **Experience DataViz AI in Real-Time!**
 
-<!-- YouTube Demo Video Embed -->
+<!-- YouTube Demo Video Embed (GitHub-compatible) -->
 <div align="center">
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/G9khu1KDEic?si=T28ek322hFAk-baH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![Demo Video](https://img.youtube.com/vi/G9khu1KDEic/0.jpg)](https://www.youtube.com/watch?v=G9khu1KDEic)
 
 </div>
 
