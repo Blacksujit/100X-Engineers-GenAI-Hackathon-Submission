@@ -174,16 +174,9 @@ The solution should be able to:
 
 <div align="center">
 
-![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-brightgreen?style=for-the-badge&logo=play-circle&logoColor=white)
-![Demo Videos](https://img.shields.io/badge/Demo%20Videos-Watch%20Now-red?style=for-the-badge&logo=youtube&logoColor=white)
+[![Watch Demo Video](https://img.shields.io/badge/Watch-Demo%20Video-red?style=for-the-badge&logo=youtube&logoColor=white)](coming soon....)
 
-</div>
-
-<div align="center">
-
-[![Watch Demo Video](https://img.shields.io/badge/Watch-Demo%20Video-red?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/watch?v=demo)
-
-[![Try Live Demo](https://img.shields.io/badge/Try-Live%20Demo-brightgreen?style=for-the-badge&logo=globe&logoColor=white)](https://dataviz-ai-demo.com)
+[![Try Live Demo](https://img.shields.io/badge/Try-Live%20Demo-brightgreen?style=for-the-badge&logo=globe&logoColor=white)](coming soon....)
 
 </div>
 
@@ -193,10 +186,10 @@ The solution should be able to:
 
 | **Demo Type** | **Duration** | **Features** | **Watch Now** |
 |---------------|--------------|--------------|---------------|
-| **Story Lab** | 30s | Text-to-Video, AI Narration | [▶️ Watch](https://youtube.com/watch?v=storylab) |
-| **Pro Studio** | 60s | Multi-Model, Enterprise Features | [▶️ Watch](https://youtube.com/watch?v=prostudio) |
-| **Data Magic** | 45s | CSV Processing, Advanced Viz | [▶️ Watch](https://youtube.com/watch?v=datamagic) |
-| **Full Platform** | 3min | Complete Walkthrough | [▶️ Watch](https://youtube.com/watch?v=fullplatform) |
+| **Story Lab** | 30s | Text-to-Video, AI Narration | [▶️ Watch](coming soon....) |
+| **Pro Studio** | 60s | Multi-Model, Enterprise Features | [▶️ Watch](coming soon....) |
+| **Data Magic** | 45s | CSV Processing, Advanced Viz | [▶️ Watch](coming soon....) |
+| **Full Platform** | 3min | Complete Walkthrough | [▶️ Watch](coming soon....) |
 
 </div>
 
@@ -206,12 +199,11 @@ The solution should be able to:
 
 **Experience DataViz AI in Real-Time!**
 
-[![Live Demo Platform](https://img.shields.io/badge/Access-Live%20Demo%20Platform-blue?style=for-the-badge&logo=rocket&logoColor=white)](https://dataviz-ai-demo.com)
+[![Live Demo Platform](https://img.shields.io/badge/Access-Live%20Demo%20Platform-blue?style=for-the-badge&logo=rocket&logoColor=white)](coming soon....)
 
 **🔗 Demo Links:**
-- **🌐 Live Platform:** [dataviz-ai-demo.com](https://dataviz-ai-demo.com)
-- **📱 Mobile Demo:** [m.dataviz-ai-demo.com](https://m.dataviz-ai-demo.com)
-- **🎯 API Demo:** [api.dataviz-ai-demo.com](https://api.dataviz-ai-demo.com)
+
+- **🌐 Live Platform:** [dataviz-ai-demo.com](coming soon....)
 
 </div>
 
