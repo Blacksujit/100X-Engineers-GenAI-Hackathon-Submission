@@ -26,7 +26,7 @@
 ### **🚀 Quick Navigation**
 - [🎯 Problem Statement](#-problem-statement---100x-engineers-genai-buildathon)
 - [🏆 Our Solution](#-our-solution---dataviz-ai-mvp)
-- [🎬 Live Demo & Videos](#-demo-videos-showcase)
+- [🎬 Live Demo & Videos](#-live-demo--videos)
 - [🎯 MVP Showcase](#-mvp-showcase---hackathon-solution)
 - [🏗️ System Architecture](#️-system-architecture)
 - [🌟 Revolutionary Features](#-revolutionary-features)
@@ -34,6 +34,7 @@
 - [🎯 Impact & Applications](#-impact--applications)
 - [🛠️ Technical Stack](#️-technical-stack)
 - [🚀 Quick Start Guide](#-quick-start-guide)
+- [📚 Code Notebooks](#-code-notebooks--development-journey)
 - [🎮 How to Use](#-how-to-use)
 - [🔮 Future Roadmap](#-future-roadmap)
 - [🤝 Contributing](#-contributing)
@@ -81,6 +82,10 @@
 #### **🛠️ Technical Information**
 - [Technical Stack](#️-technical-stack)
 - [Quick Start Guide](#-quick-start-guide)
+- [Code Notebooks & Development Journey](#-code-notebooks--development-journey)
+  - [Model Development Notebooks](#-model-development-notebooks)
+  - [Research & Development Notebooks](#-research--development-notebooks)
+  - [Development Journey Overview](#-development-journey-overview)
 - [How to Use](#-how-to-use)
   - [Story Lab (Text-to-Video)](#story-lab-text-to-video)
   - [Pro Studio (Multi-Model)](#pro-studio-multi-model)
@@ -611,6 +616,71 @@ python app.py
 
 ### **4. Access the Platform**
 Open your browser and navigate to: `http://localhost:2000`
+
+---
+
+## 📚 **Code Notebooks & Development Journey**
+
+<div align="center">
+
+![Code Notebooks](https://img.shields.io/badge/Code%20Notebooks-Development%20Journey-purple?style=for-the-badge&logo=jupyter&logoColor=white)
+![Model Development](https://img.shields.io/badge/Model%20Development-Transparent-blue?style=for-the-badge&logo=code&logoColor=white)
+
+**Explore the complete development journey and model implementation!** 🔬
+
+</div>
+
+### **🧠 Model Development Notebooks**
+
+<div align="center">
+
+| **Notebook** | **Description** | **Size** | **Lines** | **Purpose** | **View** |
+|--------------|-----------------|----------|-----------|-------------|----------|
+| **Final Production Model** | Main production-ready model | 167KB | 2 | Core production implementation | [📖 View](Code-notebooks/Final_production_model_Genai.ipynb) |
+| **Final Production Model (Second)** | Alternative production model | 214KB | 2 | Secondary production approach | [📖 View](Code-notebooks/Final_production_model_Genai_second.ipynb) |
+| **Multi-Model Production Code** | Multi-model implementation | 219KB | 4,956 | Advanced multi-model processing | [📖 View](Code-notebooks/multimodel_notebok_production_code.ipynb) |
+| **Custom Prompt Notebook** | Custom prompt engineering | 96KB | 2,060 | Prompt optimization techniques | [📖 View](Code-notebooks/custom_notebook_prompt.ipynb) |
+| **CSV to Video Model** | CSV processing implementation | 133KB | 2 | CSV data processing pipeline | [📖 View](Code-notebooks/CSV_to_Video_Model_Working.ipynb) |
+| **CSV to Video Generation** | Video generation from CSV | 63KB | 1,615 | Video creation workflow | [📖 View](Code-notebooks/csv_to_video_generation.ipynb) |
+
+</div>
+
+### **🔬 Research & Development Notebooks**
+
+<div align="center">
+
+| **Notebook** | **Description** | **Size** | **Lines** | **Purpose** | **View** |
+|--------------|-----------------|----------|-----------|-------------|----------|
+| **Second Model Custom Input** | Custom input processing | 2.2MB | - | Advanced input handling | [📖 View](Code-notebooks/second-model-custom-input-model.ipynb) |
+| **Text to Video New Code** | Enhanced text processing | 1.1MB | - | Improved text-to-video pipeline | [📖 View](Code-notebooks/text_to_video_new_code_aaded.ipynb) |
+| **Text to Video New Approach** | Alternative text approach | 70KB | 2 | Novel text processing methods | [📖 View](Code-notebooks/text_to_video_new_approach_genai.ipynb) |
+| **Second Text to Video Approach** | Secondary text approach | 75KB | 1,222 | Backup text processing | [📖 View](Code-notebooks/second_text_to_video_new_approach_genai.ipynb) |
+| **GenAI Text to Video** | GenAI integration | 97KB | 2,303 | Generative AI implementation | [📖 View](Code-notebooks/genai_text_to_video.ipynb) |
+| **Final Production (Not in Use)** | Legacy production model | 600KB | 1,871 | Historical implementation | [📖 View](Code-notebooks/Final_production_model_Genai_not_in_use_model.ipynb) |
+
+</div>
+
+### **🎯 Development Journey Overview**
+
+#### **📈 Evolution of Models**
+1. **Initial Research** - Text-to-video concept exploration
+2. **CSV Processing** - Data handling and visualization
+3. **Multi-Model Integration** - Advanced processing capabilities
+4. **Production Optimization** - Performance and reliability improvements
+5. **Final Implementation** - Production-ready solution
+
+#### **🔍 Key Development Phases**
+- **Phase 1:** Basic text-to-video conversion
+- **Phase 2:** CSV data processing integration
+- **Phase 3:** Multi-model architecture development
+- **Phase 4:** Production optimization and testing
+- **Phase 5:** Final deployment and documentation
+
+#### **💡 Learning Insights**
+- **Model Selection** - Understanding which approaches work best
+- **Performance Optimization** - Improving processing speed and quality
+- **Error Handling** - Robust implementation for production use
+- **Scalability** - Designing for enterprise-level usage
 
 ---
 
