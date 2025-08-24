@@ -397,6 +397,8 @@ flowchart TD
 | **💾 Storage Layer** | Temp Storage, Output Storage, Cache | File System, Database | Data persistence and caching |
 | **🔌 API Layer** | Flask API, Routes, Middleware | Flask, RESTful APIs | Backend service management |
 
+</div>
+
 ### **Data Flow Process**
 
 1. **📥 Input Processing** - Users upload files or enter text through the web interface
@@ -428,7 +430,7 @@ flowchart TD
 - **Processing Time:** Under 2 minutes
 - **Quality:** Production-ready MP4 format
 
-</div>
+
 
 ---
 
