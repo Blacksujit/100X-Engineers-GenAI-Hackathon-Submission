@@ -199,7 +199,9 @@ The solution should be able to:
 
 **Experience DataViz AI in Real-Time!**
 
-[![Live Demo Platform](https://img.shields.io/badge/Access-Live%20Demo%20Platform-blue?style=for-the-badge&logo=rocket&logoColor=white)](coming soon....)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/G9khu1KDEic?si=T28ek322hFAk-baH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
 
 **🔗 Demo Links:**
 
