@@ -154,10 +154,20 @@ The solution should be able to:
 - **🔄 Scalable processing pipeline** for various data types
 
 ---
+---
 
 ## 🏆 **Our Solution - DataViz AI MVP**
 
-## **📹 Demo Videos Showcase:**
+### **📹 Demo Videos Showcase:**
+
+<div align="center">
+
+**Click below image to see it in action:**
+
+[![Demo Video](./assets-of-app/image.png)](https://www.youtube.com/watch?v=G9khu1KDEic)
+
+</div>
+
 
 <div align="center">
 
@@ -167,8 +177,10 @@ The solution should be able to:
 
 </div>
 
+---
+---
 
-</div>
+
 
 ### **🎥 Video Gallery:**
 
@@ -183,17 +195,11 @@ The solution should be able to:
 
 </div>
 
-### **🎬 Live Demo Access**
+<!-- ### **🎬 Live Demo Access** -->
 
 
 <!-- YouTube Demo Video Embed (GitHub-compatible) -->
-<div align="center">
 
-**Click below image to see it in action:**
-
-[![Demo Video](./assets-of-app/image.png)](https://www.youtube.com/watch?v=G9khu1KDEic)
-
-</div>
 
 <!-- 
   Note: GitHub's markdown renderer does NOT support <iframe> tags, so the video will not be visible directly on GitHub.com.
