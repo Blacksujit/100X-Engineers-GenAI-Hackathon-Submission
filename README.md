@@ -61,7 +61,7 @@
   - [Key Features of Architecture](#key-features-of-architecture)
 
 #### **🎬 Demo & Showcase**
-- [Live Demo & Videos](#-live-demo--videos)
+
 - [MVP Showcase - Hackathon Solution](#-mvp-showcase---hackathon-solution)
 
 #### **🌟 Features & Capabilities**
