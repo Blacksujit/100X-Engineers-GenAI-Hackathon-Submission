@@ -27,9 +27,9 @@
 - [🎯 Problem Statement](#-problem-statement---100x-engineers-genai-buildathon)
 - [🏆 Our Solution](#-our-solution---dataviz-ai-mvp)
 - [🎬 Live Demo & Videos](#-live-demo--videos)
+- [🎯 MVP Showcase](#-mvp-showcase---hackathon-solution)
 - [🏗️ System Architecture](#️-system-architecture)
 - [🌟 Revolutionary Features](#-revolutionary-features)
-- [🎯 MVP Showcase](#-mvp-showcase---hackathon-solution)
 - [🎯 Problem Statement Alignment](#-problem-statement-alignment)
 - [🎯 Impact & Applications](#-impact--applications)
 - [🛠️ Technical Stack](#️-technical-stack)
@@ -206,6 +206,13 @@ The solution should be able to:
 - **🌐 Live Platform:** [coming soon...](coming soon....)
 
 </div>
+
+## 🎯 **MVP Showcase - Hackathon Solution**
+
+<div align="center">
+
+### **Frontend Landing Page**
+![Landing Page Preview](./assets-of-app/image.png)
 
 ### **📊 Demo Statistics**
 
@@ -399,12 +406,6 @@ flowchart TD
 
 ---
 
-## 🎯 **MVP Showcase - Hackathon Solution**
-
-<div align="center">
-
-### **Frontend Landing Page**
-![Landing Page Preview](./assets-of-app/image.png)
 
 ### **Solution Demonstration**
 > **Perfect Match for Problem Statement** - Our solution exactly addresses the hackathon requirements! 🎯
