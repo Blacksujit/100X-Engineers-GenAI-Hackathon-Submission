@@ -225,7 +225,17 @@ The solution should be able to:
 <div align="center">
 
 ### **Frontend Landing Page**
+
 ![Landing Page Preview](./assets-of-app/image.png)
+<br>
+
+![Story-Lab Preview](./assets-of-app/story-lab.png)
+<br>
+
+![Data-Lab Preview](./assets-of-app/data-lab.png)
+<br>
+
+![Pro-Studio Preview](./assets-of-app/pro-studio.png)
 
 ### **📊 Demo Statistics**
 
