@@ -201,7 +201,7 @@ The solution should be able to:
 
 **Click below image to see it in action:**
 
-[![Demo Video](https://img.youtube.com/vi/G9khu1KDEic/0.jpg)](https://www.youtube.com/watch?v=G9khu1KDEic)
+[![Demo Video](./assets-of-app/image.png)](https://www.youtube.com/watch?v=G9khu1KDEic)
 
 </div>
 
