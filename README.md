@@ -252,7 +252,7 @@ The solution should be able to:
 
 </div>
 
-> **💡 Pro Tip:** Try our interactive demo to experience the full power of DataViz AI! Upload your own data and see the magic happen in real-time.
+> **💡 Pro Tip:** Once the platform is live, you'll be able to try our interactive demo to experience the full power of DataViz AI! Upload your own data and see the magic happen in real-time.
 
 </div>
 
