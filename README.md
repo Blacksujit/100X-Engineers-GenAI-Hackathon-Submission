@@ -630,6 +630,42 @@ Open your browser and navigate to: `http://localhost:2000`
 
 ---
 
+### **5. Download and Setup ML Models (Required)**
+
+To run the project locally with all AI features, you must download the pre-trained ML models and place them in the project root under a folder named `models`.
+
+- **Download models from:** [Google Drive (ML Models)](https://drive.google.com/drive/folders/1fe6LxQoYuMSE5ScyeKcHvrv_Ndr2lnFP?usp=sharing)
+
+#### Steps
+1. Create a folder named `models` at the project root (same level as `app.py`):
+```bash
+mkdir models
+```
+2. Download all files from the Drive link above (e.g., `facebook_model.pkl`, `facebook_model_joblib.pkl`, `facebook_tokenizer.pkl`, `facebook_tokenizer_joblib.pkl`, `spacy_model.pkl`, `spacy_model_joblib.pkl`, `tokenizer.pkl`, `model.pkl`, etc.).
+3. Place all downloaded files directly inside the `models/` folder:
+```text
+1OOx-enginners-hackathon-submission-2/
+├─ app/
+├─ models/
+│  ├─ facebook_model.pkl
+│  ├─ facebook_model_joblib.pkl
+│  ├─ facebook_tokenizer.pkl
+│  ├─ facebook_tokenizer_joblib.pkl
+│  ├─ spacy_model.pkl
+│  ├─ spacy_model_joblib.pkl
+│  ├─ tokenizer.pkl
+│  ├─ model.pkl
+│  └─ ... (any other provided model files)
+├─ app.py
+└─ ...
+```
+4. Start or restart the app. The code expects models to be available at `./models/...` and will load them from there during runtime.
+
+#### Why models are not in the repository?
+Large model binaries are not committed to GitHub to avoid bandwidth and storage limits. Please use the Drive link above to obtain them and place them in `models/` locally.
+
+> Tip: If you use a remote server or container, ensure the `models/` directory is present and populated before starting the app.
+
 ## 📚 **Code Notebooks & Development Journey**
 
 <div align="center">
