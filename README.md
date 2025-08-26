@@ -651,11 +651,14 @@ Large model binaries are not committed to GitHub to avoid bandwidth and storage 
 
 > Tip: If you use a remote server or container, ensure the `models/` directory is present and populated before starting the app.
 
+---
+
 ### **3. Install Dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
+---
 
 ### **4. Run the Application**
 
