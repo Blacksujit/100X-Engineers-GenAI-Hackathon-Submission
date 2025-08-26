@@ -625,12 +625,9 @@ pip install -r requirements.txt
 python app.py
 ```
 
-### **4. Access the Platform**
-Open your browser and navigate to: `http://localhost:2000`
-
 ---
 
-### **5. Download and Setup ML Models (Required)**
+### **4. Download and Setup ML Models (Required)**
 
 To run the project locally with all AI features, you must download the pre-trained ML models and place them in the project root under a folder named `models`.
 
@@ -665,6 +662,10 @@ mkdir models
 Large model binaries are not committed to GitHub to avoid bandwidth and storage limits. Please use the Drive link above to obtain them and place them in `models/` locally.
 
 > Tip: If you use a remote server or container, ensure the `models/` directory is present and populated before starting the app.
+
+### **5. Access the Platform**
+Open your browser and navigate to: `http://localhost:2000`
+
 
 ## 📚 **Code Notebooks & Development Journey**
 
