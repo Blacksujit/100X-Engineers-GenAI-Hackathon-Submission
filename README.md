@@ -280,7 +280,7 @@ flowchart TD
     %% User Input Layer
     subgraph UI ["🎨 User Interface Layer"]
         direction TB
-        UI_WEB[Web Interface<br/>Flask + React]
+        UI_WEB[Web Interface<br/>Flask + static frontend]
         UI_UPLOAD[File Upload<br/>Drag & Drop]
         UI_TEXT[Text Input<br/>25-word limit]
         UI_PROMPT[Creative Prompt<br/>AI-guided]
